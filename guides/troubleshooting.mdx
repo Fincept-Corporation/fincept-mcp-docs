@@ -29,8 +29,8 @@ icon: "wrench"
   <Accordion title="A result says status partial">
     The result was too large to send whole. The agent reads the rest with `fincept_read_result`, or open `artifacts[0].view_url` in the browser. See [large results](/guides/results#large-results).
   </Accordion>
-  <Accordion title="A stats tool returns validation_failed">
-    The message names the argument at fault. Common causes: series of different lengths in one table, too few observations for the model, a formula naming a column the table lacks, or a `$fincept` path that does not exist in the referenced tool's data.
+  <Accordion title="An engine tool returns validation_failed">
+    The message names the argument at fault. Common causes: series of different lengths in one table, too few observations for the model, a formula or column name the table lacks, asset weights or bounds that cannot be met, or a `$fincept` path that does not exist in the referenced tool's data.
   </Accordion>
   <Accordion title="HTTP 429 Too Many Requests">
     The account passed 120 requests per minute. Clients back off and retry; agents that loop over many symbols should use batch tools such as `market_get_quotes`.

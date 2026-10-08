@@ -29,7 +29,7 @@ A tool that runs but cannot answer returns an envelope with `status: "error"`, `
 | `not_found` | The item does not exist or belongs to another account, or a stored result expired. |
 | `timeout` | The call ran past its time limit. |
 | `busy` | The engine (Fincept Stats, Forecast, Allocation, Portfolio Optimizer or Quant) has no free worker. Retry in a few seconds. |
-| `model_failed` | A statistical model could not be estimated on this data. The hint suggests what to change. |
+| `model_failed` | An engine computation (a model fit, an optimisation, a forecast) failed on this data. The hint suggests what to change. |
 | `unavailable` | A Fincept service could not be reached. Retry later. |
 
 Other codes come straight from the service that refused, with a `message` and often a `hint`; agents should read and relay them.
