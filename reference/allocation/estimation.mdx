@@ -1,0 +1,20 @@
+---
+title: "Estimation of returns, risk and views"
+description: "Expected returns and covariance by 6 mean and 15 covariance estimators, coskewness and cokurtosis, Black-Litterman (plain, augmented, Bayesian) posteriors, factor models with stepwise or principal components loadings, entropy pooling, bootstrap uncertainty sets, random-matrix denoising and covariance/correlation matrix tools."
+mode: "wide"
+---
+
+Toolset `alloc_estimation`: 8 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `alloc_assets_stats` | Expected returns and the covariance matrix by the chosen estimators, beside the plain sample figures: mean by sample, EWMA, James-Stein, Bayes-Stein or BOP shrinkage; covariance by sample, semi, EWMA, Ledoit-Wolf, OAS, shrunk, graphical lasso, j-LoGo, fixed/spectral/shrink denoising or Gerber 0/1/2. |  |
+| `alloc_comoments` | Higher comoments of up to 12 assets: coskewness and cokurtosis matrices (sample, denoised, or probability-weighted), their downside (lower semi) versions and the semi covariance. |  |
+| `alloc_factor_model` | Factor model of the assets on the given factors: loadings (alpha and betas) chosen by forward or backward stepwise regression on p-value, AIC, SIC, R² or adjusted R², or by principal components regression, or given. |  |
+| `alloc_matrix` | Matrix utilities for covariance and correlation matrices: convert between covariance and correlation, repair a matrix that is not positive definite (eigenvalue clipping or nearest correlation), check positive definiteness with the eigenvalues, or generate return scenarios whose sample covariance is exactly the matrix. |  |
+| `alloc_denoise` | Random-matrix denoising of the sample covariance: fits the Marchenko-Pastur law to the correlation eigenvalues, splits them into noise and signal (the number of factors), and rebuilds the covariance with the noise removed (fixed, spectral or shrink), optionally detoned. |  |
+| `alloc_uncertainty_sets` | Box and elliptical uncertainty sets of the mean vector and covariance matrix: lower and upper bounds of each asset's mean and volatility, the bounds of every covariance, the covariance of the mean estimate and the radii of the elliptical sets. |  |
+| `alloc_black_litterman` | Black-Litterman posterior expected returns and covariance from absolute or relative views on assets or classes (BL), augmented with views on factors (ABL), or Bayesian on factor views (BLB). |  |
+| `alloc_entropy_pooling` | Entropy pooling: the scenario probabilities closest (minimum relative entropy) to equal weights that satisfy the views on moments, and the posterior means, volatilities and correlations they imply. |  |
+
+Inputs, limits and outputs are described in [Fincept Allocation](/guides/fincept-allocation). Full schemas: `fincept_describe_tool`.

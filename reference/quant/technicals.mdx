@@ -1,0 +1,14 @@
+---
+title: "Technical indicators"
+description: "Simple, smoothed (Wilder) and exponential moving averages, Bollinger bands, relative strength index, MACD, and the trend or seasonally adjusted series from a classical additive or multiplicative decomposition."
+mode: "wide"
+---
+
+Toolset `quant_technicals`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `quant_technical` | Technical indicator of a dated price series: simple, Wilder-smoothed or exponential moving average, Bollinger bands (price, middle, lower, upper), relative strength index or MACD, over a window of observations or a tenor where the indicator has one. |  |
+| `quant_trend_seasonal` | Trend or seasonally adjusted version of a dated series from a classical decomposition (moving-average trend, average seasonal pattern per position in the cycle, residual), additive or multiplicative, with a weekly, monthly, quarterly or yearly cycle. |  |
+
+Inputs, limits and outputs are described in [Fincept Quant](/guides/fincept-quant). Full schemas: `fincept_describe_tool`.

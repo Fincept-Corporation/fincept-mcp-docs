@@ -1,0 +1,15 @@
+---
+title: "Model update and transfer"
+description: "Reuse a trained forecaster: append new observations without retraining and forecast from the new end; forecast series the models never saw (a new ticker, store or market) with intervals recalibrated, rescaled or density-ratio reweighted for them; covariate-shift weights between two feature sets."
+mode: "wide"
+---
+
+Toolset `forecast_transfer`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `forecast_update` | Trains on the history, scores that model on the new observations it never saw (an honest out-of-sample check), then appends them to the stored series without retraining and forecasts h periods from the new end with the original conformal intervals. |  |
+| `forecast_transfer` | Trains models on source series (data or y) and forecasts different target series with them (transfer learning: a new ticker, product or market with short history), with conformal intervals adapted to the targets by recalibration, error or scale ratios, or density-ratio reweighting. |  |
+| `forecast_density_ratio` | Density-ratio weights w(x) = p_target(x) / p_source(x) for every source row, from a classifier trained to tell target rows from source rows on standardized features: how representative each past observation is of the target conditions. |  |
+
+Inputs, limits and outputs are described in [Fincept Forecast](/guides/fincept-forecast). Full schemas: `fincept_describe_tool`.

@@ -1,0 +1,14 @@
+---
+title: "Panel preparation"
+description: "Validate a long table of series (duplicates, missing periods, missing values), insert missing periods on each series' calendar and fill them, and generate synthetic panels to try the forecasting tools."
+mode: "wide"
+---
+
+Toolset `forecast_data`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `forecast_prepare_panel` | Checks a long table of series and makes it regular: reports duplicates, periods missing from each series' calendar and missing values, inserts the missing periods between the start and end bounds at the frequency, and fills them. |  |
+| `forecast_synthetic_panel` | Generates a reproducible synthetic panel (unique_id, ds, y) with seasonality and optional trend, static and exogenous features, simulated model forecasts with intervals (to try forecast_evaluate) or a daily price column. |  |
+
+Inputs, limits and outputs are described in [Fincept Forecast](/guides/fincept-forecast). Full schemas: `fincept_describe_tool`.

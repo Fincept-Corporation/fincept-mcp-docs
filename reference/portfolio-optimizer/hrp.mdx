@@ -1,0 +1,13 @@
+---
+title: "Hierarchical risk parity"
+description: "Hierarchical risk parity: cluster the assets by correlation distance (single, complete, average, weighted, centroid, median or Ward linkage), order them along the tree and split risk by recursive bisection; returns the weights, performance, linkage, dendrogram and clustered correlation heatmap."
+mode: "wide"
+---
+
+Toolset `pfopt_hrp`: 1 tool.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pfopt_hrp` | Hierarchical risk parity weights from a price (or returns) history, or from a covariance matrix alone: the assets are clustered by correlation distance, ordered along the tree and risk is split between sub-clusters by inverse variance, needing no expected returns and no matrix inversion. |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Optimizer](/guides/fincept-portfolio-optimizer). Full schemas: `fincept_describe_tool`.

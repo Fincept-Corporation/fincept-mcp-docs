@@ -1,0 +1,16 @@
+---
+title: "Hierarchical clustering and networks"
+description: "Hierarchical portfolios (HRP, HERC, HERC2, NCO) over 12 codependence measures, 8 linkages (DBHT included) and 38 risk measures; the assets' cluster tree, codependence and distance matrices, and their minimum spanning tree or planar filtered graph with centralities."
+mode: "wide"
+---
+
+Toolset `alloc_hierarchical`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `alloc_hierarchical` | Hierarchical clustering portfolio: HRP, HERC, HERC2 or NCO on a tree of the assets built from a codependence (correlation, Gerber, distance correlation, mutual information, tail dependence) and a linkage (single ... ward, DBHT), allocating by one of 38 risk measures, with optional weight bounds. |  |
+| `alloc_clusters` | Hierarchical clusters of the assets from a codependence and a linkage, with the number of clusters given or chosen by the two-difference gap statistic or the standardised silhouette. |  |
+| `alloc_codependence` | The codependence matrix of the assets and the distance derived from it: Pearson, Spearman or Kendall correlation, Gerber statistic, absolute correlation, distance correlation, mutual information (distance = variation of information) or lower-tail dependence. |  |
+| `alloc_network` | The assets' network: edges of the minimum spanning tree or planar filtered graph of their codependence distances, each node's degree, chosen centrality and hierarchical cluster, and the connection matrix (assets within walk_size edges) that network constraints use. |  |
+
+Inputs, limits and outputs are described in [Fincept Allocation](/guides/fincept-allocation). Full schemas: `fincept_describe_tool`.

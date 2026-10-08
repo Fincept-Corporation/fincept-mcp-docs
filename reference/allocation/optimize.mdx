@@ -1,0 +1,18 @@
+---
+title: "Portfolio optimisation"
+description: "Mean-risk optimisation over 26 risk measures and four objectives on historical, Black-Litterman, factor-model and entropy-pooling inputs, with bounds, budgets, cardinality, risk limits, linear, integer, turnover, tracking-error and network constraints; efficient frontiers; worst-case robust, OWA and mean-variance-skewness-kurtosis portfolios; and the constraint and view matrix builders."
+mode: "wide"
+---
+
+Toolset `alloc_optimize`: 6 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `alloc_optimize` | Optimal portfolio weights for one of 26 risk measures (variance, MAD, CVaR, EVaR, tail Gini, drawdowns, ...) and an objective (minimum risk, maximum utility, maximum return/risk ratio, maximum return), on historical estimates or a Black-Litterman, factor-model, Black-Litterman-on-factors or entropy-pooling model, under any mix of constraints. |  |
+| `alloc_efficient_frontier` | The efficient frontier of a risk measure under the same models and constraints as alloc_optimize: points portfolios from minimum risk to maximum return. |  |
+| `alloc_owa` | Portfolio optimising an ordered-weighted-average risk measure (a weighted sum of the sorted portfolio returns) such as the Gini mean difference, weighted CVaR, tail Gini, ranges or L-moments. |  |
+| `alloc_worst_case` | Worst-case (robust) mean-variance portfolio: optimises the objective against the least favourable mean and covariance inside box or elliptical uncertainty sets estimated by bootstrap, normal simulation or a delta band. |  |
+| `alloc_mvsk` | Portfolio optimising the first four moments together (mean, variance, skewness, kurtosis) through a semidefinite relaxation of coskewness and cokurtosis, at most 20 assets. |  |
+| `alloc_build_constraints` | Builds the matrices an optimizer receives from rule rows and shows them: weight rules as A w &lt;= B, risk contribution rules, factor-exposure rules, integer (cardinality, exclusive, joint) rules, hierarchical-portfolio bounds, risk budget vectors, Black-Litterman P/Q and entropy-pooling P/Q. |  |
+
+Inputs, limits and outputs are described in [Fincept Allocation](/guides/fincept-allocation). Full schemas: `fincept_describe_tool`.

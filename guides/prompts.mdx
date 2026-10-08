@@ -18,6 +18,14 @@ Start prompts with "Using Fincept" so the agent reaches for these tools instead 
 | Which institutions hold NVDA, largest first? Where have insiders been buying in clusters? | `filings_get_security_holders`, `filings_find_insider_clusters` |
 | Is the US unemployment rate stationary? Run ADF and KPSS. | `data_get_observations`, `stats_stationarity_test` |
 | How many observations per group do I need to detect a 0.3 effect size at 80% power? | `stats_power_solve` |
+| Backtest LightGBM and ridge forecasts of Nifty 50 daily closes over 5 windows, then forecast 20 sessions with 80% and 95% intervals. | `market_get_candles`, `forecast_cross_validation`, `forecast_ml_forecast` |
+| Search models and features automatically for a 12-month forecast of US industrial production. | `data_get_observations`, `forecast_auto_ml` |
+| Build a CVaR risk parity portfolio of SPY, TLT, GLD and DBC from three years of daily prices. | `market_get_candles`, `alloc_risk_parity` |
+| Give me the full risk report of a 60/40 SPY/AGG portfolio: CVaR, drawdowns and ulcer index. | `market_get_candles`, `alloc_risk_table` |
+| Plot the efficient frontier of SPY, EFA, EEM, TLT and GLD with the max-Sharpe and minimum-volatility portfolios. | `market_get_candles`, `pfopt_efficient_frontier` |
+| Find the minimum-CVaR portfolio at 95% of SPY, QQQ, TLT and GLD from five years of daily prices. | `market_get_candles`, `pfopt_cvar` |
+| Chart SPY's 1-month realized volatility and its 1-year rolling Sharpe ratio since 2020. | `market_get_candles`, `quant_volatility`, `quant_sharpe_ratio` |
+| Backtest a 60/40 SPY/TLT basket rebalanced monthly with 5 bp costs since 2015. | `market_get_candles`, `quant_basket_backtest` |
 
 <Tip>
   Ask for a chart and the agent gets one: forecasting and analysis tools return `series` and `chart` blocks. Large results include a viewer link at fincept.in with interactive tables and CSV download.

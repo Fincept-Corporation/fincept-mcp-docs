@@ -1,0 +1,14 @@
+---
+title: "Forecast evaluation"
+description: "Score forecasts against actuals: MAE, RMSE, MAPE, sMAPE, WAPE, MASE, RMSSE, bias, quantile and multi-quantile losses, CRPS, interval coverage, Winkler score and calibration, per series, window or aggregated (weighted); Pareto-optimal models; errors by step ahead; residual rectification."
+mode: "wide"
+---
+
+Toolset `forecast_evaluation`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `forecast_evaluate` | Scores model forecasts against actuals with any of 25 metrics: point (MAE, MSE, RMSE, MAPE, sMAPE, WAPE, ND, bias, cumulative error, relative MAE), scaled by the seasonal naive (MASE, MSSE, RMSSE, scaled PIS), quantile (pinball, multi-quantile, scaled CRPS) and interval (coverage, Winkler, calibration). |  |
+| `forecast_rectify` | Learns how each model's backtest error (actual minus forecast) depends on the step ahead and on chosen features, with a correction regressor per step (or one using the step as a feature), and adds the predicted error to new forecasts. |  |
+
+Inputs, limits and outputs are described in [Fincept Forecast](/guides/fincept-forecast). Full schemas: `fincept_describe_tool`.

@@ -1,0 +1,15 @@
+---
+title: "Calendar operations on dated series"
+description: "Bucket a series by week, month, quarter or year; cut a date range; keep only business days of a holiday calendar; day, month, year, quarter and weekday of each date; accrual fractions between dates; interpolation onto chosen dates; and splicing several series end to end."
+mode: "wide"
+---
+
+Toolset `quant_calendar`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `quant_series_calendar` | Calendar operations on one dated series: resample into weekly/monthly/quarterly/yearly buckets (max, min, mean, sum, first, last), cut a date range, keep only business days of a holiday calendar, extract each date's day, month, year, quarter or weekday, or the accrual year fraction between consecutive dates under a day count convention. |  |
+| `quant_interpolate` | The series read on chosen dates: carried forward from the last known value (step), only where the series has the date (intersect), or with gaps as null or zero. |  |
+| `quant_splice` | Splices the columns of a dated table, in column order, into one series: append later history, prepend older history (e.g. a proxy before a listing date), or fill one series' missing dates from others (union). |  |
+
+Inputs, limits and outputs are described in [Fincept Quant](/guides/fincept-quant). Full schemas: `fincept_describe_tool`.

@@ -1,0 +1,20 @@
+---
+title: "Fincept Quant"
+description: "Every Fincept Quant module and its toolset."
+icon: "calculator"
+mode: "wide"
+---
+
+28 tools in 9 modules, plus `quant_catalog`, which lists them from inside your agent. All are free.
+
+| Module | Toolset | Covers | Tools |
+| --- | --- | --- | --- |
+| [Basket and rule backtests](/reference/quant/backtest) | `quant_backtest` | Backtests on your own prices: a weighted basket rebalanced daily, weekly or monthly with transaction costs (index level and drifting weights), the basket's weighted average realized volatility and pairwise correlation, and rule-triggered trading (dates, signal levels, mean reversion) with an equity curve and trade ledger. | 3 |
+| [Business-day and date tools](/reference/quant/dates) | `quant_dates` | Business-day offsets, checks, counts, previous/next business dates and business-date ranges on your own holiday calendar and week mask; relative date rules ('1m', '-1b', month ends, third Friday) and schedules; day count fractions; tenor lengths and market-point ordering. | 4 |
+| [Returns, volatility and performance](/reference/quant/econometrics) | `quant_econometrics` | Returns (simple, log, absolute) over observations or tenors, prices from returns, rebasing, excess returns over a cash rate or index, realized, swap-convention and exponentially weighted volatility, rolling correlation, correlation-swap correlation, beta and covariance, rolling maximum drawdown and the rolling Sharpe ratio. | 5 |
+| [Epidemic models](/reference/quant/epidemic) | `quant_epidemic` | SIR and SEIR compartmental models fitted to observed daily infected and removed counts (transmission and recovery rates, reproduction number, projected path), and simulations of SIR, SEIR, SEIRCM with quarantine, cases and deaths, and its age-stratified form. | 2 |
+| [Event studies](/reference/quant/events) | `quant_events` | Frame a series around event dates (earnings, central-bank meetings, data releases you supply), or detect events from another series' threshold moves and measure the response over chosen horizons. | 2 |
+| [Calendar operations on dated series](/reference/quant/calendar) | `quant_calendar` | Bucket a series by week, month, quarter or year; cut a date range; keep only business days of a holiday calendar; day, month, year, quarter and weekday of each date; accrual fractions between dates; interpolation onto chosen dates; and splicing several series end to end. | 3 |
+| [Rolling statistics and regression](/reference/quant/stats) | `quant_stats` | Rolling or expanding statistics of a dated series by observation count or tenor: min, max, range, arithmetic and quadratic mean, median, mode, sum, product, standard deviation, variance, z-scores, winsorizing, percentiles and percentile ranks, exponentially weighted deviation; static and rolling linear regression; random-walk sample series. | 3 |
+| [Technical indicators](/reference/quant/technicals) | `quant_technicals` | Simple, smoothed (Wilder) and exponential moving averages, Bollinger bands, relative strength index, MACD, and the trend or seasonally adjusted series from a classical additive or multiplicative decomposition. | 2 |
+| [Series algebra and transforms](/reference/quant/algebra) | `quant_algebra` | Element-wise maths on dated series (exp, log, powers, floors, caps), value and date filters, lags, differences, spike and outlier smoothing, run counts, arithmetic between two series with date alignment, weighted sums and logical combinations of many series, and conditional selection. | 4 |

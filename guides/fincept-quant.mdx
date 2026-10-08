@@ -1,0 +1,49 @@
+---
+title: "Fincept Quant"
+description: "Time-series analytics as MCP tools: returns, volatility, rolling statistics, technical indicators, basket backtests, event studies and date tools."
+icon: "calculator"
+---
+
+Fincept Quant is the time-series analytics engine behind every `quant_*` tool: series transforms and algebra, calendar operations, rolling statistics and regression, returns, realized and exponentially weighted volatility, correlation and beta, drawdown, Sharpe ratio, technical indicators (moving averages, Bollinger bands, RSI, MACD, trend and seasonal adjustment), basket and rule backtests with rebalancing and costs, event studies, SIR/SEIR epidemic models and business-day calendars with your own holidays. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Quant tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `quant_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Quant reference](/reference/quant/overview) lists every module and tool.
+
+`quant_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| Dated series | Values with `dates`, ISO dates one per value | `[101.2, 102.8, 103.1]` with `["2024-01-02", "2024-01-03", "2024-01-04"]` |
+| Table | Columns by name with one date column (`date_column`, default `date`) | `{"date": ["2024-01-02", "2024-01-03"], "SPY": [472.7, 468.8], "TLT": [97.4, 96.9]}` |
+| Window | A number of observations, or a tenor: 1 to 9999 then `h`, `d`, `w`, `m` or `y` | `22`, `"1m"`, `"1y"` |
+| Holidays | Optional ISO holiday dates, with a week mask of working weekdays | `["2024-12-25"]`, `"1111100"` |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds by default; 180 seconds for `quant_basket_backtest`, `quant_basket_risk` and `quant_epidemic_fit`; 300 seconds for `quant_rule_backtest` |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Series tools return the result as a dated `series` with a line chart (an area chart for drawdowns, a band chart for Bollinger bands). Backtests return the basket level or equity curve with total return, annualized volatility and maximum drawdown, and rule backtests add every order and the trade ledger. Date tools return one row per date as a table.
+
+## Example
+
+```text Prompt
+Using Fincept, chart SPY's 1-month realized volatility and 1-year rolling Sharpe ratio over the last five years, and its 3-month rolling correlation with TLT.
+```
+
+The agent searches for `realized volatility`, finds `quant_volatility`, `quant_sharpe_ratio` and `quant_correlation`, and passes each series' closes and dates as `$fincept` references to `market_get_candles` (`candles.close` and `candles.time`).

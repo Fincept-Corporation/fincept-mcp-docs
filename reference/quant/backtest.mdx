@@ -1,0 +1,15 @@
+---
+title: "Basket and rule backtests"
+description: "Backtests on your own prices: a weighted basket rebalanced daily, weekly or monthly with transaction costs (index level and drifting weights), the basket's weighted average realized volatility and pairwise correlation, and rule-triggered trading (dates, signal levels, mean reversion) with an equity curve and trade ledger."
+mode: "wide"
+---
+
+Toolset `quant_backtest`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `quant_basket_backtest` | Backtest of a weighted basket of the price columns, starting at 100, rebalanced to target weights daily, weekly or monthly, with proportional transaction costs on the weight traded. |  |
+| `quant_basket_risk` | Weighted average realized volatility of a basket's constituents, or their weighted average pairwise correlation, using the basket's drifting actual weights (rebalanced daily, weekly or monthly). |  |
+| `quant_rule_backtest` | Event-driven backtest of a trading rule on your daily prices: whenever the trigger fires (chosen dates, a signal above or below a level, or a mean-reversion z-score rule) the simulator trades one unit of each traded column at that day's close, optionally closes it after hold_days, and marks the book at every close (weekdays, skipping given holidays; missing prices carry forward). |  |
+
+Inputs, limits and outputs are described in [Fincept Quant](/guides/fincept-quant). Full schemas: `fincept_describe_tool`.

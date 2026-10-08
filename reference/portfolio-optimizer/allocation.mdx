@@ -1,0 +1,13 @@
+---
+title: "Discrete allocation"
+description: "Whole-share orders from target weights: latest prices from a price history or given, a portfolio value, greedy rounding or integer programming, long/short with a short ratio and optional reinvestment of short proceeds; the leftover cash and the error against the targets."
+mode: "wide"
+---
+
+Toolset `pfopt_allocation`: 1 tool.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pfopt_discrete_allocation` | Whole-share allocation of a portfolio value to target weights at the latest prices: greedy rounding or an integer program that minimises the gap to the targets plus the leftover cash; long/short weights are split into a long and a short book (short_ratio, reinvest). |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Optimizer](/guides/fincept-portfolio-optimizer). Full schemas: `fincept_describe_tool`.

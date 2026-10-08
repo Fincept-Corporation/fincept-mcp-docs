@@ -1,0 +1,13 @@
+---
+title: "Automatic model search"
+description: "Search each model's hyperparameters jointly with lags, rolling/EWM statistics, calendar features and target transforms by backtest, with a bounded number of trials; retrain the best and forecast."
+mode: "wide"
+---
+
+Toolset `forecast_tuning`: 1 tool.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `forecast_auto_ml` | Searches, for each chosen model, its hyperparameters together with the features (candidate lags, EWM and rolling means, calendar features and target transforms such as log, differencing and scaling, shaped by the season) to minimize the backtest error over n_windows windows, then retrains the best configuration on all data and forecasts h periods with conformal bands. |  |
+
+Inputs, limits and outputs are described in [Fincept Forecast](/guides/fincept-forecast). Full schemas: `fincept_describe_tool`.

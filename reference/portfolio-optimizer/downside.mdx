@@ -1,0 +1,15 @@
+---
+title: "Downside-risk optimisation"
+description: "Portfolios that control losses instead of variance, from historical return scenarios: mean-semivariance (downside deviation below a threshold, Sortino ratio), mean-CVaR (expected shortfall at a confidence level) and mean-CDaR (conditional drawdown at risk, with the drawdown curve); minimum risk, target risk, target return and downside quadratic utility."
+mode: "wide"
+---
+
+Toolset `pfopt_downside`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pfopt_semivariance` | Mean-semivariance optimal weights from a price (or returns) history: only returns below semi_benchmark count as risk. |  |
+| `pfopt_cvar` | Mean-CVaR optimal weights from historical return scenarios: CVaR (expected shortfall) is the average loss in the worst (1 - beta) share of periods, per period (daily for daily data). |  |
+| `pfopt_cdar` | Mean-CDaR optimal weights from a price (or returns) history: CDaR is the average of the worst (1 - beta) share of drawdowns of the cumulative (summed) portfolio return. |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Optimizer](/guides/fincept-portfolio-optimizer). Full schemas: `fincept_describe_tool`.

@@ -1,0 +1,16 @@
+---
+title: "Business-day and date tools"
+description: "Business-day offsets, checks, counts, previous/next business dates and business-date ranges on your own holiday calendar and week mask; relative date rules ('1m', '-1b', month ends, third Friday) and schedules; day count fractions; tenor lengths and market-point ordering."
+mode: "wide"
+---
+
+Toolset `quant_dates`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `quant_business_days` | Business-day arithmetic on your own holiday list and week mask: move dates by business days with a roll convention, test whether dates are business days, count business days between date pairs, find the previous or next business date, list the business dates in a range, or today's date in New York, London, Hong Kong or Tokyo. |  |
+| `quant_relative_date` | Applies a relative date rule ('1m', '-1b', '3y', end of month 'e', third Friday '3F', combinations like '1y-1d') to each base date on your holiday list and week mask, or builds a schedule of rule multiples from a base date to schedule_end (payment, roll or observation dates). |  |
+| `quant_day_count` | Day-count arithmetic: accrual year fractions between dates under ACT/360, ACT/364, ACT/365F, ACT/365.25, ACT/365L or 1/1, weekday counts, a countdown series of days (or business days) to a target date, leap-day checks, and date-time gaps in words. |  |
+| `quant_tenor` | Tenor arithmetic for curves: the approximate length in days of tenor strings ('3m' is 90, '1y' 365), or the ordering of market curve point labels (overnight, tom-next, tenors, FRA pairs, futures and month codes, quarter ends, dates) from shortest to longest with each point's sort key in days. |  |
+
+Inputs, limits and outputs are described in [Fincept Quant](/guides/fincept-quant). Full schemas: `fincept_describe_tool`.

@@ -1,0 +1,16 @@
+---
+title: "Return and risk estimates"
+description: "Annual expected returns (mean historical, exponentially weighted, CAPM) and covariance matrices (sample, semicovariance, exponential, minimum covariance determinant, manual, Ledoit-Wolf and oracle shrinkage), correlation, conversions between prices and returns, and positive-semidefinite repair."
+mode: "wide"
+---
+
+Toolset `pfopt_estimates`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pfopt_expected_returns` | Annual expected return of each asset from a price (or returns) history: mean historical return (geometric CAGR with compounding, else arithmetic), exponentially weighted mean (recent periods weigh more) or CAPM (risk-free rate plus beta times the market premium, the market being the benchmark series or the equal-weighted assets). |  |
+| `pfopt_risk_model` | Annual covariance matrix of the assets from a price (or returns) history by the chosen risk model, with the correlation matrix, each asset's annual volatility and, for shrinkage estimators, the shrinkage intensity. |  |
+| `pfopt_returns_prices` | Periodic simple or log returns from a price history, or pseudo-prices (growth of one unit, first row = 1) from a returns history. |  |
+| `pfopt_matrix_transform` | Converts a covariance matrix to correlations, a correlation matrix plus standard deviations to a covariance, or repairs a matrix that is not positive semidefinite (spectral clipping or a diagonal shift). |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Optimizer](/guides/fincept-portfolio-optimizer). Full schemas: `fincept_describe_tool`.

@@ -1,0 +1,15 @@
+---
+title: "Risk parity and risk budgeting"
+description: "Portfolios whose assets (or classes, or factors) contribute risk in chosen proportions: equal risk contribution and risk budgeting for 22 risk measures, relaxed risk parity, factor risk parity and optimisation under factor risk-contribution limits; each answer shows the achieved risk contributions."
+mode: "wide"
+---
+
+Toolset `alloc_parity`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `alloc_risk_parity` | Risk parity (equal risk contribution) or risk budgeting portfolio for one of 22 risk measures (standard deviation, MAD, CVaR, EVaR, CDaR, ulcer index, ...): each asset's share of portfolio risk matches its budget (equal, per asset, or equal per class). |  |
+| `alloc_relaxed_risk_parity` | Relaxed risk parity on variance: risk contributions near their budgets while a minimum expected return or weight rules can bind, which exact risk parity cannot honour. |  |
+| `alloc_factor_risk_budget` | Factor risk budgeting on a factor model of the assets: parity spreads portfolio risk across the factors by factor_budget for one of 22 risk measures; constrained optimises the objective on variance while each factor's share of variance obeys factor_limits (and constraints). |  |
+
+Inputs, limits and outputs are described in [Fincept Allocation](/guides/fincept-allocation). Full schemas: `fincept_describe_tool`.

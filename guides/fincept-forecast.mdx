@@ -1,0 +1,51 @@
+---
+title: "Fincept Forecast"
+description: "Machine-learning forecasting as MCP tools: one series or a panel, conformal intervals, backtests and automatic model search."
+icon: "trending-up"
+---
+
+Fincept Forecast is the machine-learning forecasting engine behind every `forecast_*` tool: LightGBM, XGBoost, CatBoost, random forests, ridge, lasso and 40 other regressors trained on lags, rolling, seasonal, expanding and EWM statistics, calendar features and exogenous columns; recursive or direct multi-step forecasts with conformal prediction intervals; rolling-origin backtests; automatic hyperparameter and feature search; model update and transfer to new series; and forecast accuracy metrics. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Forecast tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `forecast_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Forecast reference](/reference/forecast/overview) lists every module and tool.
+
+`forecast_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| Series | `y`: one series of numbers, oldest first | `[101.2, 102.8, 101.9, 103.1]` |
+| Dates | Optional ISO dates for `y`, one per observation | `["2024-01-31", "2024-02-29"]` |
+| Panel | `data`: a long table, one row per series and period, with id, time and target columns plus any exogenous columns | `{"unique_id": ["AAPL", "MSFT"], "ds": ["2024-01-02", "2024-01-02"], "y": [185.6, 370.9]}` |
+| Future exogenous | `future_exog`: the values of every dynamic exogenous column over the horizon | `{"unique_id": ["AAPL"], "ds": ["2024-01-03"], "rate": [5.33]}` |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+The id, time and target columns are `unique_id`, `ds` and `y` unless `id_col`, `time_col` and `target_col` name others. Columns listed in `static_features` are constant within each series; every other extra column is dynamic and needs future values.
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds by default; 180 seconds for `forecast_feature_importance`, `forecast_prepare_panel`, `forecast_evaluate`, `forecast_rectify` and `forecast_feature_matrix`; 300 seconds for `forecast_ml_forecast`, `forecast_fitted_values`, `forecast_cross_validation`, `forecast_lightgbm_cv`, `forecast_update`, `forecast_transfer` and `forecast_auto_ml` |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Forecasting tools return the forecast of every series and model with `-lo-<level>` and `-hi-<level>` interval bands, charts and feature importances. Backtests return every window's forecasts and the chosen metrics per model, window and series; `forecast_auto_ml` adds each model's best hyperparameters, features and trial losses. `forecast_evaluate` returns scores per series and per model, the Pareto-optimal models and errors by step ahead.
+
+## Example
+
+```text Prompt
+Using Fincept, backtest a LightGBM and a ridge model on Nifty 50 daily closes over the last 5 windows of 20 days, then forecast the next 20 sessions with 80% and 95% intervals.
+```
+
+The agent searches for `machine learning forecast`, finds `forecast_cross_validation` and `forecast_ml_forecast`, and passes the closes as a `$fincept` reference to `market_get_candles`.

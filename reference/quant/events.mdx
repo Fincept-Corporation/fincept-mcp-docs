@@ -1,0 +1,14 @@
+---
+title: "Event studies"
+description: "Frame a series around event dates (earnings, central-bank meetings, data releases you supply), or detect events from another series' threshold moves and measure the response over chosen horizons."
+mode: "wide"
+---
+
+Toolset `quant_events`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `quant_event_window` | A dated series framed around event dates you supply (earnings, central-bank meetings, data releases): the observations from window points before to window points after each event, or only the pre-event, post-event or event-day part. |  |
+| `quant_event_impact` | Event impact study: events are the dates where the trigger series moves by at least threshold (up, down or either way) over horizon; each event is mapped onto the response series' calendar and the response's return or change over each response horizon is sampled there. |  |
+
+Inputs, limits and outputs are described in [Fincept Quant](/guides/fincept-quant). Full schemas: `fincept_describe_tool`.

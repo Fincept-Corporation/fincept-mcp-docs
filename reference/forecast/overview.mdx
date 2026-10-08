@@ -1,0 +1,18 @@
+---
+title: "Fincept Forecast"
+description: "Every Fincept Forecast module and its toolset."
+icon: "trending-up"
+mode: "wide"
+---
+
+17 tools in 7 modules, plus `forecast_catalog`, which lists them from inside your agent. All are free.
+
+| Module | Toolset | Covers | Tools |
+| --- | --- | --- | --- |
+| [Machine-learning forecasting](/reference/forecast/forecasting) | `forecast_forecasting` | Forecast one series or a panel with LightGBM, XGBoost, CatBoost, random forests, ridge, lasso and 40 other regressors on lags, rolling/seasonal/expanding/EWM statistics, calendar and exogenous features; recursive or direct multi-step; conformal prediction intervals; in-sample fitted values; feature importances. | 3 |
+| [Backtesting](/reference/forecast/backtest) | `forecast_backtest` | Rolling-origin cross-validation of machine-learning forecasters: several windows, refit schedule, expanding or fixed-size training, interval coverage, accuracy metrics by model, series and window; LightGBM boosting-round search with early stopping. | 2 |
+| [Panel preparation](/reference/forecast/data) | `forecast_data` | Validate a long table of series (duplicates, missing periods, missing values), insert missing periods on each series' calendar and fill them, and generate synthetic panels to try the forecasting tools. | 2 |
+| [Forecast evaluation](/reference/forecast/evaluation) | `forecast_evaluation` | Score forecasts against actuals: MAE, RMSE, MAPE, sMAPE, WAPE, MASE, RMSSE, bias, quantile and multi-quantile losses, CRPS, interval coverage, Winkler score and calibration, per series, window or aggregated (weighted); Pareto-optimal models; errors by step ahead; residual rectification. | 2 |
+| [Feature engineering](/reference/forecast/features) | `forecast_features` | The feature matrix the models train on (lags, rolling/seasonal/expanding/EWM statistics, calendar, static and dynamic exogenous columns, per-step targets), lags and rolling statistics of exogenous series, Fourier seasonality, trend and calendar terms with their future values, and the future rows a forecast needs. | 4 |
+| [Model update and transfer](/reference/forecast/transfer) | `forecast_transfer` | Reuse a trained forecaster: append new observations without retraining and forecast from the new end; forecast series the models never saw (a new ticker, store or market) with intervals recalibrated, rescaled or density-ratio reweighted for them; covariate-shift weights between two feature sets. | 3 |
+| [Automatic model search](/reference/forecast/tuning) | `forecast_tuning` | Search each model's hyperparameters jointly with lags, rolling/EWM statistics, calendar features and target transforms by backtest, with a bounded number of trials; retrain the best and forecast. | 1 |

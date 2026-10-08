@@ -1,0 +1,14 @@
+---
+title: "Black-Litterman"
+description: "Black-Litterman allocation: a market-implied (or equal, estimated, given) prior of returns blended with absolute and relative views, view confidences (Idzorek), view uncertainty and tau into posterior returns and covariance; implied, max-Sharpe, min-volatility or max-utility weights; the market-implied risk aversion and prior returns from market caps."
+mode: "wide"
+---
+
+Toolset `pfopt_black_litterman`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pfopt_black_litterman` | Black-Litterman: combines a prior of annual returns with absolute and relative views into posterior expected returns and covariance, the views weighted by their uncertainty (proportional to variance, from percentage confidences by Idzorek's method, or given). |  |
+| `pfopt_market_implied` | The market-implied risk aversion δ = (market return - risk-free) / market variance from a benchmark index's prices, and with market caps the equilibrium prior returns Π = δ Σ w_mkt + risk-free that make the market portfolio optimal. |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Optimizer](/guides/fincept-portfolio-optimizer). Full schemas: `fincept_describe_tool`.

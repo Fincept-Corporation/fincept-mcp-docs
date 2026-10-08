@@ -1,0 +1,14 @@
+---
+title: "Backtesting"
+description: "Rolling-origin cross-validation of machine-learning forecasters: several windows, refit schedule, expanding or fixed-size training, interval coverage, accuracy metrics by model, series and window; LightGBM boosting-round search with early stopping."
+mode: "wide"
+---
+
+Toolset `forecast_backtest`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `forecast_cross_validation` | Rolling-origin backtest: for each of n_windows origins (step_size apart) trains the models on the history before it (all of it, or the last input_size points; retrained every refit windows) and forecasts the next h periods, then scores them against the actuals. |  |
+| `forecast_lightgbm_cv` | Trains one LightGBM booster per backtest window simultaneously, eval_every rounds at a time, scoring the whole h-step recursive forecast of every window (MAPE or RMSE, weighted across windows) and stopping early when it no longer improves. |  |
+
+Inputs, limits and outputs are described in [Fincept Forecast](/guides/fincept-forecast). Full schemas: `fincept_describe_tool`.

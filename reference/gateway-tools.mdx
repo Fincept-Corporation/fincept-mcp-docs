@@ -58,4 +58,40 @@ Reads a stored large result: any field by path, any list by page. See [large res
 
 ## stats_catalog
 
-Lists every Fincept Stats module and tool with a one-line description. Takes no arguments.
+Lists every Fincept Stats module and tool with a one-line description.
+
+<ParamField body="module" type="string">
+  List one module only, by module or toolset name, for example `power` or `stats_power`.
+</ParamField>
+
+## forecast_catalog
+
+Lists every Fincept Forecast module and tool with a one-line description.
+
+<ParamField body="module" type="string">
+  List one module only, by module or toolset name, for example `backtest` or `forecast_backtest`.
+</ParamField>
+
+## alloc_catalog
+
+Lists every Fincept Allocation module and tool with a one-line description.
+
+<ParamField body="module" type="string">
+  List one module only, by module or toolset name, for example `parity` or `alloc_parity`.
+</ParamField>
+
+## pfopt_catalog
+
+Lists every Fincept Portfolio Optimizer module and tool with a one-line description.
+
+<ParamField body="module" type="string">
+  List one module only, by module or toolset name, for example `downside` or `pfopt_downside`.
+</ParamField>
+
+## quant_catalog
+
+Lists every Fincept Quant module and tool with a one-line description.
+
+<ParamField body="module" type="string">
+  List one module only, by module or toolset name, for example `technicals` or `quant_technicals`.
+</ParamField>

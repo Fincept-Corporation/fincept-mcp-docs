@@ -1,0 +1,13 @@
+---
+title: "Portfolio analytics"
+description: "Performance of given weights: expected return, volatility, Sharpe, semideviation and Sortino, each asset's risk contribution, and the value of every optimisation objective (variance, return, Sharpe, L2, quadratic utility, transaction cost, ex-ante and ex-post tracking error); cleaned weights."
+mode: "wide"
+---
+
+Toolset `pfopt_analytics`: 1 tool.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pfopt_portfolio_performance` | Evaluates given weights: expected annual return, volatility and Sharpe ratio, semideviation and Sortino ratio (with a history), each asset's share of portfolio risk, and the value of every optimisation objective at these weights: variance, return, Sharpe, L2, quadratic utility, transaction cost against previous_weights, ex-ante tracking error against benchmark_weights and ex-post tracking error against the benchmark series. |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Optimizer](/guides/fincept-portfolio-optimizer). Full schemas: `fincept_describe_tool`.

@@ -1,0 +1,19 @@
+---
+title: "Fincept Portfolio Optimizer"
+description: "Every Fincept Portfolio Optimizer module and its toolset."
+icon: "scale"
+mode: "wide"
+---
+
+17 tools in 8 modules, plus `pfopt_catalog`, which lists them from inside your agent. All are free.
+
+| Module | Toolset | Covers | Tools |
+| --- | --- | --- | --- |
+| [Discrete allocation](/reference/portfolio-optimizer/allocation) | `pfopt_allocation` | Whole-share orders from target weights: latest prices from a price history or given, a portfolio value, greedy rounding or integer programming, long/short with a short ratio and optional reinvestment of short proceeds; the leftover cash and the error against the targets. | 1 |
+| [Portfolio analytics](/reference/portfolio-optimizer/analytics) | `pfopt_analytics` | Performance of given weights: expected return, volatility, Sharpe, semideviation and Sortino, each asset's risk contribution, and the value of every optimisation objective (variance, return, Sharpe, L2, quadratic utility, transaction cost, ex-ante and ex-post tracking error); cleaned weights. | 1 |
+| [Black-Litterman](/reference/portfolio-optimizer/black-litterman) | `pfopt_black_litterman` | Black-Litterman allocation: a market-implied (or equal, estimated, given) prior of returns blended with absolute and relative views, view confidences (Idzorek), view uncertainty and tau into posterior returns and covariance; implied, max-Sharpe, min-volatility or max-utility weights; the market-implied risk aversion and prior returns from market caps. | 2 |
+| [Critical line algorithm](/reference/portfolio-optimizer/cla) | `pfopt_cla` | Markowitz's critical line algorithm: the exact mean-variance frontier under per-asset bounds through its turning points, the max-Sharpe and min-volatility portfolios and the frontier curve. | 1 |
+| [Downside-risk optimisation](/reference/portfolio-optimizer/downside) | `pfopt_downside` | Portfolios that control losses instead of variance, from historical return scenarios: mean-semivariance (downside deviation below a threshold, Sortino ratio), mean-CVaR (expected shortfall at a confidence level) and mean-CDaR (conditional drawdown at risk, with the drawdown curve); minimum risk, target risk, target return and downside quadratic utility. | 3 |
+| [Return and risk estimates](/reference/portfolio-optimizer/estimates) | `pfopt_estimates` | Annual expected returns (mean historical, exponentially weighted, CAPM) and covariance matrices (sample, semicovariance, exponential, minimum covariance determinant, manual, Ledoit-Wolf and oracle shrinkage), correlation, conversions between prices and returns, and positive-semidefinite repair. | 4 |
+| [Hierarchical risk parity](/reference/portfolio-optimizer/hrp) | `pfopt_hrp` | Hierarchical risk parity: cluster the assets by correlation distance (single, complete, average, weighted, centroid, median or Ward linkage), order them along the tree and split risk by recursive bisection; returns the weights, performance, linkage, dendrogram and clustered correlation heatmap. | 1 |
+| [Mean-variance optimisation](/reference/portfolio-optimizer/mean-variance) | `pfopt_mean_variance` | Efficient-frontier portfolios: max Sharpe (tangency), min volatility, max quadratic utility, max return for a target volatility and min volatility for a target return, long-only or long/short, market neutral, with per-asset, sector and linear constraints and L2, transaction-cost and tracking-error terms; the efficient frontier curve with random portfolios; custom convex and nonconvex objectives (log-barrier risk budgeting, index tracking, risk parity). | 4 |

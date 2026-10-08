@@ -1,0 +1,15 @@
+---
+title: "Machine-learning forecasting"
+description: "Forecast one series or a panel with LightGBM, XGBoost, CatBoost, random forests, ridge, lasso and 40 other regressors on lags, rolling/seasonal/expanding/EWM statistics, calendar and exogenous features; recursive or direct multi-step; conformal prediction intervals; in-sample fitted values; feature importances."
+mode: "wide"
+---
+
+Toolset `forecast_forecasting`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `forecast_ml_forecast` | Trains machine-learning regressors (LightGBM, XGBoost, CatBoost, random forest, ridge and 40 more) on lag, rolling, calendar and exogenous features of one series (y) or a panel (data: id, time, value) and forecasts h periods ahead, recursively or with one model per step, with conformal prediction intervals. |  |
+| `forecast_fitted_values` | In-sample predictions of every model over the training history, step periods ahead (1 = one-step), with normal bands from each series' residual spread at the given levels. |  |
+| `forecast_feature_importance` | Trains the models on the features and returns what drives them: split/gain importances for tree and boosting models, coefficients for linear models (on standardized features when scale_features), as a table per feature and model and a bar chart of each model's share of total absolute importance. |  |
+
+Inputs, limits and outputs are described in [Fincept Forecast](/guides/fincept-forecast). Full schemas: `fincept_describe_tool`.

@@ -1,0 +1,16 @@
+---
+title: "Mean-variance optimisation"
+description: "Efficient-frontier portfolios: max Sharpe (tangency), min volatility, max quadratic utility, max return for a target volatility and min volatility for a target return, long-only or long/short, market neutral, with per-asset, sector and linear constraints and L2, transaction-cost and tracking-error terms; the efficient frontier curve with random portfolios; custom convex and nonconvex objectives (log-barrier risk budgeting, index tracking, risk parity)."
+mode: "wide"
+---
+
+Toolset `pfopt_mean_variance`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pfopt_mean_variance` | Mean-variance optimal weights from a price history (or given expected returns and covariance): max Sharpe, min volatility, max quadratic utility, max return for a target volatility, or min volatility for a target return, with bounds, shorting, market neutrality, sector/group and linear constraints and L2, transaction-cost and tracking-error penalties. |  |
+| `pfopt_convex_objective` | Minimises one convex objective from a fixed set under the same bounds, sector and linear constraints and penalty terms as pfopt_mean_variance: a log-barrier risk-budgeting portfolio, or the portfolio closest to a benchmark by ex-ante (weights and covariance) or ex-post (historical returns) tracking error. |  |
+| `pfopt_nonconvex_objective` | Optimises an objective from a fixed set with a local gradient method, which admits nonconvex objectives and constraints (equal risk contribution, an exact volatility target, market neutrality with a Sharpe or return objective) but may stop at a local optimum. |  |
+| `pfopt_efficient_frontier` | The mean-variance efficient frontier under the given bounds and constraints: annual volatility against expected return (and Sharpe) at each point with the weights of every frontier portfolio, the tangency (max Sharpe) and minimum-volatility portfolios, each asset's own risk and return, and random portfolios. |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Optimizer](/guides/fincept-portfolio-optimizer). Full schemas: `fincept_describe_tool`.

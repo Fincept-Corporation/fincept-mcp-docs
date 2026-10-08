@@ -1,0 +1,17 @@
+---
+title: "Returns, volatility and performance"
+description: "Returns (simple, log, absolute) over observations or tenors, prices from returns, rebasing, excess returns over a cash rate or index, realized, swap-convention and exponentially weighted volatility, rolling correlation, correlation-swap correlation, beta and covariance, rolling maximum drawdown and the rolling Sharpe ratio."
+mode: "wide"
+---
+
+Toolset `quant_econometrics`: 5 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `quant_returns` | Returns of a dated price series over a number of observations or a tenor (simple, logarithmic or absolute), the price path implied by a return series, the series rebased to a starting level or net of its first value, annualized by its date spacing, or its excess-return index over a cash rate or cash index. |  |
+| `quant_drawdown` | Rolling maximum peak-to-trough drawdown of a price or level series as a ratio (-0.25 = a 25% fall from the window's peak), over a window of observations or a tenor; with no window, the running maximum drawdown since the start. |  |
+| `quant_sharpe_ratio` | Rolling Sharpe ratio of a price series: its annualized excess return (over a cash rate or cash index) divided by its annualized volatility, over a window of observations or a tenor (default: since the start). |  |
+| `quant_volatility` | Volatility of a dated price (or return) series in annualized percent: rolling realized volatility over a window of observations or a tenor, the volatility-swap convention (log returns, zero mean, window observations), or exponentially weighted volatility of returns or of daily changes for spreads. |  |
+| `quant_correlation` | Rolling co-movement of two dated series over a window of observations or a tenor: correlation of returns, the correlation-swap convention, beta of x against benchmark y, or covariance. |  |
+
+Inputs, limits and outputs are described in [Fincept Quant](/guides/fincept-quant). Full schemas: `fincept_describe_tool`.

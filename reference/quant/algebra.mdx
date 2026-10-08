@@ -1,0 +1,16 @@
+---
+title: "Series algebra and transforms"
+description: "Element-wise maths on dated series (exp, log, powers, floors, caps), value and date filters, lags, differences, spike and outlier smoothing, run counts, arithmetic between two series with date alignment, weighted sums and logical combinations of many series, and conditional selection."
+mode: "wide"
+---
+
+Toolset `quant_algebra`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `quant_transform` | One dated series in, one out: element-wise maths (exp, log, sqrt, abs, power, floor, ceil), value and date filters, lags and differences by observations or tenor, calendar forward-fill, spike and outlier smoothing, consecutive-sign run counts, compounding of returns, or the series' first/last value. |  |
+| `quant_combine` | Arithmetic between two dated series, or a series and a constant: add, subtract, multiply, divide, floor division, sign comparison, or just the alignment of both onto one date set. |  |
+| `quant_cross_series` | Combines the columns of a dated table into one series: a weighted sum (a fixed-weight basket value), the logical and/or of 0/1 signal series, or the cross-sectional min, max, mean or sum on each date followed by a rolling window (default: expanding over the whole history for min/max/mean/sum). |  |
+| `quant_conditional` | Conditional selection on a 0/1 flag series: on each flag date the value of x where the flag is 1, else the value of y; x and y are dated series or constants. |  |
+
+Inputs, limits and outputs are described in [Fincept Quant](/guides/fincept-quant). Full schemas: `fincept_describe_tool`.

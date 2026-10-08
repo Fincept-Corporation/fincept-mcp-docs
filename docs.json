@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "linden",
   "name": "Fincept MCP",
-  "description": "Connect Claude Code, Codex, Cursor and any MCP client to Fincept Terminal's markets, research, analytics and Fincept Stats.",
+  "description": "Connect Claude Code, Codex, Cursor and any MCP client to Fincept Terminal's markets, research and analytics, and to Fincept Stats, Forecast, Allocation, Portfolio Optimizer and Quant.",
   "colors": {
     "primary": "#0E7C4A",
     "light": "#04B96C",
@@ -90,6 +90,10 @@
               "guides/results",
               "guides/data-references",
               "guides/fincept-stats",
+              "guides/fincept-forecast",
+              "guides/fincept-allocation",
+              "guides/fincept-portfolio-optimizer",
+              "guides/fincept-quant",
               "guides/prompts"
             ]
           },
@@ -170,6 +174,83 @@
                   "reference/stats/nonparametric",
                   "reference/stats/survival",
                   "reference/stats/imputation"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Forecast",
+            "pages": [
+              "reference/forecast/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/forecast/forecasting",
+                  "reference/forecast/backtest",
+                  "reference/forecast/data",
+                  "reference/forecast/evaluation",
+                  "reference/forecast/features",
+                  "reference/forecast/transfer",
+                  "reference/forecast/tuning"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Allocation",
+            "pages": [
+              "reference/allocation/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/allocation/estimation",
+                  "reference/allocation/hierarchical",
+                  "reference/allocation/optimize",
+                  "reference/allocation/parity",
+                  "reference/allocation/risk"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Portfolio Optimizer",
+            "pages": [
+              "reference/portfolio-optimizer/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/portfolio-optimizer/allocation",
+                  "reference/portfolio-optimizer/analytics",
+                  "reference/portfolio-optimizer/black-litterman",
+                  "reference/portfolio-optimizer/cla",
+                  "reference/portfolio-optimizer/downside",
+                  "reference/portfolio-optimizer/estimates",
+                  "reference/portfolio-optimizer/hrp",
+                  "reference/portfolio-optimizer/mean-variance"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Quant",
+            "pages": [
+              "reference/quant/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/quant/backtest",
+                  "reference/quant/dates",
+                  "reference/quant/econometrics",
+                  "reference/quant/epidemic",
+                  "reference/quant/events",
+                  "reference/quant/calendar",
+                  "reference/quant/stats",
+                  "reference/quant/technicals",
+                  "reference/quant/algebra"
                 ]
               }
             ]

@@ -1,0 +1,16 @@
+---
+title: "Feature engineering"
+description: "The feature matrix the models train on (lags, rolling/seasonal/expanding/EWM statistics, calendar, static and dynamic exogenous columns, per-step targets), lags and rolling statistics of exogenous series, Fourier seasonality, trend and calendar terms with their future values, and the future rows a forecast needs."
+mode: "wide"
+---
+
+Toolset `forecast_features`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `forecast_feature_matrix` | Builds the exact training matrix the forecasting tools use: target (or one target per step ahead under the direct strategy), lags, rolling/seasonal/expanding/EWM statistics, calendar features and exogenous columns, after the target transforms, with incomplete leading rows dropped. |  |
+| `forecast_future_frame` | The (series, period) rows of the next h periods after each series' end: the rows future_exog must supply for dynamic exogenous columns. |  |
+| `forecast_exog_lags` | Lags and per-series rolling/seasonal/expanding/EWM statistics of exogenous series (prices, rates, indicators), so a forecast can use their past values without needing their future ones. |  |
+| `forecast_calendar_features` | Deterministic regressors for history and horizon: Fourier sine/cosine seasonality terms, a trend counter, calendar attributes of the dates, and known-in-advance columns shifted into history. |  |
+
+Inputs, limits and outputs are described in [Fincept Forecast](/guides/fincept-forecast). Full schemas: `fincept_describe_tool`.

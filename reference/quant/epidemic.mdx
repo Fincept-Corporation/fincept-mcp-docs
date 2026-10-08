@@ -1,0 +1,14 @@
+---
+title: "Epidemic models"
+description: "SIR and SEIR compartmental models fitted to observed daily infected and removed counts (transmission and recovery rates, reproduction number, projected path), and simulations of SIR, SEIR, SEIRCM with quarantine, cases and deaths, and its age-stratified form."
+mode: "wide"
+---
+
+Toolset `quant_epidemic`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `quant_epidemic_fit` | Fits an SIR or SEIR epidemic model to observed daily counts (one row per calendar day) by least squares: susceptible = population - infected - removed (- exposed). |  |
+| `quant_epidemic_simulate` | Simulates a compartmental epidemic model from chosen rates and starting counts by integrating its equations daily: SIR, SEIR, SEIRCM (recorded cases, deaths and a quarantine effect) or SEIRCM by age group. |  |
+
+Inputs, limits and outputs are described in [Fincept Quant](/guides/fincept-quant). Full schemas: `fincept_describe_tool`.

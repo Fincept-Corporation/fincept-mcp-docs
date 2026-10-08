@@ -15,7 +15,7 @@ Most tools are free. Tools that cost credits in the terminal cost the same here,
 - The price is in each tool's description, so the agent sees it before calling.
 - Charges happen on a delivered result. Failed, empty and refused calls cost nothing.
 - Daily spend caps and per-action hourly caps apply as in the terminal (`402 spend_cap_reached`).
-- Fincept Stats tools are free.
+- Engine tools are free: Fincept Stats, Forecast, Allocation, Portfolio Optimizer and Quant.
 
 The [credits reference](/reference/toolsets/credits) lists every tool that can spend credits. Check your balance with `account_get_credits` and your spending with `account_get_usage`.
 
@@ -36,6 +36,10 @@ Every MCP message counts as one request, including `tools/list` and discovery ca
 | Analytics, screeners, portfolio reports, AI answers | 60 to 180 seconds |
 | `backtest_run` / `backtest_optimize` | 5 / 10 minutes |
 | Fincept Stats | 90 seconds, up to 300 seconds for heavy models |
+| Fincept Forecast | 90 seconds, up to 300 seconds for heavy tools |
+| Fincept Allocation | 90 seconds, up to 300 seconds for heavy tools |
+| Fincept Portfolio Optimizer | 90 seconds, up to 180 seconds for heavy tools |
+| Fincept Quant | 90 seconds, up to 300 seconds for heavy tools |
 
 A call past its limit returns an error envelope with code `timeout`.
 

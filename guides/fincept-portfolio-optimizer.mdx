@@ -1,0 +1,51 @@
+---
+title: "Fincept Portfolio Optimizer"
+description: "Portfolio construction as MCP tools: mean-variance, downside risk, critical line, hierarchical risk parity, Black-Litterman and share allocation."
+icon: "scale"
+---
+
+Fincept Portfolio Optimizer is the portfolio construction engine behind every `pfopt_*` tool: expected return and covariance estimates (historical, EMA, CAPM; sample, semi, exponential, robust, Ledoit-Wolf and oracle shrinkage), mean-variance optimisation (max Sharpe, min volatility, target risk or return, quadratic utility) with bounds, shorting, market neutrality, sector and linear constraints and L2, transaction-cost and tracking-error terms, the efficient frontier, semivariance, CVaR and CDaR optimisation, the critical line algorithm, hierarchical risk parity, Black-Litterman with views and whole-share allocation. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Portfolio Optimizer tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `pfopt_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Portfolio Optimizer reference](/reference/portfolio-optimizer/overview) lists every module and tool.
+
+`pfopt_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| Price history | `prices`: one column per asset named by its ticker, rows in time order, optionally a date column; periodic returns with `returns_data: true` | `{"date": ["2024-01-02", "2024-01-03"], "AAPL": [185.6, 184.3], "MSFT": [370.9, 370.6]}` |
+| Expected returns | `expected_returns`: annual expected return per asset, instead of an estimate | `{"AAPL": 0.12, "MSFT": 0.10}` |
+| Covariance | `cov_matrix`: annual covariance, one column per asset and the rows in the same order | The matrix `pfopt_risk_model` returns |
+| Weights | Target or current weights by asset | `{"AAPL": 0.6, "MSFT": 0.4}` |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+Estimates are annualised with `frequency` periods per year: 252 (the default) for daily data, 52 weekly, 12 monthly.
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds by default; 120 seconds for `pfopt_mean_variance`, `pfopt_black_litterman`, `pfopt_cla`, `pfopt_semivariance` and `pfopt_cvar`; 150 seconds for `pfopt_cdar`; 180 seconds for `pfopt_nonconvex_objective` and `pfopt_efficient_frontier` |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Optimisers return the weights as a table and bar chart with the expected annual return and the risk they optimise (volatility and Sharpe ratio, semideviation and Sortino ratio, CVaR or CDaR). `pfopt_efficient_frontier` and `pfopt_cla` return the frontier as a series with a line chart; `pfopt_hrp` adds the linkage, the dendrogram and the clustered correlation heatmap. `pfopt_expected_returns` and `pfopt_risk_model` return estimates you can pass straight back as `expected_returns` and `cov_matrix`. `pfopt_discrete_allocation` returns the shares per asset, the leftover cash and the error against the targets.
+
+## Example
+
+```text Prompt
+Using Fincept, find the max-Sharpe portfolio of AAPL, MSFT, NVDA, JPM and XOM from three years of daily prices with Ledoit-Wolf shrinkage, at most 35% in any stock, and turn it into whole shares for $50,000.
+```
+
+The agent searches for `max Sharpe portfolio`, finds `pfopt_mean_variance` and `pfopt_discrete_allocation`, and passes each stock's closes as a `$fincept` reference to `market_get_candles`, one `prices` column per stock.

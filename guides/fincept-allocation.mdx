@@ -1,0 +1,49 @@
+---
+title: "Fincept Allocation"
+description: "Portfolio optimisation and risk as MCP tools: 26 risk measures, risk parity, hierarchical portfolios, Black-Litterman and risk analytics."
+icon: "chart-pie"
+---
+
+Fincept Allocation is the portfolio engine behind every `alloc_*` tool: mean-risk optimisation over 26 risk measures (variance, MAD, CVaR, EVaR, drawdown measures and more), risk parity and risk budgeting, worst-case robust and OWA portfolios, efficient frontiers, hierarchical portfolios (HRP, HERC, NCO), Black-Litterman, factor models and entropy pooling, and the risk analytics of any portfolio: risk tables, risk contributions, drawdowns, attribution and share allocation. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Allocation tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `alloc_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Allocation reference](/reference/allocation/overview) lists every module and tool.
+
+`alloc_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| Returns or prices | `data`: one column per asset, one row per period, optionally a date column; returns (0.01 = 1%) by default, prices with `data_kind: "prices"` | `{"date": ["2024-01-02", "2024-01-03"], "AAPL": [0.012, -0.004], "MSFT": [0.008, 0.001]}` |
+| Weights | Portfolio weights by asset; assets left out weigh 0 | `{"AAPL": 0.4, "MSFT": 0.6}` |
+| Factors | Factor returns, one column per factor, same layout as `data` | `{"MKT": [0.004, -0.002], "SMB": [0.001, 0.003]}` |
+| Asset classes | One row per asset: the asset name, then one column per classification | `{"Assets": ["AAPL", "XOM"], "Sector": ["Tech", "Energy"]}` |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds by default; 120 seconds for `alloc_risk_table`; 180 seconds for `alloc_uncertainty_sets`, `alloc_risk_parity`, `alloc_relaxed_risk_parity` and `alloc_factor_risk_budget`; 300 seconds for `alloc_optimize`, `alloc_efficient_frontier`, `alloc_owa`, `alloc_worst_case`, `alloc_mvsk` and `alloc_hierarchical` |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Optimisation tools return the weights and the portfolio's expected return and risk; risk parity tools add each asset's or factor's risk contribution against its budget. `alloc_efficient_frontier` returns every point as a series with a line chart and the composition as an area chart. Risk tools return tables, with bar charts for contributions and attribution and line and area charts for drawdowns and value paths; estimation tools return covariance and correlation matrices with heatmaps.
+
+## Example
+
+```text Prompt
+Using Fincept, build a minimum-CVaR portfolio of AAPL, MSFT, JPM, XOM and GLD from two years of daily prices, with no position above 30%, and show each asset's risk contribution.
+```
+
+The agent searches for `CVaR portfolio`, finds `alloc_optimize` and `alloc_risk_contribution`, and passes each asset's closes as a `$fincept` reference to `market_get_candles`, one `data` column per asset with `data_kind: "prices"`.

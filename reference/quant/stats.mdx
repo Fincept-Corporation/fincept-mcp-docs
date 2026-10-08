@@ -1,0 +1,15 @@
+---
+title: "Rolling statistics and regression"
+description: "Rolling or expanding statistics of a dated series by observation count or tenor: min, max, range, arithmetic and quadratic mean, median, mode, sum, product, standard deviation, variance, z-scores, winsorizing, percentiles and percentile ranks, exponentially weighted deviation; static and rolling linear regression; random-walk sample series."
+mode: "wide"
+---
+
+Toolset `quant_stats`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `quant_rolling_stat` | Rolling (or, with no window, expanding) statistic of one dated series over a window of observations or a tenor such as '1m' or '1y': min, max, range, mean, root mean square, median, mode, sum, product, standard deviation, variance, z-score, winsorized values, percentile, percentile rank, or exponentially weighted standard deviation. |  |
+| `quant_sample_series` | A random-walk sample series starting at 100 with standard normal steps, dated daily or by minute from or up to now; every call draws a new path. |  |
+| `quant_linear_regression` | Ordinary least squares of one dated column on one to twenty others, on the dates where all are present (rows with missing or infinite values are dropped). |  |
+
+Inputs, limits and outputs are described in [Fincept Quant](/guides/fincept-quant). Full schemas: `fincept_describe_tool`.

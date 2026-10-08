@@ -1,0 +1,21 @@
+---
+title: "Portfolio risk analytics"
+description: "Risk of any portfolio or asset: 40 risk measures with return/risk ratios, the full risk report table, risk contributions per asset, class and factor, drawdown paths, the return distribution with its tail and range measures, portfolio comparisons, Brinson attribution and conversion of weights into shares."
+mode: "wide"
+---
+
+Toolset `alloc_risk`: 9 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `alloc_risk_measures` | Any of 41 risk measures of a portfolio's (or one series') returns per period: dispersion (std, MAD, Gini, semi deviation, kurtosis, even moments), downside (lower partial moments), tail (VaR, CVaR, EVaR, RLVaR, tail Gini, worst realization, entropic, L-moments), ranges, and drawdowns of uncompounded or compounded cumulative returns. |  |
+| `alloc_brinson_attribution` | Brinson-Fachler attribution of a portfolio's excess return over a benchmark between two dates, per class: allocation effect (over- or under-weighting classes), selection effect (picking within classes), interaction and total excess return, with totals. |  |
+| `alloc_discrete_allocation` | Converts target weights and a capital amount into whole numbers of shares at the latest prices (negative for shorts), spending leftover cash on extra shares where it fits. |  |
+| `alloc_risk_contribution` | Euler risk decomposition of a portfolio for one of 37 risk measures: each asset's marginal risk, risk contribution (they sum to the portfolio risk) and share, beside the equal-risk-contribution level risk / n, and optionally the sum per class. |  |
+| `alloc_factor_risk_contribution` | Risk decomposition of a portfolio across factors for one of 37 risk measures: each factor's risk contribution through the portfolio's factor exposures, plus the residual (Others), with shares. |  |
+| `alloc_return_distribution` | Histogram of the portfolio's period returns with the risk measures drawn as return levels (mean, mean minus std/MAD/Gini, -VaR, -CVaR, -tail Gini, -EVaR, -RLVaR, worst realization) and the range measures (VaR, CVaR, tail Gini, EVaR, RLVaR ranges and the full range) with their loss end, gain end and width. |  |
+| `alloc_drawdown` | The portfolio's cumulative value (compounded and uncompounded) and its drawdown path, with the maximum drawdown's peak, trough and recovery, and every drawdown measure: maximum and average drawdown, DaR, CDaR, EDaR, RLDaR and ulcer index, on uncompounded (absolute) and compounded (relative) cumulative returns. |  |
+| `alloc_compare_portfolios` | Cumulative value of several fixed-weight portfolios (rebalanced each period) over the same history, side by side, with each one's total return, annualised return and volatility, return/volatility and maximum drawdown. |  |
+| `alloc_risk_table` | The risk report of a portfolio (or one series): mean return and CAGR; standard deviation, MAD, semi deviation, first and second lower partial moments, VaR, CVaR, EVaR, tail Gini, RLVaR and worst realization, annualised, each with its (return - MAR) / risk ratio; skewness and excess kurtosis; and the ulcer index, average drawdown, DaR, CDaR, EDaR, RLDaR and maximum drawdown of uncompounded cumulative returns. |  |
+
+Inputs, limits and outputs are described in [Fincept Allocation](/guides/fincept-allocation). Full schemas: `fincept_describe_tool`.
