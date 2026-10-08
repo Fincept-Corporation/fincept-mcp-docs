@@ -1,0 +1,14 @@
+---
+title: "Missing-data imputation"
+description: "Multiple imputation of missing values: chained equations (MICE) with an analysis model pooled by Rubin's rules and the fraction of missing information, and Bayesian multivariate-normal imputation of gaps in a panel of series with the posterior mean and covariance."
+mode: "wide"
+---
+
+Toolset `stats_imputation`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_mice` | Multiple imputation by chained equations: every column with gaps is imputed in turn from a regression on the others (predictive mean matching), the analysis model (formula) is fitted to each imputed data set, and the fits are pooled by Rubin's rules. | up to 300 s |
+| `stats_bayes_gauss_imputation` | Bayesian imputation under a multivariate normal model: a Gibbs sampler draws the missing values, the mean vector and the covariance matrix in turn (conjugate priors, on internally standardized columns so the default priors are weak at any scale). | up to 180 s |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

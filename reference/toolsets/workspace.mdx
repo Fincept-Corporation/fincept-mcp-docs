@@ -1,0 +1,48 @@
+---
+title: "Workspace"
+description: "Watchlists, alerts, notes, notebooks, reports, chat sessions, custom indices, news monitors and scan watches."
+icon: "layout-dashboard"
+mode: "wide"
+---
+
+Toolset `workspace`: 35 tools. List them all with `?toolsets=workspace`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `workspace_list_watchlists` | The account's saved watchlists under "watchlists": each with id, name, description, color, is_default, stocks (symbol, name, exchange, notes) and created_at/updated_at in UTC. | Read, core |
+| `workspace_get_watchlist` | One watchlist by id: name, description, color, is_default and its stocks. | Read |
+| `workspace_create_watchlist` | Saves a new watchlist to the account. | Write |
+| `workspace_update_watchlist` | Replaces a watchlist's whole document: fields and stocks left out are removed. | Write |
+| `workspace_delete_watchlist` | Deletes a watchlist from the account and, on their next sync, from the user's terminals. | Delete |
+| `workspace_list_alerts` | The account's server-side price alerts under "alerts": id, watchlist_id, symbol, condition, threshold, cooldown_min, active, last_fired_at/last_fired_price. | Read, core |
+| `workspace_save_alert` | Creates a price alert, or updates the one whose id is given. | Write, credits |
+| `workspace_delete_alert` | Deletes one price alert. | Delete |
+| `workspace_get_alert_charges` | What the daily alert meter billed over the last 30 days: charges (charge_date, credits, alert_count), credits_spent, active_alerts and the current credits_per_day. | Read |
+| `workspace_list_notes` | The account's financial notes under "notes": id, title, content, category, priority, tags, tickers, sentiment, is_favorite, is_archived and created_at/updated_at in UTC. | Read, core |
+| `workspace_get_note` | One note by id with its full content. | Read |
+| `workspace_create_note` | Saves a new note to the account. | Write |
+| `workspace_update_note` | Replaces a note's whole document: fields left out are removed. | Write |
+| `workspace_delete_note` | Deletes a note from the account and, on their next sync, from the user's terminals. | Delete |
+| `workspace_list_notebooks` | The account's AI Quant Lab notebooks under "notebooks": id, name, description, cells (the notebook's cells as the terminal stores them), metadata and timestamps. | Read |
+| `workspace_get_notebook` | One research notebook by id with its cells and metadata. | Read |
+| `workspace_delete_notebook` | Deletes a research notebook from the account and, on their next sync, from the user's terminals. | Delete |
+| `workspace_list_reports` | The account's Report Builder reports under "reports": id, title, content (the report document as JSON, or content_raw when it is not JSON) and timestamps. | Read |
+| `workspace_get_report` | One Report Builder report by id with its content. | Read |
+| `workspace_delete_report` | Deletes a report from the account and, on their next sync, from the user's terminals. | Delete |
+| `workspace_list_chat_sessions` | The account's saved AI chat conversations under "sessions", newest first, always paged (default 200, max 500, next_cursor when more exist). | Read |
+| `workspace_get_chat_session` | One saved AI chat conversation by id with its full message transcript. | Read |
+| `workspace_list_custom_indices` | The account's user-defined market indices under "indices": id, name, method, base_value, portfolio_id and constituents (symbol, weight in percent, price_at_create). | Read |
+| `workspace_get_custom_index` | One user-defined index by id with its constituents and weights. | Read |
+| `workspace_create_custom_index` | Saves a new user-defined index (constituents with percentage weights) to the account. | Write |
+| `workspace_update_custom_index` | Replaces a custom index's whole document: fields and constituents left out are removed. | Write |
+| `workspace_delete_custom_index` | Deletes a user-defined index from the account and, on their next sync, from the user's terminals. | Delete |
+| `workspace_list_news_monitors` | The desktop News tab's keyword monitors under "monitors": id, label, keywords, color, enabled. | Read |
+| `workspace_get_news_monitor` | One desktop news keyword monitor by id. | Read |
+| `workspace_create_news_monitor` | Saves a desktop news keyword monitor, which the user's terminals evaluate while open. | Write |
+| `workspace_update_news_monitor` | Replaces a desktop news keyword monitor's whole document: fields left out are removed. | Write |
+| `workspace_delete_news_monitor` | Deletes a desktop news keyword monitor from the account and, on their next sync, from the user's terminals. | Delete |
+| `workspace_list_scan_watches` | The Algo tab's saved universe scans under "watches": id, name, conditions and logic (the strategy's entry rules), symbols or universe, timeframe, broker and account the scan reads, mode, interval_sec, cooldown_min, alert actions and active. | Read |
+| `workspace_get_scan_watch` | One saved universe scan by id. | Read |
+| `workspace_delete_scan_watch` | Deletes a saved universe scan from the account. | Delete |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

@@ -1,0 +1,21 @@
+---
+title: "Multivariate time series"
+description: "Vector autoregression with lag selection, forecasts, impulse responses, variance decompositions, Granger and instantaneous causality, whiteness, normality and stability checks; structural VAR; VARMAX; vector error correction with Johansen cointegration rank; dynamic factor models (including mixed monthly/quarterly) and pairwise Granger causality tests."
+mode: "wide"
+---
+
+Toolset `stats_tsa_multivariate`: 9 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_var` | Vector autoregression of several stationary series (use growth rates or differences of prices and levels). |  |
+| `stats_var_causality` | Granger causality inside a fitted VAR: whether the past of the causing variable(s) improves the forecast of the caused variable(s), for every ordered pair (and each variable against all others jointly) or for the groups given. |  |
+| `stats_granger_causality` | Bivariate Granger causality tests for every ordered pair of columns at each lag from 1 to maxlag: does the past of the cause improve a regression of the effect on its own past? Returns the SSR F, SSR chi-squared, likelihood-ratio and parameter F tests with p-values per pair and lag, and per pair the smallest F p-value. |  |
+| `stats_dynamic_factor` | Dynamic factor model: a few unobserved common factors, following a VAR, drive many observed series. | up to 300 s |
+| `stats_var_irf` | Impulse responses of a VAR: how every variable responds over time to a shock in each variable, plain or Cholesky-orthogonalized (ordering = variables), optionally cumulative, with asymptotic or Monte Carlo error bands. | up to 180 s |
+| `stats_svar` | Structural VAR identified by short-run restrictions on A (contemporaneous relations among the variables) and / or B (impact of the structural shocks), each a matrix whose numbers are fixed and whose "E" entries are estimated by maximum likelihood. | up to 180 s |
+| `stats_varmax` | Vector ARMA model (VARMAX) estimated by maximum likelihood in state-space form: a VAR with moving-average terms, useful when a pure VAR needs many lags. | up to 300 s |
+| `stats_johansen_test` | Johansen test of how many independent cointegrating relations tie a set of non-stationary series (levels, e.g. log prices): the trace and maximum-eigenvalue statistics for every rank with their critical values, the rank each sequential procedure selects, the eigenvalues and the cointegrating vectors. |  |
+| `stats_vecm` | Vector error-correction model for cointegrated series in levels (e.g. log prices or rates): short-run dynamics plus adjustment toward long-run equilibrium relations. |  |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

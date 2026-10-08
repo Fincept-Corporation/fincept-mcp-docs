@@ -1,0 +1,48 @@
+---
+title: "Codex"
+description: "Add Fincept MCP to the Codex CLI and sign in."
+icon: "code"
+---
+
+<Steps>
+  <Step title="Add the server">
+    ```bash
+    codex mcp add fincept --url https://enterprise.fincept.in/mcp
+    ```
+
+    Codex detects that the server uses OAuth and opens the browser. Approve the connection on fincept.in.
+  </Step>
+  <Step title="Check">
+    ```bash
+    codex mcp list
+    ```
+
+    `fincept` shows as enabled with OAuth.
+  </Step>
+</Steps>
+
+<Note>
+  `mcp add` already signs you in. Running `codex mcp login fincept` right after starts a second sign-in, which is harmless: Codex keeps the newer one.
+</Note>
+
+## Configuration file
+
+`mcp add` writes this to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.fincept]
+url = "https://enterprise.fincept.in/mcp"
+```
+
+To list whole toolsets up front, append them to the URL, for example `https://enterprise.fincept.in/mcp?toolsets=market,data`.
+
+## Sign in again or sign out
+
+```bash
+codex mcp login fincept
+codex mcp logout fincept
+```
+
+<Tip>
+  Windows PowerShell 5.1 does not accept `&&`. Run each command on its own line.
+</Tip>

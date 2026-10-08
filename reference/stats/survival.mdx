@@ -1,0 +1,16 @@
+---
+title: "Survival and duration analysis"
+description: "Time-to-event analysis with censoring: Cox proportional hazards regression with hazard ratios and baseline hazards, Kaplan-Meier survival curves with confidence bands and median survival, log-rank and weighted tests between groups, and cumulative incidence under competing risks."
+mode: "wide"
+---
+
+Toolset `stats_survival`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_cox_ph` | Cox proportional hazards regression for censored durations (time to default, prepayment, delisting, client attrition): how covariates scale the hazard of the event. |  |
+| `stats_kaplan_meier` | Kaplan-Meier estimate of the survival function from censored durations, overall or per group (fund survival, loan survival to default, client retention). |  |
+| `stats_logrank_test` | Tests whether survival differs between groups (default timing by rating, fund survival by strategy): the log-rank test or a weighted variant (Gehan-Breslow, Tarone-Ware, Fleming-Harrington), optionally stratified. |  |
+| `stats_cumulative_incidence` | Cumulative incidence of each cause under competing risks (a mortgage ends in default or prepayment, a fund closes or merges): the probability of having failed from each cause by every time, which, unlike one minus a Kaplan-Meier curve, accounts for the other causes. |  |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

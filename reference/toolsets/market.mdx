@@ -1,0 +1,26 @@
+---
+title: "Markets"
+description: "Quotes, candles, fundamentals, profiles, peers, option chains, futures curves, corporate actions, holidays and the economic calendar."
+icon: "chart-candlestick"
+mode: "wide"
+---
+
+Toolset `market`: 13 tools. List them all with `?toolsets=market`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `market_search_instruments` | Search the instrument universe by ticker, name or ISIN. | Read, core |
+| `market_get_quote` | Latest quote for one symbol: price, change, change percent, day range, volume, currency, exchange time and the feed's delay. | Read, core |
+| `market_get_quotes` | Latest quotes for up to 300 symbols in one call. | Read, core |
+| `market_get_candles` | OHLCV candles for a symbol, oldest first. | Read, core |
+| `market_get_snapshot` | An instrument's row in the symbol index: identity, listing, classification (type, sector, country, currency) and the index's stored metrics stamped with metrics_as_of. | Read |
+| `market_get_fundamentals` | Key fundamentals for an equity: valuation ratios, margins, growth, balance-sheet figures, dividend and share data as the provider reports them. | Read, core |
+| `market_get_profile` | Company profile: name, sector, industry, country, website, employees and business summary. | Read |
+| `market_get_peers` | Comparable companies for a symbol from the classification index, most similar first. | Read |
+| `market_get_options_chain` | The listed option chain for an underlying at its nearest expiry: calls and puts with strike, bid, ask, implied volatility and open interest. | Read |
+| `market_get_corporate_actions` | Splits and dividends for a symbol between two dates (YYYY-MM-DD). | Read |
+| `market_get_holidays` | Trading holidays and half days of one exchange calendar between two dates (default: the current calendar year). | Read |
+| `market_get_futures_curve` | The term structure of a futures root (e.g. CL, ES, GC): each listed contract with expiry and last price, nearest first. | Read |
+| `market_get_economic_calendar` | Upcoming macro releases and central-bank events in UTC, soonest first, deduplicated. | Read, core |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

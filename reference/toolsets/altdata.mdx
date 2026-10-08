@@ -1,0 +1,57 @@
+---
+title: "Alternative data"
+description: "Geopolitical events, sovereign bonds and yield curves, maritime and AIS data, shipping flows, ports and trade statistics."
+icon: "ship"
+mode: "wide"
+---
+
+Toolset `altdata`: 44 tools. List them all with `?toolsets=altdata`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `altdata_get_geopolitical_events` | Geopolitical news events extracted from crawled articles, newest first: url, source, event_category, title, city, country, latitude, longitude, extracted_date, confidence, event_summary, with pagination. | Read, core, credits |
+| `altdata_list_geopolitics_filters` | The values the geopolitics feed can be filtered by, with event counts: set exactly one of get_unique_countries, get_unique_cities, get_unique_categories or get_unique_sources. | Read |
+| `altdata_get_economic_calendar` | Past and scheduled economic releases from the platform's calendar corpus, paged. | Read |
+| `altdata_get_economic_calendar_filters` | The filter values of one calendar feed with row counts (global: sources, regions, impacts. | Read |
+| `altdata_get_sovereign_bonds` | Every covered sovereign: 10Y and other yields (percent), spreads vs US/CN/JP (bp), policy rate, S&P/Moody's/Fitch/DBRS ratings, CDS (bp), curve slopes, real rate, plus a summary, yield forecasts and data freshness. | Read |
+| `altdata_get_sovereign_bond` | One country's sovereign row (yields in percent, spreads and CDS in bp, policy rate, ratings, curve slopes), its yield forecasts and its rank among all covered countries on 10Y yield, CDS and policy rate. | Read, core |
+| `altdata_get_yield_curve` | One country's government bond curve: each maturity's yield (percent) with 1, 6 and 12 month changes (bp), the whole curve as it stood 1, 6 and 12 months ago, and past year-end curves. | Read |
+| `altdata_get_bond_yield_history` | Daily government bond yields (percent) for up to four maturities of one country, listed daily, weekly or monthly, with each maturity's changes, high and low, and the spread when two are asked for. | Read |
+| `altdata_get_mcx_futures` | Daily prices of one MCX (India) commodity future in INR at the contract's quote unit (GOLD per 10 g, SILVER per kg, CRUDEOIL per barrel): front-month, most-active or one expiry, with OHLC, volume, open interest, changes, range, rolls and every contract's latest close. | Read |
+| `altdata_search_vessels` | Find ships by name, IMO (7 digits) or MMSI (9 digits): ship_id, mmsi, imo, name, tracked (whether AIS positions exist) and, for tracked hulls, type, segment, flag, build year, GT and DWT. | Read |
+| `altdata_get_vessel` | One vessel's identity card by IMO (7 digits), MMSI (9 digits) or register ship id, saying which key matched. | Read |
+| `altdata_get_vessel_position` | A vessel's latest AIS row as stored (last_pos_latitude, last_pos_longitude, last_pos_speed, last_pos_angle, last_pos_updated_at, fetched_at. | Read, credits |
+| `altdata_get_vessel_history` | Every stored AIS fix of one vessel, newest first, with total_records. | Read, credits |
+| `altdata_get_vessel_positions` | Latest AIS fix for up to 50 vessels in one call, with the IMOs not found. | Read, credits |
+| `altdata_search_vessels_in_area` | Every vessel whose latest fix (or, with days_ago, its fix nearest that many days ago, within 12 h) lies in a latitude/longitude box. | Read, credits |
+| `altdata_get_maritime_data_status` | Freshness of the maritime analytics tables: fleet size, ships active in 7 days, voyage and position counts (estimates), ports located, days processed through and the last position time. | Read |
+| `altdata_get_maritime_meta` | The values the maritime analytics filter on: segments, regions, top flags (vessels, DWT), the 400 busiest ports (port_key, country, region), countries, chokepoints and the data span. | Read |
+| `altdata_get_maritime_summary` | Fleet KPIs now (active, moving, median speed in knots, laden share, idle and unfixed ships and DWT, AIS-dark ships), the last 16 weeks of the same, and chokepoint transits in the last 7 days against a 90-day baseline. | Read |
+| `altdata_get_shipping_flows` | Voyages under way in the window aggregated origin to destination at region, country or port level (or flag to destination with by=flag): voyages, vessels, DWT, arrivals, under way, median days, laden share and segment mix, largest first. | Read |
+| `altdata_get_lane_vessels` | Ships under way now between two endpoints (seen in the last 5 days), largest DWT first, with position, speed, laden flag, origin, destination and ETA. | Read |
+| `altdata_get_lane_transit_times` | Weekly transit-time index for one lane over the window plus the year before: voyages, median and p90 days, median ETA slip in hours, DWT. | Read |
+| `altdata_get_ship_density` | Vessel-days per grid cell over the window (or one day): cell lower-left corner in 0.5 degree units, vessel_days, peak, dwt_days. | Read |
+| `altdata_get_chokepoint_transits` | Daily transits of each maritime chokepoint (Suez, Hormuz, Malacca ...) over the window with DWT and bulk/tanker/container/gas counts, plus each chokepoint's per-day baseline over the prior 90 days. | Read |
+| `altdata_get_vessel_positions_latest` | Latest fix of every ship active in 7 days matching the filter, largest DWT first: position, speed, draught, laden, origin, destination, ETA. | Read |
+| `altdata_get_country_port_calls` | Per country over the window: arrivals, departures, distinct vessels, DWT in and out, laden counts. | Read |
+| `altdata_get_country_inbound` | Ships under way whose declared ETA falls in the next horizon days, bucketed by ETA day and destination country (by segment when iso is given), with vessels and DWT. | Read |
+| `altdata_get_country_sea_partners` | Which countries one country trades with by sea over the window, in voyages and DWT. | Read |
+| `altdata_get_port_calls` | Busiest ports by arrivals over the window, with country, region, calls in the previous window of equal length and the top segments. | Read |
+| `altdata_get_port_congestion` | Ships stationary near their declared destination port but not at berth (last 3 days), per port with how long they have waited and how many are laden. | Read |
+| `altdata_get_port_matrix` | Voyages between the top n ports over the window, one cell per origin-destination pair. | Read |
+| `altdata_get_fleet_breakdown` | Ships seen in 30 days grouped by segment (default), flag, build year, size band or segment and flag: vessels, DWT, GT, average age, ships 20+ years old, moving and laden counts. | Read |
+| `altdata_get_shipping_signals` | Weekly series per segment: active, moving, median speed, laden, idle vessels and DWT, unfixed vessels and DWT, AIS-dark ships. | Read |
+| `altdata_get_idle_vessels` | Ships stationary for at least min_days (floating storage, lay-up) with position, draught and laden flag, plus totals by segment. | Read |
+| `altdata_get_unfixed_vessels` | Ships moving with no declared destination or sailing "for orders" (spot-market overhang), with position and laden flag, plus totals by segment. | Read |
+| `altdata_get_ais_anomalies` | Ships whose AIS went dark for over 72 hours (longest gap first) and implausible position jumps in the window. | Read |
+| `altdata_get_vessel_profile` | One ship's fleet record (particulars, last position, destination, age, idle days) and its voyages. | Read |
+| `altdata_get_trade_meta` | What the trade tools can be asked: the loaded years, the countries (ISO3 id, name, continent), the HS product sections, classification (HS 1992), levels and limits. | Read |
+| `altdata_get_trade_partners` | A country's goods trade partners for one year, ranked by total trade: exports, imports, total and balance in current USD, plus totals over the returned partners. | Read, credits |
+| `altdata_get_trade_products` | What a country exports or imports in one year (optionally with one partner) by HS section, HS2, HS4 or HS6, in current USD, largest first. | Read, credits |
+| `altdata_get_trade_timeseries` | A country's goods trade for every loaded year, in current USD, optionally narrowed to one partner or one HS6 product. | Read, credits |
+| `altdata_get_trade_complexity` | The Economic Complexity Index league table for a year (rank 1 most complex). | Read, credits |
+| `altdata_get_trade_services` | A country's trade in services for one year by top-level EBOPS category (travel, transport, financial ...), exports or imports, optionally with one partner, in current USD. | Read, credits |
+| `altdata_get_development_indicators` | World Bank development indicators for one country: with indicator, that series' whole history. | Read, credits |
+| `altdata_get_tariffs` | Applied and predicted tariff rates an importer levies on an exporter's goods, by HS4 line (hs4 is OEC's section-prefixed numeric id). | Read, credits |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

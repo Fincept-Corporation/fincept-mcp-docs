@@ -1,0 +1,39 @@
+---
+title: "Errors"
+description: "HTTP errors from the endpoint and error codes inside result envelopes."
+icon: "triangle-alert"
+---
+
+## HTTP errors
+
+These stop a request before any tool runs. Clients handle most of them.
+
+| Status | Code | Meaning | Fix |
+| --- | --- | --- | --- |
+| `401` | `session_expired`, `session_revoked` | Missing, expired or revoked token. `WWW-Authenticate` carries `error="invalid_token"` and the OAuth metadata URL. | The client refreshes or signs in again. |
+| `402` | `entitlement_required` | The account has no active plan. | Buy or renew a plan. |
+| `403` | `upgrade_required` | The plan does not include Fincept MCP. | Upgrade to Exclusive Pro. |
+| `429` | `rate_limited` | More than 120 requests a minute. `Retry-After` gives the wait. | Back off and retry. |
+
+## Envelope errors
+
+A tool that runs but cannot answer returns an envelope with `status: "error"`, `isError: true` and one of these codes in `error.code`.
+
+| Code | Meaning |
+| --- | --- |
+| `validation_failed` | Arguments do not match the tool's schema, or a `$fincept` reference failed. The message names the field. |
+| `upgrade_required` | This tool, or an option of it, needs a feature or capability the plan does not include. |
+| `quota_exceeded` | A plan quota is reached, such as the number of watchlists or portfolios. |
+| `insufficient_credits` | Not enough credits for a paid tool. |
+| `spend_cap_reached` | The daily credit cap or the hourly cap for this action is reached. |
+| `not_found` | The item does not exist or belongs to another account, or a stored result expired. |
+| `timeout` | The call ran past its time limit. |
+| `busy` | Fincept Stats has no free worker. Retry in a few seconds. |
+| `model_failed` | A statistical model could not be estimated on this data. The hint suggests what to change. |
+| `unavailable` | A Fincept service could not be reached. Retry later. |
+
+Other codes come straight from the service that refused, with a `message` and often a `hint`; agents should read and relay them.
+
+## Unknown tools
+
+Calling a name the catalog does not have is a JSON-RPC error (`unknown tool`), not an envelope. Use `fincept_search_tools` to find the right name.

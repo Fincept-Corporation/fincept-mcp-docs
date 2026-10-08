@@ -1,0 +1,57 @@
+---
+title: "Credits by tool"
+description: "Every tool that can spend credits, and when it charges."
+icon: "coins"
+mode: "wide"
+---
+
+Every other tool is free. Prices are the terminal's, charged to the same balance; a refused, failed or empty call costs nothing unless stated. Daily and hourly spend caps apply. See [credits and limits](/guides/credits-and-limits).
+
+| Tool | Cost |
+| --- | --- |
+| `backtest_run` | Costs 1 credit (action backtest_run), charged only when a result is delivered; an identical repeat is served from history for free. |
+| `backtest_optimize` | Costs 2 credits (action backtest_optimizer), charged only on a delivered result. |
+| `algo_deploy_paper` | The desktop terminal runs deployments; while one is running or starting it costs 2 credits a day (action algo_deploy_day). |
+| `crypto_run_var` | Parametric and historical (the default) are free; adding monte_carlo costs 1 credit (action crypto_var_mc). |
+| `crypto_run_scenario` | Costs 1 credit per run (action crypto_scenario_replay). |
+| `data_get_observations` | Re-loading a series already loaded this month is free; NEW series count against data_series_loads_monthly and past it each call costs 0.1 credit (action data_series_load). |
+| `data_ai_search_series` | Costs 1 credit (action data_ai_search), charged only when the model's interpretation is used; prefer data_search_series for a plain keyword search. |
+| `data_create_schedule` | Each successful run costs 1 credit (action scheduled_refresh_run), about 31 a month for daily; quote it first with data_quote_schedule. |
+| `filings_search_edgar_text` | A fetch counts against the plan's edgar_pulls_monthly allowance; cache hits are free and past the allowance each fetch costs 1 credit (action edgar_filing_pull). |
+| `filings_get_edgar_submissions` | A fetch counts against the plan's edgar_pulls_monthly allowance; cache hits are free and past the allowance each fetch costs 1 credit (action edgar_filing_pull). |
+| `deals_build_comps` | Costs 2 credits (action ma_deal_model); a repeat of the same request the same day is a free cache hit, and a failed or empty set is not charged. |
+| `paper_place_order` | Each fill costs 0.05 credits (action paper_trade_fill). |
+| `paper_close_position` | Each fill costs 0.05 credits (action paper_trade_fill). |
+| `workspace_save_alert` | While any alert is active the account is charged 1 credit per day in total (action watchlist_alert_day), however many alerts are armed. |
+| `research_ask_model` | Costs 1 credit per delivered answer (action chat_message); a failed or empty answer costs nothing. |
+| `analytics_run_quantstats` | Costs 2 credits (action portfolio_ai_analysis), not charged when the result carries an error (e.g. no holdings). |
+| `analytics_run_montecarlo` | Costs 2 credits (action portfolio_ai_analysis), not charged when the result carries an error. |
+| `analytics_optimize_portfolio` | Costs 2 credits (action portfolio_ai_analysis), not charged when the result carries an error. |
+| `analytics_run_ffn` | Costs 2 credits (action portfolio_ai_analysis), not charged when the result carries an error. |
+| `analytics_run_attribution` | Costs 1 credit (action eod_attribution), not charged when the result carries an error. |
+| `analytics_scan_market_regime` | Costs 1 credit (action market_regime_scan), not charged when the result carries an error (not enough history). |
+| `analytics_model_option_strategy` | Costs 1 credit (action option_strategy_model), not charged when the result carries an error. |
+| `analytics_calibrate_vol_surface` | Costs 1 credit (action surface_calibrate), not charged when the result carries an error; a new underlying past the plan's tracked-surfaces quota is refused before any charge. |
+| `analytics_simulate_alt_program` | Costs 1 credit (action alt_program_model), not charged when the result carries an error. |
+| `analytics_backtest_rules` | Costs 1 credit (action backtest_run); a cached identical run is free. |
+| `screener_run_screen` | Costs 1 credit (action screener_run), also for zero matches; not charged when no symbol could be priced. |
+| `news_get_sentiment_aggregate` | Costs 1 credit (action news_sentiment_batch); an empty window is not charged. |
+| `news_analyze_article` | Costs 2 credits (action news_analyze_article), charged only for a delivered result; a cached analysis (24 h, shared) is free and says cached=true. |
+| `news_summarize_headlines` | Costs 1 credit (action news_summarize), charged only for a non-empty summary; the same headlines within 15 minutes are served from cache free. |
+| `news_list_monitors` | The user's keyword monitors (id, label, keywords, color, enabled) with the plan's news_monitors limit and the rate: each monitor costs 1 credit per UTC day it is swept (action news_monitor_run), levied by the server's sweep, not by these calls. |
+| `news_create_monitor` | Free to create, but an enabled monitor then costs 1 credit per UTC day it is swept (action news_monitor_run). |
+| `news_update_monitor` | Enabled monitors cost 1 credit per UTC day swept (action news_monitor_run). |
+| `news_list_automations` | The user's news automations with trigger, action and last sweep status, the shared news_monitors limit and how much of it monitors and automations use, and the rate: 1 credit per automation per UTC day it is evaluated (action news_monitor_run). |
+| `news_create_automation` | Free to create; an enabled automation costs 1 credit per UTC day the sweep evaluates it (action news_monitor_run) and counts against the news_monitors quota with monitors. |
+| `altdata_get_geopolitical_events` | Costs 1.5 credits (action geo_events_query) once per distinct filter set per UTC day; other pages and repeats that day are free. |
+| `altdata_get_vessel_position` | Costs 0.5 credits (action vessel_position); a vessel not found is refunded. |
+| `altdata_get_vessel_history` | Costs 2 credits (action vessel_history); no history is refunded. |
+| `altdata_get_vessel_positions` | Costs 1.5 credits for the whole request (action vessel_multi); refunded when none is found. |
+| `altdata_search_vessels_in_area` | Costs 2 credits per sweep (action vessel_area_search), kept even when the box is empty. |
+| `altdata_get_trade_partners` | Costs 0.5 credits (action trade_flow_query). |
+| `altdata_get_trade_products` | Costs 1 credit (action trade_product_sweep). |
+| `altdata_get_trade_timeseries` | Costs 0.5 credits (action trade_flow_query); the all-partner query can take several seconds. |
+| `altdata_get_trade_complexity` | Costs 0.5 credits (action trade_flow_query). |
+| `altdata_get_trade_services` | Costs 0.5 credits (action trade_flow_query). |
+| `altdata_get_development_indicators` | Costs 0.5 credits (action trade_flow_query). |
+| `altdata_get_tariffs` | Costs 1 credit (action trade_product_sweep). |

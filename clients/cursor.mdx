@@ -1,0 +1,27 @@
+---
+title: "Cursor"
+description: "Add Fincept MCP to Cursor and sign in."
+icon: "mouse-pointer-2"
+---
+
+<Steps>
+  <Step title="Add the server">
+    Add `fincept` to `~/.cursor/mcp.json` for every project, or to `.cursor/mcp.json` in one repository:
+
+    ```json
+    {
+      "mcpServers": {
+        "fincept": {
+          "url": "https://enterprise.fincept.in/mcp"
+        }
+      }
+    }
+    ```
+  </Step>
+  <Step title="Sign in">
+    Open Cursor's MCP settings. `fincept` shows that it needs a login; start it and approve the connection on fincept.in. Cursor receives the sign-in through its own `cursor://` callback.
+  </Step>
+  <Step title="Use it">
+    Ask in Agent mode, for example: "Using Fincept, compare the 1-year returns of SPY and QQQ."
+  </Step>
+</Steps>

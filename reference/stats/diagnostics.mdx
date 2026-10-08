@@ -1,0 +1,20 @@
+---
+title: "Model diagnostics"
+description: "Tests on a fitted linear regression: heteroskedasticity (Breusch-Pagan, White, Goldfeld-Quandt, ARCH), residual autocorrelation (Ljung-Box, Breusch-Godfrey, Durbin-Watson), specification (RESET, rainbow, Harvey-Collier, White), structural breaks (CUSUM, Hansen), non-nested model comparison (Cox, J, encompassing), multicollinearity (VIF), influential observations and outliers, and nearest valid correlation or covariance matrices."
+mode: "wide"
+---
+
+Toolset `stats_diagnostics`: 8 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_heteroskedasticity_test` | Tests a regression's residuals for heteroskedasticity (error variance that changes with the regressors or over time): Breusch-Pagan (Koenker), White (squares and cross products), Goldfeld-Quandt (variance in two sub-samples) and Engle's ARCH LM test (volatility clustering in time series). |  |
+| `stats_residual_autocorrelation_test` | Tests a regression's residuals for autocorrelation: Durbin-Watson (first order. |  |
+| `stats_vif` | Multicollinearity check: the variance inflation factor of every regressor (how much its coefficient variance is inflated by correlation with the other regressors) and its tolerance (1/VIF), with the design's condition number. |  |
+| `stats_influence` | Finds observations that drive a regression: leverage (hat values), Cook's distance, DFFITS and externally studentized residuals for every row, the Bonferroni outlier test, and the top rows by Cook's distance with flags (Cook's &gt; 4/n, leverage &gt; 2k/n, \|DFFITS\| above its threshold, Bonferroni p &lt; alpha). |  |
+| `stats_nearest_correlation` | Repairs a correlation or covariance matrix that is not positive semi-definite (from pairwise estimates, stressed or hand-edited correlations) so it can be used in risk models, simulation and portfolio optimization: the nearest valid matrix by iterative projection, or eigenvalue clipping. |  |
+| `stats_specification_test` | Tests whether a linear regression's functional form is right: Ramsey's RESET (added powers of the fitted values or regressors), the rainbow test (fit on the central rows versus all), Harvey-Collier (mean of recursive residuals), White's specification test (heteroskedasticity or misspecification) and the LM test for squared regressors. |  |
+| `stats_structural_break_test` | Tests a regression's coefficients for stability over the row order (time): the CUSUM test on OLS residuals (Ploberger-Kramer), Hansen's joint stability test of coefficients and variance, and the recursive-residual CUSUM path with its Brown-Durbin-Evans bands (series and chart. |  |
+| `stats_nonnested_test` | Compares two non-nested linear models of the same response (neither is a special case of the other, e.g. two competing factor sets): the Cox test, the Davidson-MacKinnon J test and the encompassing F test, each in both directions. |  |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

@@ -1,0 +1,35 @@
+---
+title: "Security"
+description: "What an agent connected to Fincept MCP can and cannot do with your account."
+icon: "shield-check"
+---
+
+An agent connected to Fincept MCP acts as you, with your plan, quotas and credits. These rules bound what it can do.
+
+## No real money
+
+- No tool places a live broker order, a live crypto order or a withdrawal.
+- Trading tools reach only the **Fincept Paper** account. Strategy deployments are paper deployments.
+- Kill switches, live routing and custody actions are not exposed.
+
+## Writes are labelled
+
+Tools that change your account (watchlists, notes, alerts, monitors, portfolios, paper orders, backtest jobs) are marked in their MCP annotations and say so in their descriptions. Keep your client's approval prompts on for write tools if you want to confirm each one.
+
+## Settings and secrets stay out
+
+Account settings, stored secrets and API keys, billing, file uploads and starting server-side agent runs are not available as tools.
+
+## Your data
+
+- Stored large results are readable only by your account and are deleted after 24 hours.
+- Tokens are stored by Fincept as hashes; a leaked refresh token is useless after its next legitimate use.
+- Every tool call is subject to the same server-side checks as the terminal: plan, quotas, credits and ownership of the item it touches.
+
+## If a token leaks
+
+Change your password. Every session and MCP connection ends at its next request.
+
+## Prompt injection
+
+Tool results can contain third-party text, such as news articles and filings. Treat instructions inside them as data. Agents that follow text from tool results may try write tools you did not ask for; approval prompts on write tools prevent that.

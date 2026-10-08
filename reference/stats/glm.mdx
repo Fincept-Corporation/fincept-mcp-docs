@@ -1,0 +1,18 @@
+---
+title: "Generalized linear and mixed models"
+description: "Generalized linear models for every family and link (logistic, Poisson, gamma, inverse Gaussian, negative binomial, Tweedie), GEE for clustered and panel data (including ordinal and nominal outcomes), linear mixed models with random intercepts, slopes and variance components, Bayesian mixed GLMs and generalized additive models with spline smooths."
+mode: "wide"
+---
+
+Toolset `stats_glm`: 6 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_glm` | Generalized linear model for any exponential family and link: logistic or probit for 0/1 and shares, Poisson and negative binomial for counts, gamma and inverse Gaussian for positive amounts, Tweedie for amounts with exact zeros. |  |
+| `stats_glm_gam` | Generalized additive model: a GLM (any family and link) whose linear part comes from the formula or x and whose smooth columns enter as penalized splines, so their effect may bend (B-splines) or repeat over a cycle (cyclic splines). | up to 180 s |
+| `stats_gee` | Generalized estimating equations (GEE): a GLM for clustered or panel data (firms over years, customers over months) whose standard errors account for correlation within each group through a working correlation (independence, exchangeable, autoregressive, nested or unstructured). | up to 180 s |
+| `stats_gee_categorical` | GEE for a categorical response observed in clusters or panels (credit ratings of issuers over years, survey answers by branch): ordinal (cumulative logit with thresholds) or nominal (one logit per category against the lowest). | up to 180 s |
+| `stats_mixedlm` | Linear mixed-effects model: fixed effects shared by all rows plus random effects that vary by group (random intercepts, random slopes, variance components), for panels and hierarchies such as firms over years, funds within families or trades within traders. | up to 180 s |
+| `stats_bayes_mixed_glm` | Bayesian generalized linear mixed model for a 0/1 response (logit) or counts (Poisson log link) with random effects given as variance components, possibly crossed (sector and year), fitted by variational Bayes with normal priors (fe_p, vcp_p). | up to 180 s |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

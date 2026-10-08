@@ -1,0 +1,34 @@
+---
+title: "Algo strategies"
+description: "Algorithm library, versions, baskets and paper deployments with their metrics and trades."
+icon: "bot"
+mode: "wide"
+---
+
+Toolset `algo`: 21 tools. List them all with `?toolsets=algo`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `algo_list_strategies` | The account's algo trading strategies: id, name, timeframe, direction, entry/exit condition trees, stop loss, take profit, trailing stop (percent), position size percent, scale-in settings, eval_on and version. | Read, core |
+| `algo_get_strategy` | One algo strategy in full. | Read |
+| `algo_list_strategy_versions` | The saved versions of one strategy (\{version, created_at\}, newest first). | Read |
+| `algo_get_strategy_version` | The full strategy as it was at one version number. | Read |
+| `algo_save_strategy` | Creates a strategy, or with id replaces that strategy whole (omitted fields reset. | Write |
+| `algo_delete_strategy` | Deletes one algo strategy. | Delete |
+| `algo_list_deployments` | Every deployment (paper and live) with its strategy, symbol, mode, status, owner device and limits, plus the latest metrics per deployment id (P&L, trades, win rate, drawdown, position). | Read |
+| `algo_get_deployment` | One deployment in full, including its frozen strategy snapshot. | Read |
+| `algo_list_stale_deployments` | Running or starting deployments whose desktop heartbeat is older than threshold_secs, with seconds_stale. | Read |
+| `algo_deploy_paper` | Creates a PAPER deployment of a strategy (mode is always paper and status pending. | Write, credits |
+| `algo_stop_deployment` | Sets a deployment's status to stopped. | Write |
+| `algo_get_metrics` | A deployment's latest metrics snapshot: total, realized and unrealized P&L, trade count, win rate, max drawdown, current price and position (qty, side, entry), as heartbeated by the terminal. | Read |
+| `algo_list_trades` | A deployment's fills, newest first: side, quantity, price, P&L, slippage and fill model. | Read |
+| `algo_get_deploy_charges` | Daily runtime charges billed over the last days, credits spent, active deployments and the credits per day they will cost (2 per active deployment). | Read |
+| `algo_list_basket_catalog` | The prebuilt symbol baskets (index constituents such as NIFTY 50, S&P 500, Nasdaq-100): key, name, region, exchange, currency, symbols, Yahoo symbols, source, as_of and whether the sync is stale. | Read |
+| `algo_resolve_basket` | Resolves an index or basket name ("nifty it") or catalog key to one catalog basket with its members. | Read |
+| `algo_list_baskets` | The account's own named order baskets (groups of order legs), or the one named name. | Read |
+| `algo_get_basket` | One order basket with its legs. | Read |
+| `algo_create_basket` | Saves a named basket of order legs. | Write |
+| `algo_update_basket` | Replaces a basket's name and legs. | Write |
+| `algo_delete_basket` | Deletes one order basket. | Delete |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

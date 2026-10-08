@@ -1,0 +1,34 @@
+---
+title: "VS Code"
+description: "Add Fincept MCP to VS Code (GitHub Copilot agent mode) and sign in."
+icon: "square-code"
+---
+
+<Steps>
+  <Step title="Add the server">
+    Create `.vscode/mcp.json` in the workspace:
+
+    ```json
+    {
+      "servers": {
+        "fincept": {
+          "type": "http",
+          "url": "https://enterprise.fincept.in/mcp"
+        }
+      }
+    }
+    ```
+
+    Or add it for your user profile from the command line:
+
+    ```bash
+    code --add-mcp "{\"name\":\"fincept\",\"type\":\"http\",\"url\":\"https://enterprise.fincept.in/mcp\"}"
+    ```
+  </Step>
+  <Step title="Sign in">
+    Start the server from `mcp.json` (or the **MCP: List Servers** command). VS Code asks to sign in; approve the connection on fincept.in.
+  </Step>
+  <Step title="Use it">
+    Open Copilot Chat in **Agent** mode. Fincept tools appear in the tools picker.
+  </Step>
+</Steps>

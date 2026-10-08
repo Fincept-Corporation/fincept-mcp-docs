@@ -1,0 +1,16 @@
+---
+title: "Power and sample size"
+description: "Statistical power and required sample size for t, z, ANOVA, regression F and chi-square tests (solve for effect size, sample size, alpha or power), power curves, proportion sample sizes and power, and the power of equivalence tests."
+mode: "wide"
+---
+
+Toolset `stats_power`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_power_solve` | Solves the power equation of a t, z, ANOVA F, regression F or chi-square goodness-of-fit test for whichever one of effect_size, nobs, alpha and power is left null: the sample size for a target power, the power of a given sample, or the minimum detectable effect. |  |
+| `stats_power_curve` | Power as a function of sample size for one or more effect sizes (one curve each), for the same tests as stats_power_solve. |  |
+| `stats_proportion_sample_size` | Sample size and power for proportions: the n that gives a confidence interval of a given half-width, the group-1 size needed to detect a difference between two proportions at a target power (or the power of given group sizes), and the n for a one-tailed normal test of a difference. |  |
+| `stats_equivalence_power` | Power of the two one-sided tests (TOST) for a proportion to show it lies inside [low, upp] when the true proportion is p_alt, at each sample size: exact binomial or normal approximation. |  |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

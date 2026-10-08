@@ -1,0 +1,74 @@
+---
+title: "Results"
+description: "The one result format every Fincept tool returns, and how large results are delivered."
+icon: "file-json"
+---
+
+Every Fincept tool answers with the same envelope, the Fincept Result Protocol (`result/v1`). Your agent parses one format whatever the tool, and charts and tables come as data, never as pixels.
+
+```json Example result
+{
+  "fincept": "result/v1",
+  "tool": "stats_arima",
+  "status": "ok",
+  "summary": "ARIMA(1,1,1) on 499 obs; AIC 5123.4; 10-step forecast",
+  "data": { "params": [ ... ], "forecast": [ ... ] },
+  "blocks": [
+    { "type": "metrics", "items": [ { "label": "AIC", "value": 5123.4 } ] },
+    { "type": "series", "id": "forecast", "x": { "name": "date", "type": "date" }, "y": [ ... ], "rows": [ ... ] },
+    { "type": "chart", "id": "forecast_chart", "kind": "line", "series_ref": "forecast", "x": "date", "y": ["mean"], "band": { "lower": "lower", "upper": "upper" } }
+  ],
+  "warnings": []
+}
+```
+
+The envelope arrives as the MCP `structuredContent` of the tool result (tools declare it as their `outputSchema`) and as the same JSON in the text content, for clients that read only text.
+
+## Reading a result
+
+| Field | Use it for |
+| --- | --- |
+| `summary` | One sentence the agent can quote. |
+| `data` | The machine payload: numbers stay numbers, dates are ISO-8601, missing values are `null`. |
+| `blocks` | Presentation, in order: metrics, tables, series, charts, text. |
+| `status` | `ok`, `partial` (a preview of a larger stored result) or `error`. |
+| `error` | `code`, `message` and `hint` when `status` is `error`. |
+| `warnings` | Notes worth passing on, such as a model that did not fully converge. |
+
+Every field is described in the [result envelope reference](/reference/result-envelope).
+
+## Large results
+
+A result larger than about 40 KB is not sent whole. Instead:
+
+<Steps>
+  <Step title="The full result is stored">
+    It is kept for 24 hours, up to 25 MB, and only your account can read it.
+  </Step>
+  <Step title="The agent gets a preview">
+    `status` is `partial`. The largest lists are cut to fit, and `truncated.lists` names each cut list with how many items are shown and how many exist.
+
+    ```json
+    "truncated": {
+      "reason": "size",
+      "read_with": "fincept_read_result",
+      "lists": [ { "path": "data.candles", "shown": 200, "total": 5000 } ]
+    }
+    ```
+  </Step>
+  <Step title="The agent reads the rest">
+    `artifacts[0].id` identifies the stored result. Three ways to read it:
+
+    - **`fincept_read_result`** pages any list by path: `{ "id": "r_...", "path": "data.candles", "offset": 200, "limit": 500 }`. Free.
+    - **MCP resource** `fincept://results/{id}` returns the whole envelope, for clients that read resources.
+    - **Viewer** at `artifacts[0].view_url` (`https://fincept.in/enterprise/results/{id}`): tables, charts and CSV or JSON download in your browser, signed in to the same account.
+  </Step>
+</Steps>
+
+<Tip>
+  Ask for exactly what you need. `market_get_candles` with `limit: 250` returns inline; `limit: 5000` goes through a stored result.
+</Tip>
+
+## Errors are results too
+
+A refusal or failure is an envelope with `status: "error"` and the MCP `isError` flag, never a protocol error. The agent can read `error.hint`, fix its arguments and retry, or tell you what blocked it. Codes are listed in the [errors reference](/reference/errors).

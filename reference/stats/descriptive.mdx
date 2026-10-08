@@ -1,0 +1,17 @@
+---
+title: "Descriptive statistics"
+description: "Summaries of every column, weighted statistics, correlation matrices, robust location and scale, empirical distributions and Q-Q comparisons."
+mode: "wide"
+---
+
+Toolset `stats_descriptive`: 5 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_describe` | Summary statistics of each numeric column: count, missing, mean, standard deviation, standard error, 95% confidence interval of the mean, min, percentiles, max, skewness, kurtosis, Jarque-Bera normality test, mode and the share of distinct values. | core |
+| `stats_weighted_stats` | Weighted mean, variance, standard deviation, quantiles, the confidence interval of the mean and a t test of the mean against test_value. |  |
+| `stats_correlation` | Correlation matrix of the numeric columns (pairwise complete rows) with each pair's p-value. | core |
+| `stats_robust_scale` | Outlier-resistant location and scale: median, median absolute deviation (normal-consistent), interquartile range scale, Qn scale and Huber's joint location and scale, beside the plain mean and standard deviation. |  |
+| `stats_distribution_compare` | The empirical CDF of the values and their Q-Q comparison with a fitted reference distribution (normal by default. |  |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

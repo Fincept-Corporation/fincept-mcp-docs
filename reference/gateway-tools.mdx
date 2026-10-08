@@ -1,0 +1,61 @@
+---
+title: "Discovery tools"
+description: "The tools that search the catalog, describe a tool, call any tool and read stored results."
+icon: "compass"
+---
+
+These tools are always listed. All are free.
+
+## fincept_search_tools
+
+Finds tools by what they do. Returns `matches` with each tool's `name`, `signature`, `effect`, `toolset` and `summary`, plus the list of `toolsets`.
+
+<ParamField body="query" type="string" required>
+  Plain words, for example `insider trades`, `arima forecast`, `cointegration test`.
+</ParamField>
+<ParamField body="toolset" type="string">
+  Search one toolset only.
+</ParamField>
+<ParamField body="limit" type="integer" default="8">
+  Matches to return, 1 to 25.
+</ParamField>
+
+## fincept_describe_tool
+
+Returns one tool's full description and JSON input schema.
+
+<ParamField body="name" type="string" required>
+  Tool name, for example `market_get_options_chain`.
+</ParamField>
+
+## fincept_call_tool
+
+Runs any tool by name, listed or not. Use it from clients that call only listed tools; other clients can call the tool directly.
+
+<ParamField body="name" type="string" required>
+  Tool name.
+</ParamField>
+<ParamField body="arguments" type="object">
+  The tool's arguments.
+</ParamField>
+
+## fincept_read_result
+
+Reads a stored large result: any field by path, any list by page. See [large results](/guides/results#large-results).
+
+<ParamField body="id" type="string" required>
+  `artifacts[].id` of the result, starting `r_`.
+</ParamField>
+<ParamField body="path" type="string" default="data">
+  Dot path from the envelope root, as named in `truncated.lists`: `data.candles`, `blocks.forecast.rows`.
+</ParamField>
+<ParamField body="offset" type="integer" default="0">
+  First item to return.
+</ParamField>
+<ParamField body="limit" type="integer" default="200">
+  Items per page, up to 5,000.
+</ParamField>
+
+## stats_catalog
+
+Lists every Fincept Stats module and tool with a one-line description. Takes no arguments.

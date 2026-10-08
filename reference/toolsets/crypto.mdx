@@ -1,0 +1,89 @@
+---
+title: "Crypto"
+description: "Crypto venues, markets, derivatives data, your crypto accounts and orders, risk, compliance, custody and DeFi. Read-only."
+icon: "bitcoin"
+mode: "wide"
+---
+
+Toolset `crypto`: 76 tools. List them all with `?toolsets=crypto`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `crypto_list_venues` | Every exchange this build connects to: id, name, capabilities (a name-to-bool map of what the venue's connector supports), status (ok, degraded, unknown), latency and whether the account has a key registered there. | Read |
+| `crypto_search_markets` | Searches the venues' instrument catalogs by symbol text, venue and type. | Read |
+| `crypto_get_instrument` | One unified symbol on every venue that lists it (or one venue): contract terms, precision, limits and venue status. | Read |
+| `crypto_get_tickers` | Per-venue tickers for up to 50 symbols (last, bid/ask with sizes, mid, 24h open/high/low, volume, change percent, mark and index) and Fincept's cross-venue index price. | Read, core |
+| `crypto_get_index` | Fincept's fair index price for one symbol from the venues' books, with the method and the venues used. | Read |
+| `crypto_get_order_book` | One symbol's order book merged across venues: bids and asks with per-venue size, best bid/ask, mid and spread in bps, optionally adjusted for each venue's taker fee. | Read |
+| `crypto_get_candles` | OHLCV candles for one symbol on one venue (bars are per venue, never merged). | Read |
+| `crypto_get_funding` | Current funding for up to 25 perpetuals on every venue: rate per interval, 8h-normalised rate, APR, predicted rate, next funding time, mark and index. | Read |
+| `crypto_get_funding_history` | Funding payments of one perpetual on one venue over a window (default the last 30 days). | Read |
+| `crypto_predict_funding` | The next funding rate of one perpetual per venue: the venue's published prediction, or one derived from mark and index. | Read |
+| `crypto_get_basis` | Basis of every dated future and perpetual on an underlying against spot: mark, spot, basis in bps, annualised percent and days to expiry per venue, the term curve and calendar spreads. | Read |
+| `crypto_get_open_interest` | Open interest of up to 25 derivatives per venue (contracts and notional) with totals. | Read |
+| `crypto_get_liquidations` | Recent forced liquidations of one derivative across venues (default the last hour): venue, side, price, size and notional per event, longs/shorts liquidated and per-venue totals. | Read |
+| `crypto_get_option_chain` | The option chain of an underlying (BTC, ETH) from Binance, OKX and Bybit: expiries and instruments with quotes, implied volatility and greeks. | Read |
+| `crypto_get_vol_surface` | Per-expiry SVI implied volatility surface fitted to the out-of-the-money options of an underlying, with the ATM term structure and any calendar-arbitrage violations. | Read |
+| `crypto_get_correlation` | Daily-return correlation of a crypto asset with other series (default NDX, DXY, GOLD) over a window (default 90d) plus a rolling correlation (default 30 days). | Read |
+| `crypto_get_exchange_flows` | Exchange reserves and net 1d/7d/30d flows per centralised venue, from DeFiLlama's CEX transparency feed (per venue, not per asset). | Read |
+| `crypto_list_positions` | Open positions on every venue the organisation holds a key for, as each venue reports them (size, entry, mark, P&L, unconverted), with per-venue errors. | Read |
+| `crypto_list_balances` | Asset balances (total, free, locked) per venue key, zero balances hidden unless all is true. | Read |
+| `crypto_list_orders` | The organisation's crypto orders, newest first. | Read |
+| `crypto_get_order` | One crypto order with its fills, state events and child orders. | Read |
+| `crypto_list_algos` | The organisation's execution algos (TWAP, VWAP and the like) with progress and status. | Read |
+| `crypto_get_algo` | One execution algo with its child orders and whether it is running on this instance. | Read |
+| `crypto_list_multileg_orders` | The organisation's multi-leg (spread) orders, newest first. | Read |
+| `crypto_get_multileg_order` | One multi-leg order with its legs. | Read |
+| `crypto_get_tca_summary` | Transaction cost analysis over a window (default the last 30 days): overall and per-venue scores and the per-order rows. | Read |
+| `crypto_get_order_tca` | Transaction cost analysis of one order, recomputed now (benchmarks improve as reversion windows close) unless stored is 1. | Read |
+| `crypto_list_rfqs` | The organisation's requests for quote with their quotes and status. | Read |
+| `crypto_get_rfq` | One request for quote with its quotes. | Read |
+| `crypto_get_nav` | The organisation's crypto net asset value now, broken down by venue, asset and strategy, with any unpriced holdings listed as gaps. | Read |
+| `crypto_get_pnl_attribution` | Realised and unrealised P&L attributed by strategy (default), venue or asset over a window (default the last 30 days). | Read |
+| `crypto_get_tax_lots` | Open and closed tax lots with realised gains under a cost-basis method (default fifo). | Read |
+| `crypto_optimise_margin` | Where each venue's margin stands against its requirement plus a buffer, and the collateral moves that would balance it. | Read |
+| `crypto_propose_rebalance` | Computes the trades that would move the book to target asset weights (fractions of NAV, summing to at most 1. | Read |
+| `crypto_list_bots` | The organisation's trading bots with their configuration and live state (equity, realised P&L, drawdown, fills), and how many are running. | Read |
+| `crypto_get_bot` | One trading bot in full. | Read |
+| `crypto_list_bot_events` | A bot's event log, newest first. | Read |
+| `crypto_build_bot_backtest` | Translates a bot into a backtest-svc spec (with notes on every translation choice) without running it. | Read |
+| `crypto_get_exposure` | The organisation's USD-normalised risk view: equity, gross/net notional, net delta, leverage, margin used and usage percent, unrealised P&L, DeFi net, and breakdowns by asset, venue, chain, strategy and instrument type. | Read |
+| `crypto_get_risk_limits` | The organisation's configured pre-trade and portfolio risk limits. | Read |
+| `crypto_list_limit_breaches` | Recorded risk-limit breaches, newest first. | Read |
+| `crypto_get_breakers` | The state of the organisation's circuit breakers and kill switch (read only). | Read |
+| `crypto_run_var` | Value at risk and expected shortfall of the current crypto book in USD, per method, with liquidity-adjusted VaR and excluded assets. | Read, credits |
+| `crypto_get_latest_var` | The organisation's most recent stored VaR run (404 when none has been run). | Read |
+| `crypto_list_scenarios` | The historical replay windows (terra_2022_05, ftx_2022_11, covid_2020_03, carry_unwind_2024_08) and the fields and units of a custom scenario, with the price of a run. | Read |
+| `crypto_run_scenario` | Stresses the current crypto book under a library replay, a custom dated window or explicit shocks, and returns the P&L per asset and in total. | Read, credits |
+| `crypto_get_solvency` | A per-venue counterparty solvency score from measured public evidence only, each component with its source. | Read |
+| `crypto_get_greeks` | Delta, gamma, vega and theta of the organisation's derivatives book per underlying. | Read |
+| `crypto_get_greeks_ladder` | Re-prices the book for one underlying across a ladder of spot moves, implied volatility held constant per instrument (sticky strike). | Read |
+| `crypto_list_surveillance_alerts` | Market-abuse surveillance alerts on the organisation's own trading (compliance or risk role). | Read |
+| `crypto_screen_addresses` | Screens up to 1000 wallet addresses against the loaded OFAC sanctions list. | Read |
+| `crypto_get_sanctions_status` | Whether the sanctions list is loaded, and its source, publish date and digest. | Read |
+| `crypto_get_travel_rule` | Travel-rule readiness. | Read |
+| `crypto_get_report` | A compliance report (nav, blotter, gains or capital) for a period (compliance or risk role). | Read |
+| `crypto_list_custody_accounts` | The organisation's accounts at its connected custodians. | Read |
+| `crypto_list_custody_balances` | Asset balances held at the organisation's custodians. | Read |
+| `crypto_get_custody_whitelist` | The withdrawal address whitelist each active custodian reports, with per-custodian errors. | Read |
+| `crypto_get_proof_of_reserves` | Exchanges' published proof-of-reserves reports (one venue, or every covered venue). | Read |
+| `crypto_get_custody_credit` | Credit lines with custodians and prime brokers. | Read |
+| `crypto_get_custody_insurance` | Custody insurance coverage. | Read |
+| `crypto_plan_collateral` | Computes the collateral transfers between venues that would keep each one's free margin above keep_free_usd. | Read |
+| `crypto_get_org` | The caller's crypto organisation: its members with roles, and its policy. | Read |
+| `crypto_list_audit` | The organisation's hash-chained audit log, newest first (compliance or risk role). | Read |
+| `crypto_verify_audit` | Recomputes the audit log's hash chain. | Read |
+| `crypto_list_approvals` | Held actions awaiting a second approver and their history (read only. | Read |
+| `crypto_list_defi_yields` | DeFi lending and liquidity pools from DeFiLlama with TVL and APY, filtered by asset, chain, project or pool id and sorted by tvl (default) or apy. | Read |
+| `crypto_get_defi_tvl` | Total value locked by chain (default, largest first, with the total) or by protocol, filtered by chain, category or name. | Read |
+| `crypto_list_stablecoins` | Stablecoins from DeFiLlama: peg type and mechanism, price and peg deviation, depeg flag and supply (now, 1 and 7 days ago). | Read |
+| `crypto_list_bridges` | Cross-chain bridges with TVL and their exploit history over a window (default 1825 days). | Read |
+| `crypto_list_defi_hacks` | Recorded DeFi and bridge exploits with date, classification, technique, chains, amount lost and returned (USD), from DeFiLlama. | Read |
+| `crypto_get_cex_transparency` | Centralised exchanges' published reserve wallets: total and clean reserves (USD), own-token share, 24h/7d/30d inflows, spot volume and open interest, per venue. | Read |
+| `crypto_list_defi_positions` | The DeFi positions the user registered in the terminal, enriched with pool data and impermanent loss unless enrich is false. | Read |
+| `crypto_get_impermanent_loss` | Impermanent loss of a liquidity position: v2 constant product (default) or v3 concentrated range (set lower/upper prices or ticks). | Read |
+| `crypto_get_liquidation_risk` | Health factors of lending positions for a wallet (or the user's registered wallets), flagging any below warn_below. | Read |
+| `crypto_list_staking` | Staking and liquid-staking pools with APY and TVL, filtered by asset, chain or project. | Read |
+| `crypto_list_governance` | Snapshot governance proposals for tokens (AAVE, UNI ...) or spaces, by state. | Read |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

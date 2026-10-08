@@ -1,0 +1,22 @@
+---
+title: "Agents"
+description: "Server-side agent runs, schedules and memories: inspect, cancel, pause and delete."
+icon: "workflow"
+mode: "wide"
+---
+
+Toolset `agents`: 9 tools. List them all with `?toolsets=agents`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `agents_list_runs` | The account's server agent runs under "runs", newest first: id, kind (task, team, workflow, desk, chat), goal, status, question (when waiting for the user), error and timestamps. | Read, core |
+| `agents_get_run` | One server agent run under "run": goal, status, config, plan, per-step checkpoints, result (the final output once completed), the pending question when status is waiting_input, and error. | Read |
+| `agents_cancel_run` | Cancels a run that has not finished. | Write |
+| `agents_list_schedules` | The account's recurring agent schedules under "schedules": id, name, goal, kind, cadence (every &lt;N&gt;s\|m\|h, daily HH:MM, weekdays HH:MM), timezone, next_run_at, enabled and last_run_id. | Read |
+| `agents_pause_schedule` | Stops a schedule from firing until the user resumes it in the terminal. | Write |
+| `agents_delete_schedule` | Deletes a recurring agent schedule. | Delete |
+| `agents_list_memories` | What the account's server agents remember across tasks, under "memories": id, kind (fact, skill, reflexion), content, tags, run_id, created_at. | Read |
+| `agents_add_memory` | Stores a memory the account's server agents recall in later runs. | Write |
+| `agents_delete_memory` | Deletes one server-agent memory. | Delete |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

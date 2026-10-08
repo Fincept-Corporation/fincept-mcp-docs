@@ -1,0 +1,15 @@
+---
+title: "Research"
+description: "Ask Fincept's research model and list the available models."
+icon: "sparkles"
+mode: "wide"
+---
+
+Toolset `research`: 2 tools. List them all with `?toolsets=research`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `research_ask_model` | One completion from Fincept AI over a conversation you supply. | Read, core, credits |
+| `research_list_models` | The branded model ids research_ask_model accepts, with display_name, capabilities and cost_weight. | Read, core |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

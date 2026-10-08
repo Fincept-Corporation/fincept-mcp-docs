@@ -1,0 +1,43 @@
+---
+title: "Claude Code"
+description: "Add Fincept MCP to Claude Code and sign in."
+icon: "terminal"
+---
+
+<Steps>
+  <Step title="Add the server">
+    ```bash
+    claude mcp add --transport http --scope user fincept https://enterprise.fincept.in/mcp
+    ```
+
+    `--scope user` makes the server available in every project. Use `--scope project` to share it through the repository's `.mcp.json`, or omit the flag for the current project only.
+  </Step>
+  <Step title="Sign in">
+    Start Claude Code, run `/mcp`, select `fincept` and choose **Authenticate**. Approve the connection on fincept.in.
+  </Step>
+  <Step title="Check">
+    ```bash
+    claude mcp list
+    ```
+
+    `fincept` shows as connected.
+  </Step>
+</Steps>
+
+## List more tools up front
+
+The default listing is the core set plus the discovery tools. To list whole toolsets, add them to the URL:
+
+```bash
+claude mcp add --transport http --scope user fincept "https://enterprise.fincept.in/mcp?toolsets=market,stats_tsa_models"
+```
+
+See [finding tools](/guides/finding-tools) for the trade-off.
+
+## Remove
+
+```bash
+claude mcp remove fincept --scope user
+```
+
+Removing the server does not revoke its sign-in on Fincept. See [authentication](/guides/authentication#revoke-access).

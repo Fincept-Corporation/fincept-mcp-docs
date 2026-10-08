@@ -1,0 +1,45 @@
+---
+title: "Filings"
+description: "SEC EDGAR companies and filings, insiders, 13F holders, funds and SEDAR+."
+icon: "file-text"
+mode: "wide"
+---
+
+Toolset `filings`: 32 tools. List them all with `?toolsets=filings`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `filings_search_companies` | Search the SEC company master by name or ticker, or browse a sector/industry: cik, display_name, tickers, exchange, sector, industry, is_fund, is_bdc, is_active, latest_filing. | Read, core |
+| `filings_get_company` | One SEC registrant from the company master: names, tickers, exchange, SIC, sector, industry, entity type, state of incorporation, fiscal year end, fund/BDC flags, latest filing. | Read |
+| `filings_list_sectors` | The sector facet of the company master with counts: 11 sectors plus Unclassified. | Read |
+| `filings_list_company_filings` | One SEC filer's filings from the parsed index, newest first: accession, form, filed, period, items, primary_document, size, XBRL flags. | Read |
+| `filings_search_filings` | Market-wide sweep of the parsed SEC filings index by form, 8-K item and date (e.g. every 8-K item 5.02 this month), newest first. | Read |
+| `filings_get_latest` | The newest SEC submissions, one row each: company, ticker, exchange, form, filed, accepted_at, items, description and url, covering the last N filing dates indexed. | Read |
+| `filings_get_filer_profile` | A filer's registrant record and name history from the filings index, indexed_at, and complete (whether every reported filing is indexed). | Read |
+| `filings_search_edgar_text` | SEC EDGAR full-text search: filings whose text contains q (quoted text is a phrase), answered in SEC's own JSON (hits with form, filer, file date, accession). | Read, credits |
+| `filings_get_edgar_submissions` | SEC's submissions document for a CIK, verbatim: company facts and the recent filings table (large. | Read, credits |
+| `filings_get_insider_graph` | The Form 4 insider graph of one issuer assembled live from its latest filings: edges (owner, role flags, shares and value bought/sold/awarded ...), filings_examined and truncated. | Read |
+| `filings_get_edgar_usage` | This month's EDGAR pulls against the plan's allowance: period, pulls, limit, relmap_hops and overage_cost (credits per pull past the limit). | Read |
+| `filings_screen_insiders` | Market-wide Form 3/4/5 transactions from the stored dataset: issuer_cik, owner, role flags, category, shares, price, value, txn_date, filed. | Read |
+| `filings_get_insider_person` | Every stored Form 3/4/5 transaction of one reporting owner across all the issuers they file on. | Read |
+| `filings_find_insider_clusters` | Issuers where several different insiders made open-market buys in a window (default the last 90 days): issuer_cik, people, buys, shares, value, names, first, last, most people first. | Read |
+| `filings_list_13f_quarters` | The SEC 13F bulk files loaded: quarter (the file, i.e. what was received), dominant_period (the report date most filings carry), filings, holdings, status. | Read |
+| `filings_get_security_holders` | Institutional managers holding one CUSIP per 13F, largest first: manager, value_usd (whole dollars), shares, value_common / value_call / value_put, plus totals and the period resolved. | Read |
+| `filings_get_manager_portfolio` | One 13F filer's positions for a period, largest first, with the cover filing, totals and every period the manager has on file. | Read |
+| `filings_search_funds` | Find a registered fund by symbol prefix or by series/fund name: symbol, class_id, series_id, cik, series_name, registrant_name. | Read |
+| `filings_get_fund` | A fund's identity, latest N-PORT cover (report_date, net_assets, total_assets), N-CEN flags and class returns, with coverage of what is loaded. | Read |
+| `filings_get_fund_holdings` | A fund's N-PORT portfolio for one report date, largest position first: holdings with issuer, cusip, isin, ticker, value_usd and pct_net_assets (a PERCENT), totals, asset_cat_mix over the whole filing. | Read |
+| `filings_get_fund_returns` | A fund share class's monthly returns from N-PORT, in PERCENT, oldest month first. | Read |
+| `filings_get_fund_providers` | A fund's N-CEN counterparties (adviser, custodian, auditor, administrator, transfer agent ...) grouped by role and LEI, for the registrant and the series, with period_end. | Read |
+| `filings_search_sedar_profiles` | Find a Canadian issuer or investment fund on SEDAR+ by name: profile_number, legal_name, previous and operating names, profile_type, industry, principal jurisdiction, status, in_default, active_cto. | Read |
+| `filings_get_sedar_profile` | One SEDAR+ profile with its per-jurisdiction reporting-issuer rows, any orders against it and filings_crawled (false means a zero filing count is not an absence). | Read |
+| `filings_list_sedar_profile_filings` | One SEDAR+ profile's filings: filing_number, filing_type, filing_category, taxonomy_key, submitted_date, document_count, permalink. | Read |
+| `filings_search_sedar_filings` | SEDAR+ filings across issuers by type, category, jurisdiction and date, same rows as filings_list_sedar_profile_filings plus issuer_name. | Read |
+| `filings_list_sedar_documents` | The documents of one SEDAR+ filing: document_id, document_type, document_name, filed_date, size_bytes, format and access_level (private documents exist but are not public). | Read |
+| `filings_get_sedar_taxonomy` | The CSA filing inventory: key, filer_type, filing_category, filing_type, document_type. | Read |
+| `filings_list_sedar_reporting_issuers` | The Canadian reporting-issuer register per (profile, jurisdiction): status, in_default with default_since and reason, active_cto. | Read |
+| `filings_search_sedar_orders` | Cease trade orders and the disciplined list from Canadian regulators, by party name or profile. | Read |
+| `filings_search_sedar_participants` | Registered firms and individuals on SEDAR+ by name: participant_kind, categories, jurisdictions, status, firm_name. | Read |
+| `filings_get_sedar_coverage` | What the SEDAR+ index holds: each register, whether and when it was crawled and whether the crawl completed, and row counts. | Read |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

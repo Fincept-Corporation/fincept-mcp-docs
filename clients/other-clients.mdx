@@ -1,0 +1,27 @@
+---
+title: "Other clients"
+description: "What an MCP client needs to connect to Fincept MCP."
+icon: "plug"
+---
+
+Any MCP client works if it supports:
+
+| Requirement | Detail |
+| --- | --- |
+| Transport | Streamable HTTP at `https://enterprise.fincept.in/mcp` |
+| Authorization | OAuth 2.1 authorization code with PKCE (`S256`) |
+| Discovery | Protected resource metadata (RFC 9728) from the `WWW-Authenticate` challenge, then authorization server metadata (RFC 8414) |
+| Registration | Dynamic client registration (RFC 7591), public client, no secret |
+| Redirect URI | `https://...`, `http://` on a loopback host (any port), or a private-use scheme such as `myapp://callback` |
+| Scope | `mcp` |
+| Resource | `https://enterprise.fincept.in/mcp` (RFC 8707 `resource` parameter) |
+
+Most clients do all of this automatically when you give them the URL. Endpoints and metadata are listed in the [endpoint reference](/reference/endpoint).
+
+<Warning>
+  Static API keys and bearer tokens copied from the terminal do not work. The server accepts only tokens issued by its own OAuth flow for this endpoint.
+</Warning>
+
+## Clients without OAuth
+
+A client that cannot run a browser sign-in cannot connect directly. Run it next to a client that can, or use a local MCP proxy that performs the OAuth flow and forwards requests.

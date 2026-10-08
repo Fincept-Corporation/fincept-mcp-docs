@@ -1,0 +1,75 @@
+---
+title: "Finding tools"
+description: "How your agent discovers and calls every Fincept tool without loading the whole catalog."
+icon: "search"
+---
+
+Fincept MCP has hundreds of tools. Listing all of them would fill your agent's context before it starts, so the server lists a **core set** and three discovery tools. Every other tool stays callable by name.
+
+## What is listed by default
+
+- **Core tools**: the most used tool of each area, for example `market_get_quote`, `market_get_candles`, `data_search_series`, `stats_ols`, `stats_arima`.
+- **Discovery tools**: `fincept_search_tools`, `fincept_describe_tool`, `fincept_call_tool`.
+- **`fincept_read_result`**: pages through large results. See [results](/guides/results).
+
+## How the agent finds the rest
+
+<Steps>
+  <Step title="Search">
+    `fincept_search_tools` takes plain words and returns matching tools with their signature and what they do.
+
+    ```json
+    { "query": "option chain greeks", "limit": 5 }
+    ```
+  </Step>
+  <Step title="Describe">
+    `fincept_describe_tool` returns one tool's full description and JSON input schema.
+
+    ```json
+    { "name": "market_get_options_chain" }
+    ```
+  </Step>
+  <Step title="Call">
+    The agent calls the tool by name, exactly like a listed tool. Clients that only call listed tools can use `fincept_call_tool`:
+
+    ```json
+    { "name": "market_get_options_chain", "arguments": { "symbol": "AAPL" } }
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+  Agents follow this pattern on their own; the server's instructions tell them to. Naming the area in your prompt ("using Fincept's filings tools...") speeds it up.
+</Tip>
+
+## List whole toolsets
+
+Add `toolsets` to the endpoint URL to list more tools up front. Use `all` for everything, or a comma-separated list:
+
+```text
+https://enterprise.fincept.in/mcp?toolsets=market,data,stats_tsa_models
+```
+
+| Value | Listed |
+| --- | --- |
+| *(none)* | Core tools and discovery tools |
+| `market,data` | Core tools plus every tool in `market` and `data` |
+| `all` | Every tool |
+
+Unknown names are ignored. Toolset names are in the [toolsets reference](/reference/toolsets/overview) and [Fincept Stats reference](/reference/stats/overview).
+
+<Warning>
+  `all` lists several hundred tools. Many clients cap or slow down with that many; prefer a short list of the toolsets you use.
+</Warning>
+
+## Tool annotations
+
+Each tool declares MCP annotations your client can use for approvals:
+
+| Annotation | Meaning |
+| --- | --- |
+| `readOnlyHint: true` | Reads data only. Most tools. |
+| `destructiveHint: true` | Deletes or overwrites something in your account. |
+| `idempotentHint` | Repeating the call with the same arguments has no further effect. |
+
+Tools that write to your account (saving a watchlist item, placing a paper order) say so in their description and annotations.

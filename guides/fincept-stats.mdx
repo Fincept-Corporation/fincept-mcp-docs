@@ -1,0 +1,51 @@
+---
+title: "Fincept Stats"
+description: "Statistical and econometric models as MCP tools: regression, time series, tests, forecasting and more."
+icon: "sigma"
+---
+
+Fincept Stats is the statistics engine behind every `stats_*` tool: regression and GLMs, discrete choice, ARIMA and state-space forecasting, VAR and cointegration, unit-root and hypothesis tests, model diagnostics, power analysis, multivariate and nonparametric methods, survival analysis and imputation. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Stats tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `stats_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Stats reference](/reference/stats/overview) lists every module and tool.
+
+`stats_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| Series | A list of numbers, `null` for a missing value | `[101.2, 102.8, null, 103.1]` |
+| Table | Columns by name, or a list of row objects | `{"y": [1, 2, 3], "x": [4, 5, 7]}` |
+| Dates | Optional ISO dates, one per observation | `["2024-01-31", "2024-02-29"]` |
+| Formula | Model formula over table columns | `"y ~ x1 + np.log(x2) + C(sector)"` |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+Formulas use the `y ~ a + b` syntax with interactions (`a:b`, `a*b`), `I(...)` for arithmetic, `C(...)` with `Treatment`, `Sum`, `Diff`, `Poly` or `Helmert` contrasts, `center`, `standardize`, `scale`, spline bases (`bs`, `cr`, `cc`, `te`) and `log`, `log1p`, `exp`, `sqrt`, `abs` (also as `np.log`, `np.log10`, `np.square` and similar). Anything else in a formula is refused, and a formula is limited to 600 characters.
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 200 |
+| Compute time | 90 seconds by default; up to 300 seconds for heavy models (state-space, Markov switching, dynamic factors, MICE) |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Model tools return a coefficient table, fit statistics (AIC, BIC, log-likelihood and model-specific measures) and diagnostics. Forecasting tools add a `series` block with the forecast and its interval, and a line `chart` with a band. Test tools return the statistic, p-value, critical values where they exist, and a one-sentence verdict.
+
+## Example
+
+```text Prompt
+Using Fincept, test whether the 10-year and 2-year US Treasury yields are cointegrated since 2010, then fit a VECM and forecast 12 months.
+```
+
+The agent searches for `cointegration`, finds `stats_johansen_test` and `stats_vecm`, and passes both yields as `$fincept` references to `data_get_observations`.

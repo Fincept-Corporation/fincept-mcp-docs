@@ -1,0 +1,51 @@
+---
+title: "Authentication"
+description: "How sign-in works, how long it lasts, and how to revoke an agent's access."
+icon: "key-round"
+---
+
+Fincept MCP uses OAuth 2.1. Your client never sees your password; it receives tokens that work only on the MCP endpoint.
+
+## Sign-in flow
+
+<Steps>
+  <Step title="The client registers and opens the browser">
+    On first connect the server answers `401` with a pointer to its OAuth metadata. The client registers itself and opens `fincept.in/enterprise/connect`.
+  </Step>
+  <Step title="You sign in and approve">
+    Signed out, you sign in to your Fincept account first and land back on the request. The page shows which app is asking and where it will return. Select **Authorize** or **Decline**.
+  </Step>
+  <Step title="The client receives tokens">
+    The browser returns to the client (a local port for terminal agents, an app link for editors). The client exchanges the one-time code for tokens and connects.
+  </Step>
+</Steps>
+
+<Info>
+  Approval needs an active Exclusive Pro plan. On another plan the connect page explains what is required instead of offering **Authorize**.
+</Info>
+
+## Token lifetimes
+
+| Item | Lifetime |
+| --- | --- |
+| Access token | 1 hour. The client refreshes it silently. |
+| Refresh token | 30 days, rotated on every use. A refresh token used twice ends the connection. |
+| Approval link | 15 minutes from when the client opened it. |
+| Connections | Up to 20 per account. A 21st sign-in ends the oldest. |
+
+Every request is also checked live: if your plan lapses or your password changes, the next request is refused.
+
+## Revoke access
+
+| To end | Do this |
+| --- | --- |
+| One client | Sign out in the client: `codex mcp logout fincept`, or in Claude Code `/mcp` then **Clear authentication**. |
+| Every connection | Change your password (in the terminal, or **Forgot password** at [fincept.in/enterprise/login](https://fincept.in/enterprise/login)). Every session and MCP connection ends at its next request. |
+
+Removing a server from a client's config does not end its sign-in on Fincept; sign out first.
+
+## Tokens are scoped
+
+- An MCP token works only at `https://enterprise.fincept.in/mcp`. It cannot call the Fincept API used by the terminal.
+- A terminal or website token is refused at the MCP endpoint.
+- The only scope is `mcp`: the agent can do what your plan allows through the tools listed in this documentation, and nothing that moves real money.

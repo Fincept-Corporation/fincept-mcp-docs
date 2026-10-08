@@ -1,0 +1,35 @@
+---
+title: "News"
+description: "News feed and search, sentiment, AI analysis and summaries, keyword monitors and automations."
+icon: "newspaper"
+mode: "wide"
+---
+
+Toolset `news`: 22 tools. List them all with `?toolsets=news`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `news_get_feed` | Latest articles from the curated feeds, newest first: title, summary, source, url, category, published_at (UTC), sentiment label and score, tickers. | Read, core |
+| `news_search_articles` | Search the article corpus, newest first, same row shape as news_get_feed. | Read, core |
+| `news_list_sources` | The enabled news feeds: id, name, url, category, region, publisher, tier and last poll status, plus the plan's news_sources limit. | Read, core |
+| `news_score_text` | Lexicon sentiment of one piece of text: label (positive, negative, neutral) and score. | Read |
+| `news_get_sentiment_aggregate` | Aggregate sentiment over many articles: counts by label, mean score and std dev, mean by source and by UTC day, top title terms. | Read, credits |
+| `news_analyze_article` | AI dossier on one article fetched from its url: the model's structured analysis plus headline and word count. | Read, credits |
+| `news_summarize_headlines` | AI desk note summarising a list of headlines (the first 60 are used). | Read, credits |
+| `news_list_monitors` | The user's keyword monitors (id, label, keywords, color, enabled) with the plan's news_monitors limit and the rate: each monitor costs 1 credit per UTC day it is swept (action news_monitor_run), levied by the server's sweep, not by these calls. | Read, credits |
+| `news_create_monitor` | Create a keyword monitor swept server-side against the corpus. | Write, credits |
+| `news_update_monitor` | Replace a monitor's label, keywords, color and enabled state. | Write, credits |
+| `news_delete_monitor` | Delete one of the user's news monitors. | Delete |
+| `news_list_monitor_hits` | Articles the user's monitors matched, most recent match first, each with the monitor and the article. | Read |
+| `news_list_monitor_charges` | What the user was billed for monitors and automations over the last 30 days: one row per charge with credits, plus credits_30d, the total. | Read |
+| `news_list_automations` | The user's news automations with trigger, action and last sweep status, the shared news_monitors limit and how much of it monitors and automations use, and the rate: 1 credit per automation per UTC day it is evaluated (action news_monitor_run). | Read, credits |
+| `news_dry_run_automation` | Evaluate an automation spec against the last N days of the corpus (1-14) without saving it: what it would have fired on, the normalised spec and a plain-language summary. | Read |
+| `news_create_automation` | Save an automation. | Write, credits |
+| `news_get_automation` | One automation with its trigger, action, status and a plain-language summary. | Read |
+| `news_update_automation` | Change an automation's name, trigger or action. | Write |
+| `news_set_automation_enabled` | Set an automation enabled (true) or paused (false). | Write |
+| `news_delete_automation` | Delete one of the user's automations. | Delete |
+| `news_get_automation_history` | What an automation fired on: instrument, trading day, article, filing type, importance, entity confidence and the queued action id. | Read |
+| `news_list_automation_user_feeds` | The user's own RSS feeds as automations name them (source_key "user:&lt;key&gt;"), whether the server polls each and why not, and the plan's rss_feeds limit. | Read |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

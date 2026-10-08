@@ -1,0 +1,31 @@
+---
+title: "Analytics"
+description: "Portfolio analytics, attribution, technicals, macro factors, market regimes, option strategies, volatility surfaces and rule backtests."
+icon: "activity"
+mode: "wide"
+---
+
+Toolset `analytics`: 18 tools. List them all with `?toolsets=analytics`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `analytics_run_quantstats` | QuantStats-style report over one year of daily history for a saved portfolio: performance (total and annualised return, best/worst day), risk (annualised volatility, max drawdown, daily 95% VaR and CVaR, downside deviation), ratios (Sharpe, Sortino, Calmar, profit factor) and the return distribution. | Read, core, credits |
+| `analytics_run_montecarlo` | Monte Carlo of a saved portfolio over 252 daily steps from one year of history: median, 5th and 95th percentile returns, probability of loss and expected max drawdown (percent), plus sample paths. | Read, credits |
+| `analytics_optimize_portfolio` | Optimal weights for a saved portfolio's holdings from one year of daily prices, with expected annual return, volatility and Sharpe, the other strategies for comparison, risk contributions and an efficient frontier. | Read, credits |
+| `analytics_run_ffn` | FFN-style analysis of a saved portfolio over one year of daily prices: per-asset and portfolio return, CAGR, volatility, Sharpe, drawdown and streak statistics, and alternative weightings (equal risk contribution, inverse volatility, equal) compared with the current one. | Read, credits |
+| `analytics_run_attribution` | Where a saved portfolio's return came from over a window: contribution by position and sector, the mark-to-market split, and the active return against a benchmark split into beta-explained and selection. | Read, credits |
+| `analytics_list_attribution_runs` | The stored end-of-day attribution reports of one portfolio, newest first, each with its trigger (manual or auto), benchmark, lookback, credits paid and full result. | Read |
+| `analytics_get_attribution_schedule` | Whether a portfolio is enrolled in the daily automatic attribution report, with its benchmark, lookback, last charge date and the price per day (credits_per_day). | Read |
+| `analytics_compute_technicals` | Daily technical-indicator grid for a symbol (SMA, EMA, MACD, ADX, Aroon, RSI, stochastic, Williams %R, ROC, MFI, ATR, Bollinger, OBV, VWAP, CMF and more), one row per bar plus a summary with buy/neutral/sell tallies per indicator group and an overall signal. | Read, core |
+| `analytics_get_risk_free_rate` | The current risk-free rate as an annual decimal (0.043 = 4.3%) from FRED DGS10 (10-year Treasury), cached for 24 hours, with its source. | Read |
+| `analytics_get_macro_factors` | Dated observations (YYYY-MM-DD, value) for one or more FRED series ids such as DGS10, CPIAUCSL, UNRATE, FEDFUNDS. | Read |
+| `analytics_scan_market_regime` | Cross-sectional read of a universe of at least 5 distinct symbols: regime (RISK-ON, RISK-OFF, CORRELATED, BROAD ADVANCE, BROAD DECLINE, MIXED) and a one-line reading, breadth above each symbol's own moving average, advancing breadth, dispersion, average pairwise correlation, annualised realised volatility, leaders and laggards. | Read, credits |
+| `analytics_model_option_strategy` | Black-Scholes risk profile of a multi-leg option strategy: per-leg theoretical value and Greeks, aggregated delta/gamma/vega/theta, net premium, breakevens, a spot x volatility scenario P&L grid with worst and best cells, and a non-authoritative margin estimate (worst grid loss, floored at 5% of short notional). | Read, credits |
+| `analytics_calibrate_vol_surface` | Joint SVI calibration of an implied-volatility surface across at least two expiries under a no-calendar-arbitrage constraint, multi-started per slice. | Read, credits |
+| `analytics_list_surface_fits` | The account's stored surface calibrations, newest first: underlying, as-of, fitted time, slice count, calendar_ok, slices repaired, worst RMSE (IV) and the fit. | Read |
+| `analytics_simulate_alt_program` | Seeded correlated Monte Carlo of a private-markets commitment program (Takahashi-Alexander pacing): percentile bands per period of capital calls, distributions, net and cumulative cash flow and NAV, the probability of a funding shortfall against reserves plus credit line, the need at the stated confidence and the largest sustainable annual commitment. | Read, credits |
+| `analytics_backtest_rules` | Backtests one symbol with entry and exit rules in the screener's condition DSL, stop loss, take profit, trailing stop and position sizing, on the fincept engine with a default cost model for the asset class. | Read, credits |
+| `analytics_list_rule_backtests` | The account's stored rule backtests, newest first. | Read |
+| `analytics_get_rule_backtest` | One stored rule backtest of this account with its result. | Read |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

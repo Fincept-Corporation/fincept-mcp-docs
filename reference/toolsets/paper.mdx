@@ -1,0 +1,34 @@
+---
+title: "Paper trading"
+description: "The Fincept Paper account: books, orders, positions, trades and equity curves. No real money."
+icon: "receipt"
+mode: "wide"
+---
+
+Toolset `paper`: 21 tools. List them all with `?toolsets=paper`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `paper_get_account_summary` | The Fincept Paper account totalled across its main book and every sleeve in the base currency: equity, cash, unrealised, today's realised, day and total P&L, margin used, open orders, positions, exposure by asset class and currency, top 5 positions, and each book's id, name, sleeve_key and equity. | Read, core |
+| `paper_ensure_account` | Find or create the user's Fincept Paper account and its main book (an existing account is returned unchanged and the arguments ignored). | Write |
+| `paper_list_books` | Every paper book of the user (main book, sleeves and user books) with its settings, positions, today's order book, its 100 most recent trades and trade statistics. | Read |
+| `paper_get_book` | One paper book in full: settings (currency, cash balance, initial balance, fee rate, leverage, market-hours rule), positions, today's order book, its 100 most recent trades and trade statistics. | Read |
+| `paper_get_book_summary` | One book's compact summary in its base currency: equity, cash, unrealised, today's realised, day and total P&L, margin used, open orders, positions, exposures and top 5 positions. | Read |
+| `paper_get_positions` | A book's open positions: id, symbol, canonical instrument, exchange, side (long/short), quantity, entry and current price (quote currency), unrealised and realised P&L and held margin (base currency), product, attached stop_loss/take_profit. | Read, core |
+| `paper_get_orders` | A book's orders for one trading day (IST, default today. | Read, core |
+| `paper_get_trades` | A book's fills, newest first: price (quote currency), quantity, fee and realised P&L (base currency), the fill's FX rate, source and tag. | Read |
+| `paper_get_stats` | A book's trade statistics in its base currency: total and today's P&L, win rate, winning/losing trades, largest and average win and loss, gross profit and loss, profit factor, fees and turnover. | Read |
+| `paper_get_equity_curve` | A book's daily equity history (one row per UTC day, oldest first) over the last N days, in its base currency, with each day's net deposits. | Read |
+| `paper_place_order` | Place a SIMULATED order in a paper book (the main book is portfolio_id of paper_get_account_summary). | Write, credits |
+| `paper_close_position` | Close (or reduce) an open paper position with a reduce-only MARKET order: side sell closes a long, buy closes a short. | Write, credits |
+| `paper_cancel_order` | Cancel an open paper order and release its blocked margin. | Write |
+| `paper_set_position_bracket` | Set, change or clear the stop-loss and take-profit attached to an open paper position. | Write |
+| `paper_convert_position` | Move an open paper position to another product (e.g. intraday MIS to delivery CNC). | Write |
+| `paper_create_book` | Create a separate paper book inside the Fincept Paper account, with its own cash and margin. | Write |
+| `paper_rename_book` | Rename a paper book. | Write |
+| `paper_set_cash_balance` | Set a paper book's cash to balance (base currency). | Write |
+| `paper_set_book_config` | Replace a paper book's leverage per product and its market-hours rule. | Write |
+| `paper_reset_book` | Reset a paper book to its starting state: ERASES every order, position, trade and the equity history, and puts cash back to the initial balance. | Write |
+| `paper_delete_book` | Delete a paper sleeve or user book with all its orders, positions and trades. | Delete |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

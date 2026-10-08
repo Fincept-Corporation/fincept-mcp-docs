@@ -1,0 +1,4 @@
+/* Tool names are identifiers: keep each on one line in reference tables. */
+table td:first-child code {
+  white-space: nowrap;
+}

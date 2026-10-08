@@ -1,0 +1,18 @@
+---
+title: "Multivariate analysis"
+description: "Principal components (yield-curve and return PCA), factor analysis with rotations (factor models of returns, risk factors), MANOVA, canonical correlation, and tests of multivariate means and of the structure of a covariance matrix."
+mode: "wide"
+---
+
+Toolset `stats_multivariate`: 6 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_pca` | Principal component analysis of several series (e.g. yields across maturities, asset returns): loadings of each column on each component, component scores per row as a series with a chart, eigenvalues with the share and cumulative share of variance explained (scree chart), and the Bai-Ng information criteria IC_p1-IC_p3 for the number of components (the minimum suggests how many to keep). |  |
+| `stats_factor_analysis` | Exploratory factor analysis of the correlation matrix of several series (e.g. asset returns, macro indicators): rotated and unrotated loadings of each variable on n_factor latent factors, communalities (variance shared with the factors), uniquenesses (idiosyncratic variance), eigenvalues (principal axis) or loading standard errors (maximum likelihood), and the fitted correlation matrix. |  |
+| `stats_manova` | Multivariate analysis of variance (multivariate linear model): whether each term of the formula moves several responses jointly, e.g. whether the returns of several assets differ across regimes or sectors. |  |
+| `stats_canonical_correlation` | Canonical correlation analysis between two sets of variables (e.g. a basket of asset returns and a set of macro surprises): the canonical correlations, a Wilks' lambda F test that each one and all smaller ones are zero, the overall multivariate tests (Wilks, Pillai, Hotelling-Lawley, Roy), and the canonical coefficients of each set. |  |
+| `stats_mv_mean_test` | Hotelling's T-squared test of a mean vector: one sample against hypothesised means (e.g. are the average returns of several assets jointly zero), or two independent groups against each other. |  |
+| `stats_mv_cov_test` | Likelihood-ratio tests of the structure of a covariance matrix estimated from the rows (e.g. asset returns): equal to a hypothesised matrix, spherical, diagonal (no correlation), block diagonal (groups of assets uncorrelated with each other), or equal across groups (Box's M, e.g. calm vs stressed regimes). |  |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

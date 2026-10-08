@@ -1,0 +1,56 @@
+---
+title: "Data"
+description: "Global economic and financial series from every provider, datasets, vendor fundamentals, adjusted prices, options data and scheduled refreshes."
+icon: "database"
+mode: "wide"
+---
+
+Toolset `data`: 43 tools. List them all with `?toolsets=data`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `data_list_providers` | Every data provider in the series catalog (fred, imf, worldbank, eurostat, ecb, bis, oecd, bls, boe ...): id, name, kind, series_count, licence_class, homepage, synced_at and whether exact point-in-time vintages exist. | Read |
+| `data_list_topics` | The subject taxonomy the series catalog is labelled with: id, parent_id, level, name, description and series_count (whole subtree) / direct_series_count. | Read |
+| `data_search_series` | Search 1.7M+ economic and financial time series across every provider, best match first: provider_id, native_id, title, units, frequency, geo, start_date, end_date, status. | Read, core |
+| `data_search_datasets` | Which datasets, across every provider, are about a subject ('unemployment rate', 'house prices'): provider_id, provider_name, id, name, series_count and rank, a few per provider. | Read |
+| `data_list_provider_datasets` | One provider's dataset tree: each dataset's id, parent_id, name and series_count. | Read |
+| `data_get_series` | Metadata for one series: title, unit, canonical currency and scale, frequency, geo, dates covered, last sync, plus the provider's licence_class and attribution. | Read |
+| `data_get_observations` | Values of up to 50 series between two dates: per series title, unit, frequency and [\{date, value\}] oldest first, with status ok, fetching (a first fill was queued: call again shortly) or missing. | Read, core, credits |
+| `data_get_cross_section` | One indicator family across every country on one date (the map view): per country geo, label, value, date and native_id. | Read |
+| `data_list_families` | The indicator families of a provider (or one of its datasets) that exist for many countries and can feed data_get_cross_section: dataset_id, family, title, units and members. | Read |
+| `data_resolve_identifier` | The entity that held an identifier on a date (recycled tickers resolve to the right company), the interval it held it (valid_from, valid_to) and the series linked to that entity across providers. | Read |
+| `data_ai_search_series` | Turns a plain-language question into the catalog's own terms (topic, provider, frequency, geography, exact series ids) and runs the search: interpretation, results, count. | Read, credits |
+| `data_list_infra_layers` | The infrastructure map layers loaded: id, title, category, geometry_kind, asset_count, coverage, licence_class and attribution. | Read |
+| `data_get_infra_layer` | One infrastructure layer as a GeoJSON FeatureCollection, filtered by status, country, name text and bounding box. | Read |
+| `data_get_financial_statements` | Income statement, balance sheet and cash flow of an SEC filer as filed in XBRL, by ticker or CIK: periods (newest first), each line keyed by period, in the filing currency, plus derived lines named in derived and as_of = latest filing date. | Read, core |
+| `data_list_vendors` | The equity vendor connectors registered on the data plane (fundamentals, prices, index membership): name, licence_class, requires_key (the user's own key) and requests_per_sec. | Read |
+| `data_get_vendor_fundamentals` | A company's fundamental concepts (revenue, net_income, eps_diluted ...) per fiscal period from the vendor plane, the ticker resolved as of the read date (recycled tickers handled). | Read |
+| `data_get_adjusted_prices` | Daily closes for a ticker from the vendor plane, adjusted at read time: none (as traded), splits, or total_return (splits and reinvested dividends). | Read |
+| `data_get_index_universe` | Constituents of an index (e.g. SPX) from the membership series the caller's own vendor uploads hold: today's members, or with as_of (point-in-time capability) the members on that date including later-delisted names, survivorship-free. | Read |
+| `data_list_frames` | Which cross-company XBRL frames are captured: concept, tag, unit, frame (CY2024, CY2024Q1, CY2024Q1I) and filer count. | Read |
+| `data_rank_frame` | Every SEC filer's value of one XBRL concept for one calendar frame, ranked (largest first by default): cik, entity_name, val, unit, period_start, period_end. | Read |
+| `data_snapshot_dataset` | Records a content-addressed version of a named set of series (listed, or selected by a pattern. | Write |
+| `data_list_dataset_versions` | The versions recorded for one of your dataset keys, newest first: version_seq, created_at, as_of, row_count, content_hash. | Read |
+| `data_diff_dataset_versions` | What changed between two versions of a dataset: rows added, removed and revised, revision rate, per-series counts and the largest value changes. | Read |
+| `data_verify_dataset` | Recomputes the current content hash of a dataset's latest membership and compares it with a hash you recorded: match, current_hash, current_rows, latest_seq. | Read |
+| `data_list_schedules` | Your scheduled data refreshes: id, label, provider, series, cadence, hour_utc, next_run_at, paused, credits_paused, last_run_at, plus the plan's limit and used count. | Read |
+| `data_quote_schedule` | What a schedule would cost before creating it: credits_per_run (1, whatever the number of series), runs_per_month and credits_per_month for a cadence. | Read |
+| `data_list_schedule_runs` | Past runs of your scheduled refreshes, newest first: job_id, scheduled_for, credits, status, series_total, series_ok, error, started_at, finished_at. | Read |
+| `data_create_schedule` | Creates a server-side refresh of up to 100 series of one provider on a daily, weekly or monthly cadence at an hour (UTC). | Write, credits |
+| `data_update_schedule` | Changes a schedule's label, provider, series, cadence or hour, or pauses/resumes it. | Write |
+| `data_delete_schedule` | Deletes one of your scheduled refreshes. | Delete |
+| `data_list_option_venues` | The option exchanges held: venue code, name, country, MIC, currency, timezone, quote_basis, delay_minutes and licence_class. | Read |
+| `data_get_options_coverage` | What the options store holds per venue and when each was last refreshed, so an empty answer can be told apart from a venue never loaded. | Read |
+| `data_search_option_underlyings` | Underlyings with listed options, ordered by venue: venue, symbol, name, category, kind, currency, plus total and has_more. | Read |
+| `data_search_option_contracts` | Individual option series across venues: venue, contract_symbol, underlying, side, strike, expiry_date, contract_size, exercise_style and the latest quote. | Read |
+| `data_get_option_quotes` | Latest held quote (or the quote on a date) for up to 500 contracts of one venue: bid, ask, last, settlement, volume, open_interest and the quote's own trade_date. | Read |
+| `data_get_option_chain` | One underlying's option chain from the venue's end-of-day or delayed snapshot: each contract (side, strike, expiry_date) with its quote, the session trade_date and truncated. | Read |
+| `data_list_option_chain_dates` | The session dates for which an underlying's chain is held, newest first. | Read |
+| `data_list_option_expiries` | The expiries listed for an underlying: expiry, strikes, calls, puts, strike_min, strike_max. | Read |
+| `data_get_iv_history` | Constant-tenor at-the-money implied volatility, one point per held session, oldest first: date, iv (decimal fraction), expiry_date, dte, strike. | Read |
+| `data_get_mx_catalog` | The Montreal Exchange (TMX) datasets this plane holds and where each lands, with the licence note. | Read |
+| `data_list_mx_series` | The Montreal Exchange statistics series held (put/call ratios, monthly volume and open interest): series_id, dataset, product, metric, latest_period, latest_value. | Read |
+| `data_get_mx_series` | One Montreal Exchange statistics series as [\{period, value\}] between two dates. | Read |
+| `data_get_mx_records` | Rows of one Montreal Exchange dataset stored exactly as published (TMX's columns, which can change). | Read |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

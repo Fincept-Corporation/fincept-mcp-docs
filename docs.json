@@ -1,0 +1,187 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "linden",
+  "name": "Fincept MCP",
+  "description": "Connect Claude Code, Codex, Cursor and any MCP client to Fincept Terminal's markets, research, analytics and Fincept Stats.",
+  "colors": {
+    "primary": "#0E7C4A",
+    "light": "#04B96C",
+    "dark": "#0E7C4A"
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg",
+    "href": "https://fincept.in"
+  },
+  "favicon": "/favicon.svg",
+  "appearance": {
+    "default": "dark",
+    "strict": false
+  },
+  "background": {
+    "color": {
+      "light": "#F3EFE4",
+      "dark": "#121212"
+    }
+  },
+  "fonts": {
+    "family": "JetBrains Mono"
+  },
+  "styling": {
+    "codeblocks": "dark",
+    "eyebrows": "section"
+  },
+  "icons": {
+    "library": "lucide"
+  },
+  "search": {
+    "prompt": "Search tools, clients, errors..."
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Plans",
+        "href": "https://fincept.in/enterprise/plans"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Get Exclusive Pro",
+      "href": "https://fincept.in/enterprise/plans"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "claude",
+      "chatgpt",
+      "cursor",
+      "vscode"
+    ]
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "index",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Connect a client",
+            "pages": [
+              "clients/claude-code",
+              "clients/codex",
+              "clients/cursor",
+              "clients/vs-code",
+              "clients/other-clients"
+            ]
+          },
+          {
+            "group": "Use the server",
+            "pages": [
+              "guides/finding-tools",
+              "guides/results",
+              "guides/data-references",
+              "guides/fincept-stats",
+              "guides/prompts"
+            ]
+          },
+          {
+            "group": "Account",
+            "pages": [
+              "guides/authentication",
+              "guides/credits-and-limits",
+              "guides/security",
+              "guides/troubleshooting"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Reference",
+        "icon": "square-terminal",
+        "groups": [
+          {
+            "group": "Protocol",
+            "pages": [
+              "reference/endpoint",
+              "reference/gateway-tools",
+              "reference/result-envelope",
+              "reference/errors"
+            ]
+          },
+          {
+            "group": "Toolsets",
+            "pages": [
+              "reference/toolsets/overview",
+              "reference/toolsets/credits",
+              {
+                "group": "By toolset",
+                "expanded": false,
+                "pages": [
+                  "reference/toolsets/market",
+                  "reference/toolsets/backtest",
+                  "reference/toolsets/algo",
+                  "reference/toolsets/crypto",
+                  "reference/toolsets/data",
+                  "reference/toolsets/filings",
+                  "reference/toolsets/deals",
+                  "reference/toolsets/portfolio",
+                  "reference/toolsets/paper",
+                  "reference/toolsets/workspace",
+                  "reference/toolsets/research",
+                  "reference/toolsets/agents",
+                  "reference/toolsets/account",
+                  "reference/toolsets/analytics",
+                  "reference/toolsets/screener",
+                  "reference/toolsets/quantlab",
+                  "reference/toolsets/news",
+                  "reference/toolsets/altdata"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Stats",
+            "pages": [
+              "reference/stats/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/stats/descriptive",
+                  "reference/stats/regression",
+                  "reference/stats/glm",
+                  "reference/stats/discrete",
+                  "reference/stats/tsa-models",
+                  "reference/stats/tsa-analysis",
+                  "reference/stats/tsa-multivariate",
+                  "reference/stats/tests",
+                  "reference/stats/diagnostics",
+                  "reference/stats/power",
+                  "reference/stats/multivariate",
+                  "reference/stats/nonparametric",
+                  "reference/stats/survival",
+                  "reference/stats/imputation"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "website": "https://fincept.in",
+      "github": "https://github.com/Fincept-Corporation"
+    }
+  }
+}

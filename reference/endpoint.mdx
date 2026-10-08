@@ -1,0 +1,60 @@
+---
+title: "Endpoint"
+description: "The MCP endpoint, its transport and the OAuth 2.1 endpoints behind it."
+icon: "server"
+---
+
+## MCP endpoint
+
+```text
+https://enterprise.fincept.in/mcp
+```
+
+| Property | Value |
+| --- | --- |
+| Transport | Streamable HTTP (`POST`, JSON responses) |
+| Sessions | Stateless: no `Mcp-Session-Id` is required, and any request can reach any server instance |
+| Server name | `fincept` |
+| Capabilities | `tools`, `resources` (result templates) |
+| Authorization | `Authorization: Bearer <access token>` issued by the endpoints below |
+
+### Query parameters
+
+<ParamField query="toolsets" type="string">
+  Comma-separated toolsets to list in addition to the core tools, or `all`. See [finding tools](/guides/finding-tools#list-whole-toolsets).
+</ParamField>
+
+### Unauthenticated response
+
+```http
+HTTP/1.1 401 Unauthorized
+WWW-Authenticate: Bearer resource_metadata="https://enterprise.fincept.in/.well-known/oauth-protected-resource/mcp"
+```
+
+## OAuth 2.1 endpoints
+
+| Endpoint | URL |
+| --- | --- |
+| Protected resource metadata (RFC 9728) | `https://enterprise.fincept.in/.well-known/oauth-protected-resource/mcp` |
+| Authorization server metadata (RFC 8414) | `https://enterprise.fincept.in/.well-known/oauth-authorization-server` |
+| Dynamic client registration (RFC 7591) | `POST https://enterprise.fincept.in/oauth/register` |
+| Authorization | `GET https://enterprise.fincept.in/oauth/authorize` |
+| Token | `POST https://enterprise.fincept.in/oauth/token` |
+| Revocation (RFC 7009) | `POST https://enterprise.fincept.in/oauth/revoke` |
+
+| Parameter | Supported values |
+| --- | --- |
+| `response_type` | `code` |
+| `grant_type` | `authorization_code`, `refresh_token` |
+| `code_challenge_method` | `S256` (PKCE is required) |
+| `token_endpoint_auth_method` | `none` (public clients) |
+| `scope` | `mcp` |
+| `resource` | `https://enterprise.fincept.in/mcp` |
+
+The authorization response carries `iss` (RFC 9207). Refresh tokens rotate on every use; presenting a used refresh token revokes the whole grant.
+
+## Resources
+
+| URI template | Content |
+| --- | --- |
+| `fincept://results/{id}` | A stored large result: the full [result envelope](/reference/result-envelope) as JSON |

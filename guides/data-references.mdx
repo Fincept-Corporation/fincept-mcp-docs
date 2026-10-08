@@ -1,0 +1,69 @@
+---
+title: "Data references"
+description: "Feed Fincept data straight into a Fincept Stats tool with a $fincept reference."
+icon: "link"
+---
+
+A Fincept Stats tool computes on numbers that usually come from another Fincept tool. Instead of fetching 2,000 closes and pasting them back (slow, and expensive in context), the agent passes a **reference** and the server fetches the data itself.
+
+```json
+{
+  "y": {
+    "$fincept": {
+      "tool": "market_get_candles",
+      "arguments": { "symbol": "AAPL", "interval": "1d", "limit": 1000 },
+      "path": "candles.close"
+    }
+  },
+  "order": [1, 1, 1],
+  "steps": 20
+}
+```
+
+This call to `stats_arima` fits the model on AAPL's last 1,000 daily closes.
+
+## Fields
+
+<ParamField body="tool" type="string" required>
+  A Fincept read tool, such as `market_get_candles`, `data_get_observations` or `portfolio_get_performance`. Tools that write to your account are refused.
+</ParamField>
+
+<ParamField body="arguments" type="object">
+  That tool's arguments, validated against its schema.
+</ParamField>
+
+<ParamField body="path" type="string">
+  A dot path into the tool's `data`. At a list, a number picks one item (`series.0` is the first series); any other segment applies to every item (`candles.close` is every candle's close). Empty means the whole `data`.
+</ParamField>
+
+## Rules
+
+- A reference can stand in for any argument value: a series, a table column, a whole table.
+- Up to **8 references** per call.
+- The referenced tool runs as you: its plan checks, quotas and credits apply exactly as if the agent had called it.
+- A reference that fails (unknown tool, refused call, missing path) makes the whole call fail with `validation_failed` and a message naming the reference.
+
+## Examples
+
+<AccordionGroup>
+  <Accordion title="Regression of a stock on an index">
+    ```json
+    {
+      "data": {
+        "stock": { "$fincept": { "tool": "market_get_candles", "arguments": { "symbol": "RELIANCE.NS", "interval": "1d", "limit": 500 }, "path": "candles.close" } },
+        "index": { "$fincept": { "tool": "market_get_candles", "arguments": { "symbol": "^NSEI", "interval": "1d", "limit": 500 }, "path": "candles.close" } }
+      },
+      "formula": "np.log(stock) ~ np.log(index)"
+    }
+    ```
+    Tool: `stats_ols`. Both series must have the same length; ask for the same `limit` and `interval`.
+  </Accordion>
+  <Accordion title="Unit-root test on an economic series">
+    ```json
+    {
+      "values": { "$fincept": { "tool": "data_get_observations", "arguments": { "series": ["fred:UNRATE"], "start": "2000-01-01" }, "path": "series.0.observations.value" } }
+    }
+    ```
+    Tool: `stats_stationarity_test`. `data_get_observations` answers a list of series; `series.0` picks the first.
+  </Accordion>
+</AccordionGroup>

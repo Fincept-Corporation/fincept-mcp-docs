@@ -1,0 +1,26 @@
+---
+title: "Quant lab"
+description: "Research experiments, trials, deflated Sharpe ratios, signals, correlation checks and lineage."
+icon: "flask-conical"
+mode: "wide"
+---
+
+Toolset `quantlab`: 13 tools. List them all with `?toolsets=quantlab`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `quantlab_record_experiment` | Records one research trial (a backtest, signal evaluation, model fit or optimisation) against a strategy family in the append-only trials ledger, and returns the stored record with the family's updated trial counts. | Write |
+| `quantlab_list_experiments` | The account's recorded experiments, newest first, optionally filtered by family or kind. | Read |
+| `quantlab_get_experiment` | One recorded experiment of this account: family, kind, config and its hash, results, status, tags and retirement state. | Read |
+| `quantlab_get_trials` | The multiple-testing ledger for one strategy family: n_trials (every run), n_eff (distinct configurations), first and last trial time, the cross-trial Sharpe dispersion and the best Sharpe. | Read |
+| `quantlab_deflate_sharpe` | Deflates a Sharpe ratio by the number of trials recorded for its family: PSR, the DSR range between n_trials and n_eff, a PASS/FAIL verdict at the 0.95 gate, the observed t-statistic, the minimum track record length and a one-line headline. | Read |
+| `quantlab_register_signal` | Stores one representative return series for a strategy family in the signal library (60 to 20000 finite observations, daily intended), replacing any earlier series for that family. | Write |
+| `quantlab_list_signals` | The account's signal library index: each family's series length, hash, period and interval, without the return vectors. | Read |
+| `quantlab_correlate_family` | Correlates a registered family's return series with the rest of the library: pairwise correlations, top 3, max \|corr\| and its family, a DISTINCT/RELATED/REDUNDANT/UNKNOWN verdict (below 0.3 distinct, above 0.7 redundant) and the residual Sharpe after the closest signal is regressed out. | Read |
+| `quantlab_correlate_candidate` | Same check as quantlab_correlate_family for a return series that is not stored: correlations against the library, the redundancy verdict and the residual Sharpe. | Read |
+| `quantlab_record_lineage` | Records that one strategy family descends from another. | Write |
+| `quantlab_get_lineage` | Ancestors and descendants of a strategy family, two levels each way. | Read |
+| `quantlab_retire_experiment` | Moves an experiment to the graveyard with a mandatory cause of death. | Write |
+| `quantlab_search_graveyard` | Retired experiments, most recently retired first, with the reason, the family's current trial counts, best Sharpe and its deflated Sharpe when the run reported n_obs. | Read |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

@@ -1,0 +1,86 @@
+---
+title: "Result envelope"
+description: "Every field of the Fincept Result Protocol (result/v1) and every block type."
+icon: "braces"
+---
+
+Every tool returns this object as `structuredContent` and as JSON text. Tools declare it as their `outputSchema`.
+
+## Fields
+
+<ResponseField name="fincept" type="string" required>
+  Always `result/v1`.
+</ResponseField>
+<ResponseField name="tool" type="string" required>
+  The tool that produced the result.
+</ResponseField>
+<ResponseField name="status" type="string" required>
+  `ok`, `partial` (a preview; the full result is stored) or `error`.
+</ResponseField>
+<ResponseField name="summary" type="string">
+  One sentence describing the result.
+</ResponseField>
+<ResponseField name="data" type="any">
+  The machine payload, always JSON. Numbers are numbers, dates are ISO-8601, `NaN` and infinity are `null`. In a `partial` result, lists named in `truncated.lists` are cut.
+</ResponseField>
+<ResponseField name="blocks" type="object[]">
+  Presentation, in reading order. See [blocks](#blocks).
+</ResponseField>
+<ResponseField name="artifacts" type="object[]">
+  Stored full results.
+  <Expandable title="artifact">
+    <ResponseField name="id" type="string">Result id, `r_` followed by 24 hex characters.</ResponseField>
+    <ResponseField name="uri" type="string">`fincept://results/{id}`, readable as an MCP resource.</ResponseField>
+    <ResponseField name="view_url" type="string">Browser viewer at `https://fincept.in/enterprise/results/{id}`.</ResponseField>
+    <ResponseField name="mime" type="string">`application/json`.</ResponseField>
+    <ResponseField name="bytes" type="integer">Size of the full result.</ResponseField>
+    <ResponseField name="expires_at" type="string">When the stored result is deleted.</ResponseField>
+  </Expandable>
+</ResponseField>
+<ResponseField name="truncated" type="object">
+  Present when the inline result is a preview.
+  <Expandable title="truncated">
+    <ResponseField name="reason" type="string">`size`.</ResponseField>
+    <ResponseField name="inline_bytes" type="integer">Size of this preview.</ResponseField>
+    <ResponseField name="full_bytes" type="integer">Size of the full result.</ResponseField>
+    <ResponseField name="read_with" type="string">`fincept_read_result`.</ResponseField>
+    <ResponseField name="lists" type="object[]">Each cut list: `path`, `shown`, `total`.</ResponseField>
+  </Expandable>
+</ResponseField>
+<ResponseField name="warnings" type="string[]">
+  Notes about the result, such as a convergence warning.
+</ResponseField>
+<ResponseField name="error" type="object">
+  Present when `status` is `error`: `code`, `message`, optional `hint` and `details`. See [errors](/reference/errors).
+</ResponseField>
+<ResponseField name="meta" type="object">
+  Optional context such as `source`, `as_of` and `units`.
+</ResponseField>
+
+## Blocks
+
+Renderers skip block types they do not know, so new types never break a client.
+
+| Type | Fields | Meaning |
+| --- | --- | --- |
+| `text` | `format` (`markdown` or `plain`), `text` | Notes and explanations |
+| `metrics` | `items[]`: `label`, `value`, `unit`, `delta`, `hint` | Headline numbers |
+| `table` | `id`, `title`, `columns[]` (`name`, `type`, `unit`), `rows[][]`, `total_rows` | Tabular results |
+| `series` | `id`, `title`, `x` (`name`, `type`), `y[]` (`name`, `unit`), `rows[][]`, `total_rows` | Data for charts |
+| `chart` | `id`, `title`, `kind`, `series_ref`, `x`, `y[]`, `band` (`lower`, `upper`) | A chart over the `series` or `table` block named by `series_ref` |
+| `image` | `mime`, `uri` | An image stored as an artifact |
+| `link` | `url`, `label` | A related page |
+
+Chart `kind` is one of `line`, `bar`, `scatter`, `area`, `hist`, `heatmap`, `candlestick`. A `band` names the series columns that bound a shaded interval.
+
+```json Forecast with a band
+[
+  { "type": "series", "id": "forecast", "title": "Forecast",
+    "x": { "name": "date", "type": "date" },
+    "y": [ { "name": "mean" }, { "name": "lower" }, { "name": "upper" } ],
+    "rows": [ ["2026-10-09", 25012.4, 24610.2, 25414.6] ], "total_rows": 1 },
+  { "type": "chart", "id": "forecast_chart", "title": "Forecast", "kind": "line",
+    "series_ref": "forecast", "x": "date", "y": ["mean"],
+    "band": { "lower": "lower", "upper": "upper" } }
+]
+```

@@ -1,0 +1,32 @@
+---
+title: "Deals"
+description: "M&A deals, comparable-company builds, private placements, private raises and private credit."
+icon: "handshake"
+mode: "wide"
+---
+
+Toolset `deals`: 19 tools. List them all with `?toolsets=deals`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `deals_list_deals` | M&A deals extracted from SEC filings (newest announced first by default): deal_id, target and acquirer (cik, name, tickers), announced, status, deal_type, consideration_type, offer_per_share, equity_value, enterprise_value, premium_pct. | Read |
+| `deals_search` | One lookup over the M&A index: matching deals and matching SEC companies (cik, name, tickers, sic_description, has_fundamentals). | Read |
+| `deals_get_deal` | One M&A deal: its terms, the filings it was extracted from, the extraction log with the quoted evidence, and both parties. | Read |
+| `deals_get_flow` | SEC filings that signal M&A (8-K items 1.01, 1.02, 2.01, 5.01. | Read |
+| `deals_resolve_company` | Company-name, former-name or ticker lookup against the SEC register: up to 25 candidates with cik, name, tickers and matched_kind (which spelling matched). | Read |
+| `deals_get_company` | A filer's profile and its deal-signal filings of the last five years: company, deal_filings, deal_count, deal_window. | Read |
+| `deals_get_fundamentals` | The latest SEC XBRL values a comps card needs for one filer (revenue, operating income, D&A, net income, shares, debt, cash, equity, assets, capex, interest ...) with period and basis. | Read |
+| `deals_get_owners` | Institutional 13F holders of a listed ticker, ranked on value_common (options excluded): cusip used, period, holders, holders_count and totals in whole USD. | Read |
+| `deals_build_comps` | Screens up to 15 candidate peers against a subject's SIC code and returns a comps table: peers normalised to one fiscal year from XBRL and priced at a live quote with computed multiples and medians, plus rejected candidates with reasons. | Write, credits |
+| `deals_list_comps_history` | The comps sets you have built, newest first, and the current price of a new one. | Read |
+| `deals_search_private_placements` | Form D private-placement notices: accession, entity_name, cik, state, industry_group, investment_fund_type, filing_date, total_offering_amount, total_amount_sold (USD), investors. | Read |
+| `deals_get_private_placement` | One Form D notice with its issuers, sales agents, related persons and its amendment chain. | Read |
+| `deals_list_placement_industries` | The industry groups of the Form D corpus with counts, for the industry filter. | Read |
+| `deals_search_private_raises` | Private raises grouped from their Form D vehicles (main fund, feeders, parallel LPs): raise_id, sponsor, family, vintage_number, strategy_label, child_count, total_sold_latest (MAX over vehicles, USD), investors_total, first_sale_date, latest_filing_date. | Read |
+| `deals_get_private_raise` | One grouped private raise with its child Form D vehicles. | Read |
+| `deals_list_private_credit_funds` | Business development companies (private-credit lenders), largest book first: cik, bdc_name, period_end, positions, fair_value_total, cost_total, top_industries. | Read |
+| `deals_search_private_credit_borrowers` | One private borrower across every BDC's latest schedule of investments: cik, bdc_name, period_end, issuer_display, industry, fair_value, cost, interest_rate, basis_spread, mark_to_cost. | Read |
+| `deals_get_private_credit_schedule` | One BDC's schedule of investments for a period: each position's issuer, industry, investment type, fair_value, cost, principal, interest_rate, basis_spread, pik_rate. | Read |
+| `deals_get_private_credit_summary` | One BDC's portfolio shape for a period: industry mix, weighted rate, floating, non-USD, PIK and rated shares, and marks. | Read |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

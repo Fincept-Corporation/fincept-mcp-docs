@@ -1,0 +1,19 @@
+---
+title: "Discrete choice and count models"
+description: "Binary logit and probit, multinomial and conditional (fixed-effects) logit, ordered logit and probit, Poisson, negative binomial and generalized Poisson counts, zero-inflated, hurdle and truncated counts, with marginal effects, predicted probabilities and classification tables."
+mode: "wide"
+---
+
+Toolset `stats_discrete`: 7 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_logit` | Binary choice model for a 0/1 outcome (default or not, up or down, churn): logit or probit by maximum likelihood. | core |
+| `stats_multinomial_logit` | Multinomial logit for an unordered categorical outcome with three or more values (choice of venue, rating bucket, sector): one coefficient set per outcome against the lowest (base) outcome. |  |
+| `stats_conditional_logit` | Conditional maximum likelihood within groups: McFadden's conditional logit for choices among alternatives (which venue, broker or mode is chosen given each alternative's attributes) and fixed-effects logit, Poisson or multinomial logit for panels, where each group's own intercept is conditioned away (no intercept is estimated). | up to 180 s |
+| `stats_ordered_model` | Ordered logit or probit for a ranked outcome (credit rating notches, analyst recommendation 1-5, survey scale): one slope per regressor and a cutpoint between each pair of adjacent categories, no intercept. | up to 120 s |
+| `stats_count_regression` | Regression for counts (trades per day, defaults per portfolio, claims per policy): Poisson, negative binomial (NB2, NB1, geometric or NB-P) or generalized Poisson, with optional offset or exposure for rates. |  |
+| `stats_zero_inflated` | Zero-inflated count model: a mixture of structural zeros (rows that can only be zero, such as dormant accounts) and a Poisson, negative binomial or generalized Poisson count. | up to 120 s |
+| `stats_hurdle_truncated` | Hurdle model (one process decides zero or positive, a zero-truncated count gives the size: whether a client trades, then how many trades) or left-truncated count model (counts at or below the truncation point are never recorded). | up to 120 s |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

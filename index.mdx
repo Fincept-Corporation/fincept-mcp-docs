@@ -1,0 +1,55 @@
+---
+title: "Fincept MCP"
+description: "Fincept Terminal's markets, research, analytics and statistics as tools for your coding agent."
+icon: "house"
+---
+
+Fincept MCP is a hosted [Model Context Protocol](https://modelcontextprotocol.io) server. Connect Claude Code, Codex, Cursor or any MCP client, sign in once with your Fincept account, and your agent calls Fincept Terminal's services as tools.
+
+```text Endpoint
+https://enterprise.fincept.in/mcp
+```
+
+<Info>
+  Fincept MCP is part of the **Exclusive Pro** plan. Other plans can sign in but every request is refused with `upgrade_required`. See [plans](https://fincept.in/enterprise/plans).
+</Info>
+
+## What your agent gets
+
+<Columns cols={2}>
+  <Card title="Markets" icon="chart-candlestick" href="/reference/toolsets/market">
+    Quotes, OHLCV candles, option chains, fundamentals, funds and symbol search.
+  </Card>
+  <Card title="Data and filings" icon="database" href="/reference/toolsets/data">
+    Global economic series from every provider, SEC filings, funds and deals.
+  </Card>
+  <Card title="Analytics and backtests" icon="activity" href="/reference/toolsets/backtest">
+    Portfolio analytics, screeners, option models, rule and strategy backtests.
+  </Card>
+  <Card title="Portfolios and paper trading" icon="briefcase" href="/reference/toolsets/portfolio">
+    Your portfolios, ledgers and limits, and the Fincept Paper account.
+  </Card>
+  <Card title="News and alternative data" icon="newspaper" href="/reference/toolsets/news">
+    News, sentiment, monitors, maritime, trade and geopolitical data.
+  </Card>
+  <Card title="Fincept Stats" icon="sigma" href="/guides/fincept-stats">
+    Regression, time-series models, forecasts, hypothesis tests and more, on Fincept data or your own.
+  </Card>
+</Columns>
+
+## How it works
+
+- **Sign in with your browser.** OAuth 2.1 through fincept.in. No API keys to copy or rotate. See [authentication](/guides/authentication).
+- **One result format.** Every tool answers with the same structured envelope. Large results are stored and readable page by page. See [results](/guides/results).
+- **Every tool, findable.** A short core set is listed; your agent searches the rest and calls any tool by name. See [finding tools](/guides/finding-tools).
+- **Same account, same rules.** Tools spend credits and respect quotas exactly as the terminal does. See [credits and limits](/guides/credits-and-limits).
+- **No real money.** Trading tools reach the Fincept Paper account only. See [security](/guides/security).
+
+<Columns cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Connect a client and make your first call in two minutes.
+  </Card>
+  <Card title="Tool reference" icon="square-terminal" href="/reference/toolsets/overview">
+    Every toolset and every tool.
+  </Card>
+</Columns>

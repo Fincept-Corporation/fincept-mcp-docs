@@ -1,0 +1,16 @@
+---
+title: "Nonparametric estimation"
+description: "Kernel density estimates of return distributions (univariate, multivariate and conditional), LOWESS smoothing, and kernel regression (local constant or local linear, optionally censored) with marginal effects."
+mode: "wide"
+---
+
+Toolset `stats_nonparametric`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_kde` | Univariate kernel density estimate of a series (e.g. daily returns): the density curve and its CDF on a grid as a series with charts, the bandwidth used, the mode, and quantiles of the smoothed distribution (e.g. the 1% and 5% tail quantiles). |  |
+| `stats_lowess` | LOWESS (locally weighted scatterplot smoothing) of y against x, or of a time series against time: the smoothed value for every observation (null where y or x is missing) as a series with a chart, and the residual standard deviation. |  |
+| `stats_kde_multivariate` | Kernel density of one or more variables, continuous or discrete, estimated jointly f(cols) or conditionally f(cols \| given) (e.g. the density of an asset's return given the market's), with rule-of-thumb or cross-validated bandwidths. | up to 300 s |
+| `stats_kernel_regression` | Nonparametric kernel regression of y on x: the conditional mean E[y \| x] with no functional form assumed, and the marginal effect (partial derivative) of each regressor at every row, local linear or local constant (Nadaraya-Watson, whose effect exists only for a single continuous regressor), with cross-validated or AIC bandwidths. | up to 300 s |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

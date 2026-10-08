@@ -1,0 +1,23 @@
+---
+title: "Time-series models"
+description: "Forecasting models for one series: ARIMA/SARIMAX with seasonality and regressors, autoregression and ARDL/error correction, exponential smoothing (Holt-Winters, ETS), Theta, unobserved components, Markov regime switching, STL forecasting, ARMA order selection and theoretical ARMA processes."
+mode: "wide"
+---
+
+Toolset `stats_tsa_models`: 11 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_arima` | ARIMA / seasonal SARIMA with optional exogenous regressors (ARIMAX/SARIMAX), fitted by maximum likelihood, forecasting steps periods ahead with confidence intervals (series + line chart with band). | core, up to 180 s |
+| `stats_autoreg` | Autoregression AR(p) by least squares, optionally choosing p by AIC/BIC/HQIC, with trend, seasonal dummies and exogenous regressors. | up to 120 s |
+| `stats_ardl` | Autoregressive distributed-lag model ARDL(p, q): y on its own lags and current/lagged regressors by least squares, optionally choosing the orders by AIC/BIC. | up to 120 s |
+| `stats_arma_order_select` | Fits every ARMA(p, q) with p up to max_ar and q up to max_ma by maximum likelihood and tabulates AIC, BIC or HQIC for each (lower is better), naming the best order per criterion. | up to 240 s |
+| `stats_arma_process` | The theoretical properties of an ARMA(p, q) process given its coefficients: stationarity and invertibility with the characteristic roots, the theoretical ACF and PACF, the impulse response (the MA(infinity) psi weights) and the AR(infinity) representation, as tables and charts. |  |
+| `stats_exponential_smoothing` | Classical exponential smoothing: Holt-Winters (additive or multiplicative trend and seasonality, optionally damped), Holt's linear or exponential trend, or simple exponential smoothing, with smoothing weights fitted by least squares. | up to 120 s |
+| `stats_ets` | ETS(error, trend, seasonal) exponential smoothing as a state-space model fitted by maximum likelihood: additive or multiplicative error, trend (optionally damped) and seasonality. | up to 240 s |
+| `stats_theta` | Theta method (Assimakopoulos-Nikolopoulos, as SES with drift): a strong, simple benchmark forecaster that deseasonalizes when a seasonality test says so. | up to 120 s |
+| `stats_stl_forecast` | STL forecasting: decomposes the series into trend, seasonal and remainder by LOESS (STL), forecasts the seasonally adjusted series with ARIMA or ETS, and adds the last seasonal cycle back. | up to 180 s |
+| `stats_unobserved_components` | Unobserved components (structural time-series) model by Kalman filter maximum likelihood: the series as level plus trend, seasonal, cycle, autoregressive and regression parts. | up to 240 s |
+| `stats_markov_switching` | Markov regime-switching model (Hamilton) by maximum likelihood: a regression or autoregression whose mean, variance and coefficients switch between hidden regimes following a Markov chain. | up to 300 s |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

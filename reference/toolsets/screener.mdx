@@ -1,0 +1,16 @@
+---
+title: "Screener"
+description: "Stock screens and their past runs."
+icon: "filter"
+mode: "wide"
+---
+
+Toolset `screener`: 3 tools. List them all with `?toolsets=screener`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `screener_run_screen` | Evaluates technical rules on the latest bar of every symbol in a universe (up to 250. | Read, core, credits |
+| `screener_list_runs` | The account's recent screens, newest first: id, strategy name, timeframe, universe size, match count and time. | Read |
+| `screener_get_run` | One stored screen of this account with its matches. | Read |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

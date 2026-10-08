@@ -1,0 +1,33 @@
+---
+title: "Hypothesis tests"
+description: "t, z and Welch tests, equivalence (TOST), one-way, factorial and repeated-measures ANOVA, Tukey HSD and pairwise comparisons, multiple-testing corrections, proportion, binomial and Poisson-rate tests, contingency tables, runs, normality and goodness-of-fit tests, effect sizes, rater agreement, mediation and Oaxaca-Blinder decomposition."
+mode: "wide"
+---
+
+Toolset `stats_tests`: 21 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_compare_means` | Tests a mean against a value (one sample), the mean of paired differences (paired=true), or the difference of two independent means (Welch by default, pooled Student optional), as a t or z test. | core |
+| `stats_equivalence_test` | Two one-sided tests (TOST) of equivalence: is the mean (one sample), the mean paired difference, or the difference of two independent means inside [low, upp]? Equivalence is concluded when the TOST p-value (the larger of the two one-sided p-values) is below alpha, equivalently when the 1 - 2*alpha interval lies inside the margins. |  |
+| `stats_anova_oneway` | One-way ANOVA: do the means of several groups differ? Welch's test by default (no equal-variance assumption). |  |
+| `stats_anova_table` | ANOVA table of a linear model fitted by least squares from a formula: each term's sum of squares, degrees of freedom, F statistic and p-value (types 1, 2 or 3), optionally with heteroskedasticity-robust tests, plus each term's partial eta squared. |  |
+| `stats_anova_repeated` | Repeated-measures ANOVA for a balanced design: every subject is measured under every combination of the within-subject factors. |  |
+| `stats_mediation` | Causal mediation analysis with two linear models (mediator ~ exposure + covariates. | up to 180 s |
+| `stats_oaxaca_blinder` | Oaxaca-Blinder decomposition of the gap between two groups' mean outcomes into the part explained by differences in characteristics (endowments) and the part due to different coefficients (unexplained), each from a linear model per group. |  |
+| `stats_runs_test` | Runs test of randomness: are values above and below a cutoff (mean, median, or a threshold such as 0 for up/down days) ordered randomly, or do they cluster (too few runs: momentum, trends) or alternate (too many runs: mean reversion)? With values2, the Wald-Wolfowitz test that two samples share one distribution. |  |
+| `stats_normality_test` | Tests whether values are normally distributed with several tests side by side: Jarque-Bera (skewness and kurtosis), D'Agostino-Pearson omnibus, Anderson-Darling, and Lilliefors (Kolmogorov-Smirnov with estimated mean and variance). |  |
+| `stats_gof_discrete` | Chi-square goodness of fit of a discrete distribution (Poisson, negative binomial, binomial) to count data, with parameters given or fitted by moments. |  |
+| `stats_effect_size` | Standardized effect sizes from summary statistics, for judging practical (not just statistical) significance and as inputs to stats_power_solve: Hedges' g (bias-corrected standardized mean difference) with its variance and confidence interval, Cohen's h for two proportions, and Cohen's f and f² for several means. |  |
+| `stats_agreement` | Agreement between raters beyond chance: Cohen's kappa for two raters (optionally linear or quadratic weighted for ordered categories) with its standard error, interval and test against zero. |  |
+| `stats_pairwise_comparisons` | Every pair of groups compared after an ANOVA: Tukey's HSD with simultaneous confidence intervals of each mean difference, or per-pair t, Welch or Mann-Whitney tests with a multiple-testing correction. |  |
+| `stats_multiple_testing` | Adjusts many p-values for multiple testing, e.g. when screening many strategies, factors or signals: family-wise error control (Bonferroni, Sidak, Holm, Holm-Sidak, Simes-Hochberg, Hommel) or false discovery rate control (Benjamini-Hochberg, Benjamini-Yekutieli, two-stage adaptive). |  |
+| `stats_proportion_test` | Tests proportions: one group against a value (z test, exact binomial p-value, Wilson interval). |  |
+| `stats_proportion_confint` | Confidence intervals for proportions. |  |
+| `stats_binomial_test` | Exact binomial test of a success probability (e.g. is a strategy's hit rate above 50%?), with the Clopper-Pearson interval. |  |
+| `stats_poisson_rate_test` | Tests event rates (events per unit of exposure): one rate against a value, or two rates by their ratio or difference, with the chosen test plus the E-test (an exact-type unconditional test) and confidence intervals. |  |
+| `stats_contingency_table` | Analyses a two-way contingency table: Pearson chi-square test of independence, linear-by-linear (ordinal) association test, expected counts, standardized residuals and local odds ratios. |  |
+| `stats_stratified_tables` | Combines several 2x2 tables, one per stratum (one row of data per stratum): the Mantel-Haenszel pooled odds ratio with its interval and pooled risk ratio, the Cochran-Mantel-Haenszel test that the common odds ratio is 1, and the Breslow-Day test that the odds ratio is the same in every stratum. |  |
+| `stats_cochrans_q` | Cochran's Q test that several matched binary outcomes (each subject observed under every treatment) have the same success rate. |  |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

@@ -1,0 +1,21 @@
+---
+title: "Regression"
+description: "Linear models: ordinary, weighted and generalized least squares, AR errors, quantile, robust, recursive, rolling and beta regression, with robust covariances and predictions."
+mode: "wide"
+---
+
+Toolset `stats_regression`: 9 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_ols` | Ordinary least squares regression. | core |
+| `stats_wls` | Weighted least squares: each row weighted by the weights column (use 1/variance). |  |
+| `stats_gls` | Generalized least squares with a known diagonal error covariance (one variance per row). |  |
+| `stats_glsar` | Feasible GLS with AR(p) errors (iterated Cochrane-Orcutt): regression for time series whose residuals are autocorrelated. |  |
+| `stats_quantile_regression` | Quantile regression at one or more quantiles (0.5 = median/least absolute deviation): how the regressors move each part of the response's distribution. |  |
+| `stats_robust_regression` | Robust linear regression by M-estimation (iteratively reweighted least squares): coefficients that outliers cannot drag. |  |
+| `stats_recursive_ls` | Recursive least squares: the coefficients re-estimated as each observation is added, with the CUSUM and CUSUM-of-squares statistics for parameter stability. |  |
+| `stats_rolling_regression` | Rolling-window least squares: coefficients (e.g. a stock's beta) and R² re-estimated over a moving window. |  |
+| `stats_beta_regression` | Beta regression for a response strictly between 0 and 1 (rates, shares, recovery rates): a logit-link mean model with a precision parameter. |  |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

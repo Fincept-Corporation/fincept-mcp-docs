@@ -1,0 +1,28 @@
+---
+title: "Example prompts"
+description: "Workflows that combine Fincept data, analytics and statistics."
+icon: "message-square"
+---
+
+Start prompts with "Using Fincept" so the agent reaches for these tools instead of the web.
+
+| Prompt | Tools the agent uses |
+| --- | --- |
+| Get the quote, 52-week range and key ratios for MSFT. | `market_get_quote`, `market_get_fundamentals` |
+| Plot India's CPI inflation since 2015 against the RBI repo rate. | `data_search_series`, `data_get_observations` |
+| Fit an ARIMA to Nifty 50 daily closes and forecast 20 days with intervals. | `market_get_candles`, `stats_arima` |
+| Is the spread between KO and PEP mean-reverting? Test cointegration and give the hedge ratio. | `market_get_candles`, `stats_engle_granger`, `stats_ols` |
+| Regress my portfolio's daily returns on SPY and report beta with HAC errors. | `portfolio_get_performance`, `stats_ols` |
+| Backtest a 50/200-day moving-average crossover on AAPL since 2015 and summarise drawdowns. | `backtest_validate_spec`, `backtest_run` |
+| Summarise this week's news on semiconductors and its sentiment. | `news_search_articles`, `news_get_sentiment_aggregate` |
+| Which institutions hold NVDA, largest first? Where have insiders been buying in clusters? | `filings_get_security_holders`, `filings_find_insider_clusters` |
+| Is the US unemployment rate stationary? Run ADF and KPSS. | `data_get_observations`, `stats_stationarity_test` |
+| How many observations per group do I need to detect a 0.3 effect size at 80% power? | `stats_power_solve` |
+
+<Tip>
+  Ask for a chart and the agent gets one: forecasting and analysis tools return `series` and `chart` blocks. Large results include a viewer link at fincept.in with interactive tables and CSV download.
+</Tip>
+
+## Writing to your account
+
+Some tools change your account: saving watchlist items and notes, creating alerts and news monitors, placing paper orders, starting backtests. Your client asks before running them if you have approvals enabled. Monitors and alerts carry a daily credit cost while active; the tool description states it.

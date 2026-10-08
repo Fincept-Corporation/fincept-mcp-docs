@@ -1,0 +1,52 @@
+---
+title: "Portfolios"
+description: "Portfolios, valuation, performance, attribution, risk, scenarios, ledger, tax lots, limits, marks and benchmarks."
+icon: "briefcase"
+mode: "wide"
+---
+
+Toolset `portfolio`: 39 tools. List them all with `?toolsets=portfolio`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `portfolio_list_portfolios` | The user's tracked portfolios (books): id, name, base currency, cost method, cash tracking, benchmark, source, version and archived flag. | Read, core |
+| `portfolio_get_portfolio` | One portfolio's header: name, description, base currency, cost method, cash tracking, benchmark, inception date, version. | Read |
+| `portfolio_get_summary` | Everything a first look needs in one call: the header, the priced valuation (NAV, cash, P&L, exposures, positions, in the base currency), the daily NAV series, the performance headline (1d, mtd, ytd, 1y and since-inception returns, 1-year stats, money-weighted return), limit breach counts and the cached risk headline (volatility, 95% VaR/CVaR, beta). | Read, core |
+| `portfolio_get_valuation` | The book priced now, in its base currency: NAV, holdings value, cash, cost basis, unrealised, day and realised P&L (total and YTD), dividends, fees, long/short/gross/net exposure, leverage, every valued position, cash by currency, weights grouped by asset class, sector, industry, country, currency and exchange, and the FX rates used. | Read |
+| `portfolio_get_positions` | The book's positions as the ledger derives them (quantity, average cost, lots, realised P&L, income and fees in each instrument's own currency) and cash balances by currency, with no market prices. | Read |
+| `portfolio_get_consolidated` | Several books valued together in one base currency: NAV, cash, P&L, exposures, positions, cash by currency and groups, as one valuation. | Read |
+| `portfolio_get_broker_links` | The broker accounts a book is synced from: broker, account, label, the last applied statement date and its result. | Read |
+| `portfolio_create_portfolio` | Create a tracked portfolio. | Write |
+| `portfolio_update_portfolio` | Change a portfolio's header: rename, describe, archive, or change base currency, cost method, cash tracking, benchmark or inception date. | Write |
+| `portfolio_delete_portfolio` | Delete a portfolio with its whole ledger, limits and marks. | Delete |
+| `portfolio_get_nav` | The book's daily NAV replayed from its ledger: per day nav and cost in the base currency, the time-weighted index (100 on the first funded day), the benchmark index and drawdown, plus the benchmark and replay warnings. | Read |
+| `portfolio_get_performance` | Time-weighted and money-weighted performance: period returns (1d to since inception), cumulative series, drawdown, monthly and calendar-year tables, a rolling series, full and 1-year statistics (annual return, volatility, Sharpe, max drawdown, beta, tracking error) and, with start/end, stats_custom over that window. | Read, core |
+| `portfolio_get_attribution` | Brinson-Fachler attribution of the book against its benchmark over a window: portfolio, benchmark and active return, allocation, selection, interaction and currency effects, per bucket and per security (with local and FX return), and the daily series. | Read |
+| `portfolio_get_risk` | Ex-ante risk of the priced book: annualised and EWMA volatility, beta, correlation and tracking error to the benchmark, active share, VaR and CVaR rows (parametric, historical, Monte Carlo, Cornish-Fisher, Student-t) at the confidence asked and at 99%, risk contributions by position and group, correlation, concentration, factor exposures, liquidity, option greeks and a VaR backtest, with the NAV and base currency used. | Read |
+| `portfolio_run_scenarios` | Stress the book (or a proposed allocation given as weights): historical crisis windows replayed on today's positions, optional factor shocks, and a Monte Carlo fan. | Read |
+| `portfolio_simulate_trades` | Simulate trades on the book without booking them: the valuation before and after, each trade sized and priced, group weight changes, cash after, and limit status before and after when the book has limits. | Read |
+| `portfolio_propose_rebalance` | Propose the trades that move the book to target weights, to an optimiser's allocation, or that spread a cash flow pro rata: target weights, trade list, turnover, cash before and after, before/after statistics, optional cost and realised-tax estimates. | Read |
+| `portfolio_get_ledger` | The book's transactions, oldest first, each with the signed cash it moved (cash_effect, in the row's currency). | Read |
+| `portfolio_get_realized` | Closed lots with their realised P&L, and totals by currency (\{total, ytd\}) in each instrument's own currency. | Read |
+| `portfolio_get_tax_lots` | Open tax lots with cost, unrealised P&L and short/long term, realised-YTD totals by term, and tax-loss harvest candidates, in the base currency. | Read |
+| `portfolio_get_income` | Dividend and interest income for a year: received by month and by symbol, projected next-12-month income and yields, in the base currency. | Read |
+| `portfolio_get_corporate_actions` | Upcoming dividends and splits on held lines, and past ones the ledger never recorded, each with a suggested transaction to record it. | Read |
+| `portfolio_add_transactions` | Record one or more ledger rows (at most 5000) in a book: buys, sells, dividends, interest, fees, deposits, withdrawals, splits, FX conversions or adjustments. | Write |
+| `portfolio_update_transaction` | Edit one ledger row by its id (from portfolio_get_ledger). | Write |
+| `portfolio_delete_transaction` | Delete one ledger row by its id. | Delete |
+| `portfolio_import_csv` | Parse CSV text with a header row into ledger rows and record them. | Write |
+| `portfolio_list_limits` | The book's compliance limit rules: id, name, kind, params, severity (warn or breach) and enabled. | Read |
+| `portfolio_get_limits_status` | Each limit evaluated on the current book: status ok, warn, breach or unknown, the measured value against the threshold, and counts. | Read |
+| `portfolio_check_pretrade_limits` | Which limits would these transactions break if booked? Returns limit status before and after, new_breaches and cleared rule names, and warnings for rows that would open a short. | Read |
+| `portfolio_create_limit` | Add a compliance rule to a book. | Write |
+| `portfolio_update_limit` | Edit a limit rule by id. | Write |
+| `portfolio_delete_limit` | Delete a limit rule by id. | Delete |
+| `portfolio_list_marks` | The manual prices set on a book for instruments no feed prices: symbol, price, currency, as_of and note. | Read |
+| `portfolio_set_mark` | Set or replace the manual price of one symbol in a book, used to value an instrument no feed prices (a private holding, an unlisted bond). | Write |
+| `portfolio_delete_mark` | Remove a book's manual price for one symbol. | Delete |
+| `portfolio_list_benchmarks` | The user's saved custom benchmark blends: id, name, weighted components and rebalance rule. | Read |
+| `portfolio_save_benchmark` | Save a reusable custom benchmark blend of weighted symbols. | Write |
+| `portfolio_update_benchmark` | Replace a saved benchmark blend: send the full name and components. | Write |
+| `portfolio_delete_benchmark` | Delete a saved benchmark blend by id. | Delete |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

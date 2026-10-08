@@ -1,0 +1,39 @@
+---
+title: "Backtests"
+description: "Strategy backtests and parameter sweeps, templates, validation, cost profiles, saved strategies and run history."
+icon: "history"
+mode: "wide"
+---
+
+Toolset `backtest`: 26 tools. List them all with `?toolsets=backtest`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `backtest_run` | Runs one backtest of a complete spec on the native engine and returns the engine's result document with its run_id, warnings and cached flag. | Write, core, credits |
+| `backtest_optimize` | Sweeps the parameter ranges in spec.optimize (method, objective, max_evals, params) and returns the engine's document for the best configuration, the sweep summary under optimization, in the same frame shape as backtest_run. | Write, credits |
+| `backtest_list_templates` | The engine's strategy template catalog: each template's id, name, category, description, whether it is a portfolio strategy, the data it needs and its params (name, type, default, range or options). | Read, core |
+| `backtest_validate_spec` | Checks a complete backtest spec exactly as a run would prepare it, free. | Read, core |
+| `backtest_preview_splits` | The walk-forward / CPCV train-test windows a sweep over this spec would use, computed on the real data frame without running the sweep. | Read |
+| `backtest_list_indicators` | The engine's indicator catalog for rules-based strategies: indicators with their parameters, and a count. | Read |
+| `backtest_check_expression` | Validates one arithmetic expression of the strategy DSL (as used in rules and ranking). | Read |
+| `backtest_get_instruments` | What each symbol is before a run: asset class, currency, exchange calendar, exchange, name, sector and, for futures, multiplier, tick and lot size. | Read |
+| `backtest_list_cost_profiles` | The built-in cost profile names a spec may put in costs.profile (us_equity_cash, global_equity_cash, in_equity_delivery, in_equity_intraday, futures, crypto_spot, crypto_perp, fx_spot) and the account's own saved profiles. | Read |
+| `backtest_save_cost_profile` | Saves a named custom cost profile (a costs block) to the account. | Write |
+| `backtest_update_cost_profile` | Replaces the name and costs block of one saved cost profile. | Write |
+| `backtest_delete_cost_profile` | Deletes one saved cost profile. | Delete |
+| `backtest_list_runs` | The account's stored backtest runs, pinned first then newest: id, kind (run or optimize), name, family, summary metrics, hashes and timestamps, without the full result. | Read |
+| `backtest_get_run` | One stored run's full result document (summary, series, trades, validation battery, spec) with its metadata under run. | Read |
+| `backtest_get_run_records` | One page of a run's per-event arrays (orders, positions, round_trips or logs), which large runs keep outside the result document. | Read |
+| `backtest_compare_runs` | Two to four stored runs side by side: each run's summary and its equity curve aligned on one shared time axis t. | Read |
+| `backtest_pin_run` | Sets a run's pinned flag (pinned runs are exempt from the 90-day retention sweep). | Write |
+| `backtest_delete_run` | Deletes one stored backtest run and its records. | Delete |
+| `backtest_list_strategies` | The account's saved backtest specs, newest first (id, name, tags, notes, spec, version, template_id), and limit: the plan's backtest_strategies quota. | Read |
+| `backtest_search_strategies` | Searches the account's saved strategies (name, tags, notes. | Read |
+| `backtest_get_strategy` | One saved backtest strategy with its full spec and its version history. | Read |
+| `backtest_save_strategy` | Saves a backtest spec under a name. | Write |
+| `backtest_update_strategy` | Replaces a saved strategy's name, tags, notes and spec, keeping the previous version in its history. | Write |
+| `backtest_delete_strategy` | Deletes one saved backtest strategy. | Delete |
+| `backtest_get_uploaded_bars` | Reads a broker bar series the terminal uploaded (by its data_id): symbol, exchange, interval, time zone, coverage and bars as [t, o, h, l, c, v(, oi)] rows. | Read |
+| `backtest_get_family` | The multiple-testing ledger of one strategy family (the trial count and Sharpe spread the deflated Sharpe uses) and its 20 most recent runs. | Read |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

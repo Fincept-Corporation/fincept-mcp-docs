@@ -1,0 +1,75 @@
+---
+title: "Quickstart"
+description: "Connect your coding agent to Fincept MCP and make a first call."
+icon: "rocket"
+---
+
+**Prerequisites:** an active Exclusive Pro plan (check at [fincept.in/enterprise/account](https://fincept.in/enterprise/account)) and an MCP client that supports remote HTTP servers with OAuth.
+
+<Steps>
+  <Step title="Add the server">
+    <Tabs>
+      <Tab title="Claude Code">
+        ```bash
+        claude mcp add --transport http --scope user fincept https://enterprise.fincept.in/mcp
+        ```
+      </Tab>
+      <Tab title="Codex">
+        ```bash
+        codex mcp add fincept --url https://enterprise.fincept.in/mcp
+        ```
+      </Tab>
+      <Tab title="Cursor">
+        Add to `~/.cursor/mcp.json`:
+
+        ```json
+        {
+          "mcpServers": {
+            "fincept": { "url": "https://enterprise.fincept.in/mcp" }
+          }
+        }
+        ```
+      </Tab>
+      <Tab title="VS Code">
+        Add to `.vscode/mcp.json`:
+
+        ```json
+        {
+          "servers": {
+            "fincept": { "type": "http", "url": "https://enterprise.fincept.in/mcp" }
+          }
+        }
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Sign in">
+    Your client opens fincept.in in the browser. Sign in if needed, review the request and select **Authorize**. The browser hands control back to the client.
+
+    In Claude Code, run `/mcp`, pick `fincept` and choose **Authenticate**. Codex opens the browser on `mcp add`.
+  </Step>
+  <Step title="Ask for something">
+    ```text Prompt
+    Using Fincept, get the latest quote for AAPL and the last 5 daily candles.
+    ```
+
+    ```text Prompt
+    Using Fincept, fit an ARIMA(1,1,1) to the last 500 daily closes of ^NSEI and forecast 10 days.
+    ```
+  </Step>
+</Steps>
+
+<Check>
+  The agent answers from tool results. Each result carries a `summary` it can quote and the data it used.
+</Check>
+
+## Next steps
+
+<Columns cols={2}>
+  <Card title="Finding tools" icon="search" href="/guides/finding-tools">
+    How the agent discovers the full catalog.
+  </Card>
+  <Card title="Example prompts" icon="message-square" href="/guides/prompts">
+    Workflows that combine data and statistics.
+  </Card>
+</Columns>

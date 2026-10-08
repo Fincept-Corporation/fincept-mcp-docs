@@ -1,0 +1,17 @@
+---
+title: "Account"
+description: "Credit balance, usage, the credit ledger and account notices."
+icon: "user"
+mode: "wide"
+---
+
+Toolset `account`: 4 tools. List them all with `?toolsets=account`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+
+| Tool | What it does | Type |
+| --- | --- | --- |
+| `account_get_credits` | The account's credit balance: credits (the total), granted_credits (this period's allowance, which can expire), purchased_credits (bought, never expire) and tier. | Read, core |
+| `account_get_usage` | Credit consumption over the last N days: total_credits_used, total_credits_granted, total_calls, total_tokens, and breakdowns by_model, by_surface (the tab that spent it) and daily. | Read |
+| `account_get_credit_ledger` | The itemised credit statement, newest first: entries (kind grant, debit, refund or adjust. | Read |
+| `account_list_notices` | One page of the notices addressed to the account (global, its tier or the user): notices (title, body, level, pinned, links, published_at, expires_at), unread and next_cursor. | Read |
+
+**Type:** Read tools only read. Write tools change your account; Delete tools remove something from it. `core` tools are listed by default. `credits` tools can spend credits; see [credits](/reference/toolsets/credits).

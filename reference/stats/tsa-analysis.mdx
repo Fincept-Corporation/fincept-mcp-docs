@@ -1,0 +1,21 @@
+---
+title: "Time-series analysis"
+description: "Autocorrelation, partial autocorrelation and cross-correlation with Ljung-Box tests; unit-root and stationarity tests (ADF, KPSS, Zivot-Andrews, range); Engle-Granger cointegration; BDS independence and variance-break tests; classical, STL and MSTL seasonal decomposition; Hodrick-Prescott, Baxter-King and Christiano-Fitzgerald filters, polynomial detrending and the periodogram."
+mode: "wide"
+---
+
+Toolset `stats_tsa_analysis`: 9 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `stats_correlogram` | Autocorrelation (ACF) and partial autocorrelation (PACF) of one series up to nlags, each with its confidence band, plus the autocovariances and the Ljung-Box and Box-Pierce Q statistics with p-values at every lag. |  |
+| `stats_cross_correlogram` | Cross-correlation of two equally long series at lags −nlags to +nlags: the value at lag k is corr(x[t+k], y[t]), so a peak at k &gt; 0 means y leads x by k periods and at k &lt; 0 that x leads y. |  |
+| `stats_seasonal_decompose` | Splits a series into trend, seasonal and residual components by STL (LOESS, default), classical moving averages (additive or multiplicative) or MSTL (several seasonal periods at once). |  |
+| `stats_trend_cycle_filter` | Separates a series into trend and cycle with the Hodrick-Prescott filter, the Baxter-King or Christiano-Fitzgerald band-pass filters (cycles between low and high periods), or a polynomial detrend. |  |
+| `stats_periodogram` | Spectral density of a series by the periodogram or Welch's averaged periodogram. |  |
+| `stats_stationarity_test` | Unit-root and stationarity tests on one series: augmented Dickey-Fuller (null: unit root), KPSS (null: stationary), both together with a joint verdict (default), Zivot-Andrews (unit root against stationarity with one structural break, whose date it reports) and the range unit-root test. | core |
+| `stats_engle_granger` | Engle-Granger two-step cointegration test of y on one to five x columns: an ADF test on the residual of the cointegrating regression with MacKinnon p-values (null: no cointegration). |  |
+| `stats_bds_test` | BDS test of the null that a series is independent and identically distributed, at embedding dimensions 2 to max_dim. |  |
+| `stats_breakvar_test` | Test of a change in variance between the first and last parts of a series (usually model residuals): the ratio of the sums of squares of the last and first subsets. |  |
+
+Inputs, limits and outputs are described in [Fincept Stats](/guides/fincept-stats). Full schemas: `fincept_describe_tool`.

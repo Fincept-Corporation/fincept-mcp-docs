@@ -1,0 +1,49 @@
+---
+title: "Credits and limits"
+description: "What Fincept MCP requires, what it costs, and the limits that apply to every call."
+icon: "gauge"
+---
+
+## Plan
+
+Fincept MCP requires an active **Exclusive Pro** subscription. Every tool your plan includes in the terminal is available to your agent; quotas (watchlists, portfolios, history depth) are the same.
+
+## Credits
+
+Most tools are free. Tools that cost credits in the terminal cost the same here, from the same balance:
+
+- The price is in each tool's description, so the agent sees it before calling.
+- Charges happen on a delivered result. Failed, empty and refused calls cost nothing.
+- Daily spend caps and per-action hourly caps apply as in the terminal (`402 spend_cap_reached`).
+- Fincept Stats tools are free.
+
+The [credits reference](/reference/toolsets/credits) lists every tool that can spend credits. Check your balance with `account_get_credits` and your spending with `account_get_usage`.
+
+## Rate limit
+
+| Limit | Value |
+| --- | --- |
+| Requests per account | 120 per minute, bursts up to 40 |
+| Request body | 1 MB |
+
+Every MCP message counts as one request, including `tools/list` and discovery calls. Past the limit the server answers HTTP `429` with `Retry-After`; clients retry on their own.
+
+## Time limits
+
+| Call | Limit |
+| --- | --- |
+| Most tools | 30 seconds |
+| Analytics, screeners, portfolio reports, AI answers | 60 to 180 seconds |
+| `backtest_run` / `backtest_optimize` | 5 / 10 minutes |
+| Fincept Stats | 90 seconds, up to 300 seconds for heavy models |
+
+A call past its limit returns an error envelope with code `timeout`.
+
+## Result size
+
+| Item | Value |
+| --- | --- |
+| Inline result | About 40 KB; larger results are stored and previewed |
+| Stored result | Up to 25 MB, kept 24 hours |
+
+See [results](/guides/results#large-results).
