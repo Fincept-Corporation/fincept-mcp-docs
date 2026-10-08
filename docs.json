@@ -41,13 +41,13 @@
     "links": [
       {
         "label": "Plans",
-        "href": "https://fincept.in/enterprise/plans"
+        "href": "https://fincept.in/pricing"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Get Exclusive Pro",
-      "href": "https://fincept.in/enterprise/plans"
+      "href": "https://fincept.in/pricing"
     }
   },
   "contextual": {
