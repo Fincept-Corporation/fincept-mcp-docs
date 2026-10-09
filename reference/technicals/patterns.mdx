@@ -1,0 +1,14 @@
+---
+title: "Candlestick patterns"
+description: "All 61 Japanese candlestick patterns (doji family, hammer and hanging man, engulfing, harami, stars, three white soldiers and black crows, kicking, marubozu, hikkake, ...) on OHLC bars: one pattern's signal at every bar, or a scan of many patterns listing which fired on which dates."
+mode: "wide"
+---
+
+Toolset `ta_patterns`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `ta_candlestick` | One candlestick pattern on OHLC bars: its signal at every bar aligned to the dates (null over the warm-up; 0 none, + bullish, - bearish), the bars where it fired (newest first) and a candlestick chart with the signal. |  |
+| `ta_candlestick_scan` | Scans OHLC bars for candlestick patterns (all 61 by default) and lists which fired on which dates, newest first: the date, pattern, its name, the signal (+ bullish, - bearish) and direction; per-pattern bullish/bearish counts; the patterns on the last bar; and a candlestick chart with the hits. |  |
+
+Inputs, limits and outputs are described in [Fincept Technicals](/guides/fincept-technicals). Full schemas: `fincept_describe_tool`.

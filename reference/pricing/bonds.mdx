@@ -1,0 +1,19 @@
+---
+title: "Bonds"
+description: "Fixed, zero-coupon, amortizing and floating-rate bonds (term, overnight and CMS indexes, caps and floors), callable and puttable bonds on short-rate trees, convertible bonds, bond forwards and asset swaps: clean/dirty price, yield, z-spread, option-adjusted spread, durations, convexity, BPS and cash flows."
+mode: "wide"
+---
+
+Toolset `pricing_bonds`: 7 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pricing_bond` | Prices a fixed-rate, zero-coupon, step-up or amortizing bond from its clean or dirty price, its yield, or a discount curve plus z-spread, and returns clean and dirty price, accrued interest, yield to maturity, z-spread over the curve, Macaulay/modified/simple duration, convexity, BPS, price value of a basis point and the cash-flow table with discount factors. |  |
+| `pricing_floating_bond` | Prices a floating-rate note: coupons on a term index (Euribor, Term SOFR-style IBOR), compounded overnight index (SOFR, ESTR, SONIA ...) or a constant-maturity swap rate, with margin, gearing, optional cap and floor, amortizing notionals, past fixings. |  |
+| `pricing_callable_bond` | Prices a callable or puttable bond (fixed or zero coupon, Bermudan call/put schedule) on a short-rate tree (Hull-White, Black-Karasinski, G2, Vasicek, CIR, extended CIR) fitted to the curve, or with Black's model on the forward yield. |  |
+| `pricing_convertible_bond` | Prices a convertible bond (fixed, zero or floating coupon; conversion at any time; issuer calls including soft calls with a stock-price trigger; holder puts) on a binomial tree of the underlying stock (CRR, Jarrow-Rudd, additive EQP, Trigeorgis, Tian, Leisen-Reimer, Joshi) with an issuer credit spread and discrete dividends. |  |
+| `pricing_bond_forward` | Forward on a fixed-coupon bond: the forward dirty and clean price for delivery on forward_date (spot bond value less the present value of coupons paid before delivery, carried at the repo curve), and the value of a forward contract struck at strike. |  |
+| `pricing_asset_swap` | Asset swap on a fixed-coupon bond: the floating spread over the index that makes the package (bond bought at clean_price, coupons swapped into index + spread) worth par (par asset swap) or its market value. |  |
+| `pricing_cashflows` | Analytics of a stream of cash flows given explicitly (date, amount) or generated (fixed coupons, term-index or overnight-index floaters): NPV on a curve or at a yield, the internal rate of return (yield) that matches a target NPV with the library's or a chosen 1-D solver (Brent, bisection, false position, Ridder, secant, Newton, safe Newton), the z-spread over a curve, BPS, at-the-money rate, Macaulay/modified duration and convexity. |  |
+
+Inputs, limits and outputs are described in [Fincept Pricing](/guides/fincept-pricing). Full schemas: `fincept_describe_tool`.

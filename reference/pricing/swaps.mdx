@@ -1,0 +1,18 @@
+---
+title: "Swaps, FRAs and futures"
+description: "Fixed-float, overnight-indexed (SOFR, ESTR, SONIA ...), zero-coupon, multiple-reset, amortizing, basis (float-float, CMS) and cross-currency swaps, FX forwards, FRAs, overnight-index and perpetual futures, and equity total-return swaps: NPV, par rates, spreads, leg values, DV01 and cash flows."
+mode: "wide"
+---
+
+Toolset `pricing_swaps`: 6 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pricing_swap` | Prices an interest-rate swap: fixed vs a term index (vanilla), vs a compounded overnight index (OIS: SOFR, ESTR, SONIA, TONA, SARON ...), zero-coupon, multiple-resets or amortizing, spot or forward-starting or seasoned with past fixings, discounted and projected on your curves (dual-curve). |  |
+| `pricing_basis_swap` | Prices a float-float basis swap: two floating legs on term or overnight indexes (3M vs 6M Euribor, SOFR vs term rate) or constant-maturity swap rates (CMS vs Euribor, CMS spread legs) with spreads, each projected on its own curve and discounted on one; optionally the Bermudan option to enter it. |  |
+| `pricing_fra` | Forward rate agreements and rate futures: values an FRA on a term index (forward rate, settlement amount, NPV, fixing date), or computes the Hull-White convexity adjustment that turns a futures price (IMM or other start date) into the equivalent forward rate. |  |
+| `pricing_rate_futures` | Futures on rates: the fair price (100 - rate) of a future on the compounded or simple-average overnight rate (SOFR 1M/3M, SONIA, ESTR, fed funds) over its reference period, using past fixings for the elapsed part and the curve for the rest, with a convexity adjustment; or the fair price of a perpetual future (linear or inverse payoff) from domestic and asset curves and the funding terms. |  |
+| `pricing_equity_swap` | Equity total-return swap on an index: the equity leg pays the index return each period, the funding leg pays a term or overnight rate plus margin. |  |
+| `pricing_xccy` | Cross-currency pricing between a domestic and a foreign currency: the fair outright FX forward (covered interest parity on both curves) and a forward contract's value in each currency; constant-notional cross-currency basis swaps (fair spread on either leg) and fixed-vs-floating cross-currency swaps (fair fixed rate); or the foreign discount curve implied by FX swap points and basis quotes over the domestic collateral curve. |  |
+
+Inputs, limits and outputs are described in [Fincept Pricing](/guides/fincept-pricing). Full schemas: `fincept_describe_tool`.

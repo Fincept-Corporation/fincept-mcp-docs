@@ -1,0 +1,15 @@
+---
+title: "Volatility forecasting and VaR backtests"
+description: "Out-of-sample volatility, Value-at-Risk and expected-shortfall forecasts with rolling or expanding re-estimation and hit-rate backtests; forecasts from many origins (hedgehog view, origin or target alignment); scenario forecasts from crisis-window or scaled shocks."
+mode: "wide"
+---
+
+Toolset `vol_forecast`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `vol_rolling_forecast` | Backtests a volatility model out of sample: re-estimates it on a rolling or expanding window (every refit_every steps), forecasts the conditional mean, volatility, Value-at-Risk and expected shortfall horizon steps ahead, and scores them against the realized returns. |  |
+| `vol_forecast_origins` | Forecasts a fitted volatility model from every origin since start, each h steps ahead, with the parameters estimated once (in-sample forecasts, the hedgehog view of how forecasts revert to the long-run level). |  |
+| `vol_scenario_forecast` | Simulates a fitted volatility model forward from today under a scenario: shocks bootstrapped from the standardized residuals of a chosen historical window (crisis replay) or drawn from the fitted distribution and scaled. |  |
+
+Inputs, limits and outputs are described in [Fincept Volatility](/guides/fincept-volatility). Full schemas: `fincept_describe_tool`.

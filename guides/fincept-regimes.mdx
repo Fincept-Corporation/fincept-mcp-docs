@@ -1,0 +1,50 @@
+---
+title: "Fincept Regimes"
+description: "Hidden Markov regime models as MCP tools: calm and turbulent market regimes, transition probabilities, today's regime, scenarios and the number of regimes."
+icon: "shuffle"
+---
+
+Fincept Regimes is the hidden Markov model engine behind every `regime_*` tool: Gaussian (diagonal, full, spherical or tied covariance), Gaussian-mixture and variational Gaussian models on a returns series or a feature table, one or several sequences, and categorical, Poisson and multinomial models on symbols and counts. Every fit labels its regimes by volatility or mean (calm/turbulent, bear/bull) and returns the transition matrix, per-regime statistics, expected durations, the state path with regime probabilities, information criteria, the current regime and its forecast, and the fitted model, which decodes new data and draws scenarios without refitting. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Regimes tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `regime_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Regimes reference](/reference/regimes/overview) lists every module and tool.
+
+`regime_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| Observations | `data`: one row per period, as columns by name, a list of row objects such as `market_get_candles` candles, or a plain list of numbers | `{"date": ["2024-01-02", "2024-01-03"], "SPY": [472.7, 468.8]}` |
+| Features | `features`: the columns to model; default every numeric column except the date | `["close"]` |
+| Transform | `transform`: `log_return` or `return` turn prices into returns first | `"log_return"` |
+| Regimes | `n_states`: the number of regimes; `regime_select_states` chooses it | `3` |
+| Fitted model | `model`: the `data.model` of a fit, for `regime_decode` and `regime_simulate` | The object a fit returns |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds by default; 120 seconds for `regime_decode`; 180 seconds for `regime_categorical_hmm`, `regime_poisson_hmm`, `regime_multinomial_hmm`, `regime_gaussian_hmm` and `regime_simulate`; 240 seconds for `regime_gmm_hmm` and `regime_variational_gaussian_hmm`; 300 seconds for `regime_select_states` |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Fit tools return the regimes ordered and labelled by the key feature's volatility or mean, each regime's means, volatilities and return statistics, the transition matrix, stationary distribution and expected durations, the Viterbi or posterior path with regime probabilities as series with charts, log-likelihood, AIC and BIC, the current regime, an h-step regime forecast and `data.model`. `regime_decode` returns the path and probabilities of new data under a fitted model; `regime_simulate` returns a fan chart of the cumulative key feature, regime occupancy over time and the terminal distribution. `regime_select_states` returns every fit with a chart of the criterion and the chosen model.
+
+## Example
+
+```text Prompt
+Using Fincept, find three volatility regimes in ten years of Nifty 50 daily returns, show the transition matrix and expected durations, and tell me which regime we are in today.
+```
+
+The agent searches for `market regime`, finds `regime_gaussian_hmm`, and passes the candles as a `$fincept` reference to `market_get_candles` at path `candles`, with `features: ["close"]` and `transform: "log_return"`.

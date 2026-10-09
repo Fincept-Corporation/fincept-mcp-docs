@@ -1,0 +1,14 @@
+---
+title: "Benchmarks and intermittent demand"
+description: "Benchmark forecasters every model should beat (naive, seasonal naive, random walk with drift, historic and window averages, conformal seasonal pool, constant) and intermittent-demand methods for series with many zero periods (Croston classic, optimized and SBA, ADIDA, IMAPA, TSB)."
+mode: "wide"
+---
+
+Toolset `tsforecast_benchmarks`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `tsforecast_baselines` | Forecasts one series (y) or every series of a panel (data) with benchmark methods: naive (last value), seasonal naive, random walk with drift, historic average, window and seasonal window averages, the conformal seasonal pool (seasonal naive with sample-based intervals) and constant, zero or missing forecasts (fallbacks). |  |
+| `tsforecast_intermittent` | Forecasts series with many zero periods (spare parts, slow-moving stock, rainfall, sporadic trades) with intermittent-demand methods: Croston classic, optimized and Syntetos-Boylan (SBA), ADIDA (temporal aggregation), IMAPA (multiple aggregation) and TSB (demand probability times size, handles obsolescence). |  |
+
+Inputs, limits and outputs are described in [Fincept TS Forecast](/guides/fincept-ts-forecast). Full schemas: `fincept_describe_tool`.

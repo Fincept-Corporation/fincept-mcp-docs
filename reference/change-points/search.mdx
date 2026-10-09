@@ -1,0 +1,14 @@
+---
+title: "Change-point search"
+description: "Offline change-point detection on one series or several jointly: PELT, binary segmentation, bottom-up, window sliding, dynamic programming and kernel search over ten segment costs (mean, median, mean-and-covariance, kernel distribution, cosine, regression, continuous trend, rank, Mahalanobis, autoregressive), stopping by a number of breaks, a penalty or a cost budget; and the rolling change score of a sliding window."
+mode: "wide"
+---
+
+Toolset `changepoint_search`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `changepoint_detect` | Finds the dates where one series, or several jointly, change regime: any search method over any segment cost, stopped by a number of breaks, a penalty (BIC-type by default) or a cost budget. |  |
+| `changepoint_change_score` | The window-sliding change score: at each observation, how much the cost falls when the window of width observations centred there is split into two halves (a two-sample discrepancy, in cost units). |  |
+
+Inputs, limits and outputs are described in [Fincept Change Points](/guides/fincept-change-points). Full schemas: `fincept_describe_tool`.

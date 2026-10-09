@@ -1,0 +1,14 @@
+---
+title: "Forecasts and data"
+description: "The estimates trading policies use, computed at any date from earlier data only: mean returns, variances, volatilities, standard errors, covariance matrices, PCA and SVD factor models and mean traded volumes, with rolling windows and exponential half-lives; and how your history is prepared (trading calendar, periods per year, tradable universe, aligned returns)."
+mode: "wide"
+---
+
+Toolset `mpo_forecast`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `mpo_forecast` | The estimate a policy would use at the decision date (default the last), from earlier data only, with an optional rolling window and exponential half-life: per-asset mean return, variance, standard deviation, standard error of the mean or mean traded volume (per period and annualized, optionally as a path over time), or the covariance matrix, its PSD square-root factor, or a truncated-SVD factor model (exposures F, idiosyncratic d, implied covariance). |  |
+| `mpo_market_data` | How the engine sees your history before any policy runs: the trading calendar (first date a back-test can start after min_history_days, last date, number of periods), periods per year, the cash return per period, the tradable universe through time (assets enter after enough history and leave on missing returns or investable 0), per-asset coverage (first and last return, observations, mean and volatility per period and annualized) and optionally the aligned forward returns, down-sampled by trading_frequency. |  |
+
+Inputs, limits and outputs are described in [Fincept Multi-Period](/guides/fincept-multi-period). Full schemas: `fincept_describe_tool`.

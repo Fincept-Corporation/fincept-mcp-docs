@@ -1,0 +1,51 @@
+---
+title: "Fincept Multi-Period"
+description: "Trading over time as MCP tools: optimisation and rule-based policies back-tested with costs, today's optimal trades, pre-trade checks and aversion tuning."
+icon: "route"
+---
+
+Fincept Multi-Period is the trading-policy engine behind every `mpo_*` tool: single- and multi-period optimisation policies (expected return against full, diagonal, factor or worst-case risk, transaction and holding costs) with a planning horizon and about thirty constraint types (long-only, leverage, weight, trade and holding limits, turnover, participation rate, market, dollar and factor neutrality, cash, volatility target, soft constraints); rule-based policies (hold, cash, equal weight, fixed weights, periodic, proportional and adaptive rebalancing, rank long-short, volume-weighted market portfolio); a market simulator charging spreads, market impact, per-share fees, borrow and holding costs, with whole-share rounding and liquidity caps; today's optimal trades and planned trajectory; pre-trade cost, risk and constraint checks; return, risk, factor and volume forecasts; and risk and trade-aversion sweeps and searches. It never fetches market data itself: pass a table or a `$fincept` reference. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Multi-Period tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `mpo_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Multi-Period reference](/reference/multi-period/overview) lists every module and tool.
+
+`mpo_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| History | `prices`: a date column and one column per asset, in time order; prices by default, periodic returns with `returns_data: true` | `{"date": ["2024-01-02", "2024-01-03"], "AAPL": [185.6, 184.3], "MSFT": [370.9, 370.6]}` |
+| Volumes | `volumes`: traded value per date and asset, same columns, for market impact, participation limits and the market portfolio; share counts with `volume_in_shares: true` | `{"date": ["2024-01-02", "2024-01-03"], "AAPL": [15.3e9, 10.8e9], "MSFT": [9.2e9, 7.9e9]}` |
+| Objective | `objective`: the risk, trade and holding aversions and the risk model; by default the historical mean minus 5 times full-covariance risk minus costs | `{"risk_aversion": 10, "trade_aversion": 1}` |
+| Constraints | `constraints`: a list of constraint objects | `[{"kind": "long_only"}, {"kind": "leverage_limit", "value": 1}]` |
+| Costs | `costs`: spreads, market impact, fees and borrow costs; none by default | `{"spread": 0.0005, "short_fee": 1.0}` |
+| Holdings | `holdings`: current positions in value per asset plus `cash`; all in cash by default | `{"AAPL": 50000, "MSFT": 30000, "cash": 20000}` |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds by default; 60 seconds for `mpo_market_data`; 120 seconds for `mpo_forecast` and `mpo_optimize`; 300 seconds for `mpo_backtest`, `mpo_backtest_rules`, `mpo_gamma_sweep` and `mpo_hyperparameter_search` |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Back-tests return every metric (return, volatility, excess and active return, Sharpe ratio, information ratio, growth rate, drawdown, turnover, leverage and the cost breakdown), per-period paths and weights over time as series with charts; `mpo_backtest_rules` adds a comparison table and value curves of every policy. `mpo_optimize` and `mpo_rule_trades` return current, target and trade weights and trades in value and in whole shares; `mpo_evaluate_trade` returns each objective term and whether every constraint holds. `mpo_gamma_sweep` returns the realized risk-return frontier and the best aversions by Sharpe ratio.
+
+## Example
+
+```text Prompt
+Using Fincept, back-test a long-only multi-period policy over AAPL, MSFT, JPM, XOM and PFE since 2020 with 5 bp spreads beside equal weight, then give me today's optimal trades for a $1M portfolio.
+```
+
+The agent searches for `multi-period backtest`, finds `mpo_backtest` and `mpo_optimize`, and passes each stock's closes as a `$fincept` reference to `market_get_candles`, one `prices` column per stock, with the dates from `candles.time` as the `date` column.

@@ -1,0 +1,14 @@
+---
+title: "Forecast comparison"
+description: "Compare forecasting models on their losses: superior predictive ability (SPA) and reality check p-values and the StepM set of models that beat a benchmark, and the model confidence set of the best models, all with block-bootstrap inference."
+mode: "wide"
+---
+
+Toolset `vol_comparison`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `vol_spa` | Tests whether any of several forecasting models beats a benchmark on their losses, with block-bootstrap inference that accounts for data snooping: Hansen's SPA (lower, consistent and upper p-values, critical values, the models significantly better), White's reality check, or Romano-Wolf StepM (the set of superior models at the given size). |  |
+| `vol_mcs` | The model confidence set of Hansen, Lunde and Nason: the models whose losses are not significantly worse than the best, at confidence 1 - size, found by sequential elimination with block-bootstrap p-values. |  |
+
+Inputs, limits and outputs are described in [Fincept Volatility](/guides/fincept-volatility). Full schemas: `fincept_describe_tool`.

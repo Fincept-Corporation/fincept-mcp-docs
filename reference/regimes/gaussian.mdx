@@ -1,0 +1,15 @@
+---
+title: "Gaussian regime models"
+description: "Hidden Markov models with Gaussian, Gaussian-mixture or variational Gaussian emissions on returns or feature tables: regimes labelled by volatility or mean, transition matrix, per-regime means and volatilities, state path and probabilities, AIC/BIC, convergence, forecast and the fitted model."
+mode: "wide"
+---
+
+Toolset `regime_gaussian`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `regime_gaussian_hmm` | Gaussian hidden Markov model (Baum-Welch) on a returns series or feature table, one or several sequences. |  |
+| `regime_gmm_hmm` | Hidden Markov model whose regimes each emit from a mixture of n_mix Gaussians (fat-tailed, skewed or multi-modal returns within a regime). |  |
+| `regime_variational_gaussian_hmm` | Variational Bayesian Gaussian hidden Markov model: Dirichlet, Normal and Wishart priors, fitted by maximising the variational lower bound. |  |
+
+Inputs, limits and outputs are described in [Fincept Regimes](/guides/fincept-regimes). Full schemas: `fincept_describe_tool`.

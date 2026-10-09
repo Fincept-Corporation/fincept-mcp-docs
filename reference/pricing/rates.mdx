@@ -1,0 +1,14 @@
+---
+title: "Interest-rate maths and currencies"
+description: "Converting interest rates between simple, compounded and continuous conventions, frequencies and day counts; compound and discount factors; implied rates; currency facts, roundings and conversion through your exchange rates."
+mode: "wide"
+---
+
+Toolset `pricing_rates`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pricing_interest_rate` | Interest-rate arithmetic over a period (dates or a year fraction): the compound and discount factor of a rate under its compounding, frequency and day count, and the equivalent rate under other conventions (continuous, simple, compounded at any frequency, simple-then-compounded, other day counts), or the rate implied by a growth factor. |  |
+| `pricing_currency` | Currency facts (name, ISO code and number, symbol, minor unit), rounding of amounts to a currency's minor unit or a chosen rounding, and conversion of amounts into a target currency through the exchange rates you give: a direct or inverse quote, or a chain through a common currency (EUR-&gt;USD-&gt;JPY). |  |
+
+Inputs, limits and outputs are described in [Fincept Pricing](/guides/fincept-pricing). Full schemas: `fincept_describe_tool`.

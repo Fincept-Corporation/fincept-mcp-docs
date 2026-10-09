@@ -1,0 +1,52 @@
+---
+title: "Fincept Pricing"
+description: "Derivatives and fixed-income pricing as MCP tools: yield curves, bonds, swaps, credit, inflation, rate options, equity and FX options, volatility surfaces and calibration."
+icon: "banknote"
+---
+
+Fincept Pricing is the derivatives and fixed-income engine behind every `pricing_*` tool, pricing on the market quotes you pass in: business-day calendars, day counts, schedules and rate conventions; bootstrapped, interpolated, fitted (Nelson-Siegel, Svensson, splines) and spreaded yield curves; inflation and default-probability curves; bonds (fixed, floating, amortizing, callable, convertible, inflation-linked) with yield, duration, convexity and z-spread; swaps (vanilla, OIS, basis, cross-currency), FRAs, futures, caps, floors and swaptions; credit default swaps; vanilla and exotic options (barrier, Asian, lookback, basket, digital, compound, cliquet, quanto) under Black-Scholes, Heston, Bates, SABR and other models with Greeks and implied volatility; volatility surfaces, smiles and risk-neutral densities; Heston and short-rate calibration; and distributions, statistics, interpolation, integration, random sequences and Monte Carlo paths. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Pricing tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `pricing_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Pricing reference](/reference/pricing/overview) lists every module and tool.
+
+`pricing_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| Valuation date | `valuation_date`: the ISO date prices are computed at | `"2025-12-31"` |
+| Market | `market`: one underlying's spot, a flat volatility or `vol_surface`, a rate or `rate_curve`, and a dividend yield or `dividend_curve` (for FX, the domestic and foreign rates) | `{"spot": 6845.5, "volatility": 0.1495, "rate": 0.043}` |
+| Curve | A yield curve: flat, zero rates (or discount factors, forwards, par yields) by tenor or date, or the `data.curve` of a curve tool | `{"dates": ["1Y", "5Y", "10Y"], "values": [0.035, 0.037, 0.041]}` |
+| Instruments | `instruments`: the market quotes `pricing_yield_curve` bootstraps from | `[{"type": "swap", "tenor": "5Y", "quote": 0.0373}]` |
+| Price bars | `data`: prices by date with columns date, open, high, low and close, for `pricing_historical_vol` | `{"date": ["2024-01-02", "2024-01-03"], "open": [187.2, 184.2], "high": [188.4, 185.9], "low": [183.9, 183.4], "close": [185.6, 184.3]}` |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+Rates, spreads and volatilities are decimals (0.0425 = 4.25%), dates are ISO (YYYY-MM-DD) and tenors read like `3M` or `10Y`. Calendars, day counts, frequencies and other conventions have defaults on every tool (US Treasury conventions for bonds) and can be set for other markets.
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds by default; 180 seconds for `pricing_callable_bond`, `pricing_convertible_bond`, `pricing_yield_curve`, `pricing_bond_curve_fit`, `pricing_least_squares_fit`, `pricing_process_paths`, `pricing_vanilla_option`, `pricing_barrier_option`, `pricing_double_barrier_option`, `pricing_compound_option`, `pricing_forward_start_option`, `pricing_implied_vol`, `pricing_option_models`, `pricing_asian_option`, `pricing_swing_option`, `pricing_capfloor`, `pricing_coupon_leg`, `pricing_optionlet_strip`, `pricing_smile` and `pricing_risk_neutral_density`; 240 seconds for `pricing_basket_option`, `pricing_swaption`, `pricing_swaption_vol` and `pricing_vol_surface`; 300 seconds for `pricing_heston_calibration` and `pricing_short_rate_calibration` |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Option tools return the price, every Greek the engine provides and, from a market price, the implied volatility. Bond, swap and credit tools return prices, yields, spreads, durations, convexity, BPS or DV01, leg values and the cash-flow table. Curve tools return each instrument's repriced quote, zero, discount and forward rates on a grid as series with a chart, and `data.curve` to pass to any other pricing tool; volatility tools return surfaces and smiles as grid tables with smile and term-structure charts; calibration tools return the parameters and each quote's market and model values.
+
+## Example
+
+```text Prompt
+Using Fincept, price a 3-month at-the-money call on SPY with a 4.3% rate, using its 21-day close-to-close volatility from daily candles, and give the Greeks.
+```
+
+The agent searches for `option price Greeks`, finds `pricing_historical_vol` and `pricing_vanilla_option`, and passes the dates and closes as `$fincept` references to `market_get_candles` (`candles.time` as the `date` column and `candles.close`).

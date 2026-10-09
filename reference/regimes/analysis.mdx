@@ -1,0 +1,14 @@
+---
+title: "Regime analytics"
+description: "Statistics of any returns series by regime (return, volatility, ratio, spells and their compounded returns, empirical transitions) and transition-matrix analytics (stationary distribution, expected durations, half-lives, mixing, h-step forecast, simulated regime paths)."
+mode: "wide"
+---
+
+Toolset `regime_analysis`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `regime_statistics` | Statistics of a returns series under a regime path: per regime the number of periods, share of time, mean, volatility, annualised mean and volatility and their ratio, extremes and spell counts and lengths; every spell with its dates and compounded return; the empirical transition counts and probabilities; and the current spell. |  |
+| `regime_markov_chain` | Analytics of a regime transition matrix on its own (e.g. data.model.transmat of a fit, or an assumed one): stationary distribution, persistence, expected duration and half-life of each regime, the eigenvalues and the half-life of convergence to the long run, the h-step regime forecast from the current probabilities (series + chart) and optionally a simulated regime path with its spells. |  |
+
+Inputs, limits and outputs are described in [Fincept Regimes](/guides/fincept-regimes). Full schemas: `fincept_describe_tool`.

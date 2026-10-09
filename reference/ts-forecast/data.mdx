@@ -1,0 +1,13 @@
+---
+title: "Sample data"
+description: "The monthly international airline passengers series (1949-1960) and synthetic panels of seasonal series of chosen length, frequency and static features, in the long id/date/value layout every tool accepts."
+mode: "wide"
+---
+
+Toolset `tsforecast_data`: 1 tool.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `tsforecast_sample_data` | Returns sample series in the long layout (unique_id, ds, y [, static_*]) that every tool accepts as data: the monthly international airline passengers series 1949-1960 (thousands of passengers, strong trend and multiplicative seasonality), or a synthetic panel of seasonal series with chosen count, frequency, length range, static features and seed. |  |
+
+Inputs, limits and outputs are described in [Fincept TS Forecast](/guides/fincept-ts-forecast). Full schemas: `fincept_describe_tool`.

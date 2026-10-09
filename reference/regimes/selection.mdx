@@ -1,0 +1,13 @@
+---
+title: "Number of regimes"
+description: "Choose how many regimes the data supports: a model family fitted across a range of state counts with random restarts, compared by BIC, AIC, log-likelihood, variational lower bound or held-out log-likelihood; the winning model is returned ready for regime_decode and regime_simulate."
+mode: "wide"
+---
+
+Toolset `regime_selection`: 1 tool.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `regime_select_states` | Fits one model family for every state count from min_states to max_states, each from several random restarts, and picks the count by BIC (default), AIC, log-likelihood, held-out log-likelihood or the variational lower bound. |  |
+
+Inputs, limits and outputs are described in [Fincept Regimes](/guides/fincept-regimes). Full schemas: `fincept_describe_tool`.

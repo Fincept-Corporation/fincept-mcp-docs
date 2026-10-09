@@ -1,0 +1,17 @@
+---
+title: "Dependence measures"
+description: "Kendall's tau, Spearman's rho, Pearson, Blomqvist's beta, Hoeffding's D and Chatterjee's xi matrices between assets, implied copula parameters, tail dependence from pairwise copulas, pseudo-observations, quasi-random uniform samples and latent samples for discrete pairs."
+mode: "wide"
+---
+
+Toolset `copula_dependence`: 5 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `copula_dependence_matrix` | Matrix of a rank-based or nonlinear dependence measure between every pair of assets (pairwise complete rows, optional observation weights): Kendall's tau, Spearman's rho, Pearson, Blomqvist's beta, Hoeffding's D or Chatterjee's xi, as a table with a heatmap and the most dependent pairs. |  |
+| `copula_tail_dependence` | Lower and upper tail dependence coefficients between every pair of assets (up to 20), each from the bivariate copula selected for that pair (family and rotation by AIC by default, parametric families unless controls.family_set says otherwise). |  |
+| `copula_pseudo_obs` | Rank-transforms each asset's history to the copula scale: the (optionally weighted) empirical distribution function scaled by n + 1, so every value lies in (0, 1) with uniform margins. |  |
+| `copula_uniform_sample` | Independent uniform or low-discrepancy (Sobol, generalized Halton) points on the unit cube, reproducible with seeds: the raw material of copula simulation and quasi-Monte Carlo integration. |  |
+| `copula_discrete_latent` | Recovers a continuous latent sample on the copula scale behind two discrete (integer) variables, treating each observation as known only up to its rectangle of cumulative probabilities and refining latent points by kernel sweeps (deterministic). |  |
+
+Inputs, limits and outputs are described in [Fincept Copula](/guides/fincept-copula). Full schemas: `fincept_describe_tool`.

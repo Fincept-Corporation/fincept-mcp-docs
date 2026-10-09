@@ -1,0 +1,16 @@
+---
+title: "Credit"
+description: "Default-probability curves bootstrapped from CDS spreads or upfronts (or given as hazard rates, survival probabilities or densities), credit default swaps (fair spread, upfront, RPV01, implied hazard, midpoint/ISDA/integral engines), CDS options and bonds priced with default risk."
+mode: "wide"
+---
+
+Toolset `pricing_credit`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pricing_credit_curve` | Builds a default-probability curve from CDS par spreads or upfront quotes (bootstrapped to piecewise-flat hazard rates, midpoint or ISDA model) or from hazard rates, survival probabilities or default densities, and reports survival probability, cumulative default probability, hazard rate and default density over time, plus each quote's repriced value. |  |
+| `pricing_cds` | Prices a credit default swap on standard (CDS2015) dates or a given maturity: NPV, fair (par) spread, fair upfront, premium leg and protection leg values, RPV01 (premium leg BPS), accrual rebate, the flat hazard rate implied by the NPV, and the conventional (quoted) spread, with the midpoint, ISDA standard or integral engine. |  |
+| `pricing_cds_option` | Black model for an option to enter a CDS at expiry (payer: buy protection at the strike spread; receiver: sell), knock-out on default before expiry or not. |  |
+| `pricing_risky_bond` | Prices a fixed-rate bond with default risk: coupons and principal weighted by survival probability, plus the recovery paid on default, discounted on the risk-free curve. |  |
+
+Inputs, limits and outputs are described in [Fincept Pricing](/guides/fincept-pricing). Full schemas: `fincept_describe_tool`.

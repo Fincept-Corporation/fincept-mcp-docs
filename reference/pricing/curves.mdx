@@ -1,0 +1,17 @@
+---
+title: "Yield curves"
+description: "Bootstrapped yield curves from deposits, FRAs, futures, swaps, OIS, bonds and basis swaps with every interpolation; curves from zero rates, discount factors, forwards or par yields; evaluation of zero, discount and forward rates; spreaded, implied, composite and ultimate-forward curves; Nelson-Siegel, Svensson, spline and polynomial curves fitted to bond prices."
+mode: "wide"
+---
+
+Toolset `pricing_curves`: 5 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pricing_yield_curve` | Bootstraps a yield curve that reprices market instruments exactly: deposits, FRAs, IMM and overnight (SOFR) futures, fixed-float swaps, OIS, multiple-resets swaps, fixed-coupon, par and zero-coupon bonds, and Ibor/Ibor or OIS/Ibor basis swaps over a known curve, with any piecewise method (zero, discount or forward interpolation, monotone convex, global fit), dual-curve discounting or as a spread over a base curve. |  |
+| `pricing_curve_query` | Evaluates any yield curve (flat, points with any interpolation, par yields, or data.curve from a curve tool) at dates or tenors: zero rate and discount factor, the instantaneous forward rate, and the forward rate over forward_tenor from each date (1y1y, 5y5y). |  |
+| `pricing_bond_curve_fit` | Fits a smooth discount curve to bond clean prices (Nelson-Siegel, Svensson, exponential splines, cubic B-splines, simple polynomial, optionally as a spread over a base curve), or evaluates a curve from known parameters such as a central bank's published Svensson parameters. |  |
+| `pricing_index` | Describes an interest-rate index (family, tenor, fixing days, calendar, currency, day count, convention) and, for given fixing dates, the value and maturity dates and the fixing: the stored past fixing on or before the valuation date, or the rate forecast on the curve after it. |  |
+| `pricing_curve_spread` | Derives a curve from a base curve: a parallel zero or forward spread, a term structure of zero, forward or discount spreads with any interpolation, the forward curve implied at a future date, the combination of two curves (sum, difference, max, min, average of zero rates), or the ultimate-forward-rate extrapolation of insurance regulation. |  |
+
+Inputs, limits and outputs are described in [Fincept Pricing](/guides/fincept-pricing). Full schemas: `fincept_describe_tool`.

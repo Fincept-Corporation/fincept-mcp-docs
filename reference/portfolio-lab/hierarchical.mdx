@@ -1,0 +1,15 @@
+---
+title: "Hierarchical portfolios"
+description: "Hierarchical risk parity, hierarchical equal risk contribution, Schur complementary allocation and nested clusters optimisation over any risk measure, codependence distance (Pearson, Kendall, Spearman, covariance, distance correlation, mutual information) and linkage, with the clustering tree, leaf order, clusters and seriated codependence matrices behind them."
+mode: "wide"
+---
+
+Toolset `pflab_hierarchical`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pflab_hierarchical` | Hierarchical portfolios that need no expected returns and no matrix inversion: HRP, HERC (any of 20 risk measures incl. VaR, drawdown at risk, entropic risk, fourth moments) or Schur complementary allocation, on any prior, codependence distance and linkage. |  |
+| `pflab_nested_clusters` | Nested clusters optimisation: assets are clustered, a mean-risk optimizer (objective, risk measure, prior) weights the assets inside each cluster, and a second one weights the clusters using their out-of-sample returns from k-fold cross-validation. |  |
+| `pflab_clustering` | Codependence and distance matrices of the assets (Pearson, Kendall, Spearman, covariance, distance correlation or mutual information), their hierarchical clustering (linkage, number of clusters by the gap statistic or max_clusters, flat clusters, dendrogram coordinates) and an asset ordering (optimal leaf order or spectral seriation). |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Lab](/guides/fincept-portfolio-lab). Full schemas: `fincept_describe_tool`.

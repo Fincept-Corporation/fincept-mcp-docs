@@ -1,0 +1,13 @@
+---
+title: "Regression on exogenous columns"
+description: "Per-series regression of the target on its exogenous columns (linear, regularized, robust, quantile, tree ensembles, gradient boosting, nearest neighbours, support vector and kernel ridge) forecast from future exogenous values, with conformal intervals and coefficients or importances."
+mode: "wide"
+---
+
+Toolset `tsforecast_regression`: 1 tool.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `tsforecast_regression` | Regresses the target of one series (y with exog) or of every series of a panel (data with exogenous columns) on its exogenous columns, each series separately, with a regressor chosen from linear, ridge, lasso, elastic net, Huber, Bayesian ridge, quantile, decision tree, random forest, extra trees, gradient boosting, histogram gradient boosting, k-nearest neighbours, SVR and kernel ridge, then forecasts from future_exog (scenario or what-if forecasts). |  |
+
+Inputs, limits and outputs are described in [Fincept TS Forecast](/guides/fincept-ts-forecast). Full schemas: `fincept_describe_tool`.

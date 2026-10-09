@@ -1,0 +1,16 @@
+---
+title: "Volatility models"
+description: "GARCH-family conditional volatility models (GARCH, GJR, TARCH, EGARCH, APARCH, FIGARCH, HARCH, MIDAS hyperbolic, EWMA, RiskMetrics 2006, fixed variance) with constant, zero, AR, HAR, regression or volatility-in-mean means and normal, Student t, skewed t or GED errors: estimation, diagnostics, forecasts with VaR and expected shortfall, ARCH-effect tests, simulation and the error distributions."
+mode: "wide"
+---
+
+Toolset `vol_models`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `vol_garch` | Fits a conditional volatility model (default constant mean, GARCH(1,1), normal errors; any mean, volatility process and distribution through model) and forecasts it. |  |
+| `vol_arch_effects` | Tests a return series for ARCH effects (volatility clustering) before any model is fitted: Engle's ARCH-LM test and the Ljung-Box (McLeod-Li) test on squared returns at each lag. |  |
+| `vol_simulate` | Simulates returns from a volatility model (any mean, process and distribution) at given parameters, or at parameters fitted to returns. |  |
+| `vol_distribution` | Evaluates the standardized error distributions of the volatility models (normal, Student t, Hansen skewed t, generalized error) at given shape parameters: quantiles (the VaR multipliers), CDF, moments, lower partial moments (expected-shortfall building blocks), random draws or the log-likelihood of values. |  |
+
+Inputs, limits and outputs are described in [Fincept Volatility](/guides/fincept-volatility). Full schemas: `fincept_describe_tool`.

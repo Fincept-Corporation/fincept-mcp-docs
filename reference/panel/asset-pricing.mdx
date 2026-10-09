@@ -1,0 +1,13 @@
+---
+title: "Factor asset pricing"
+description: "Linear factor models of test-asset returns: time-series regressions on traded factors, two-pass cross-sectional regressions (traded or non-traded factors, optional zero-beta rate) and GMM; risk premia with standard errors, betas, pricing errors and the J test of zero alphas."
+mode: "wide"
+---
+
+Toolset `panel_asset_pricing`: 1 tool.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `panel_factor_model` | Estimates a linear factor model of test-asset returns: risk premia per factor with standard errors, t and p; each asset's alpha (pricing error) and betas with t statistics; R²; and the J test of the null that all alphas are zero (rejection = the factors do not price the assets). |  |
+
+Inputs, limits and outputs are described in [Fincept Panel](/guides/fincept-panel). Full schemas: `fincept_describe_tool`.

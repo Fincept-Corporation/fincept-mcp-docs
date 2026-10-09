@@ -1,0 +1,14 @@
+---
+title: "Exponential smoothing and Theta"
+description: "Automatic ETS state-space models, Holt and Holt-Winters, simple and seasonal exponential smoothing, complex exponential smoothing, and the standard, optimized and dynamic Theta methods: smoothing weights, damping, initial states, AIC/AICc/BIC and forecasts with intervals."
+mode: "wide"
+---
+
+Toolset `tsforecast_smoothing`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `tsforecast_ets` | Fits exponential-smoothing models to one series (y) or every series of a panel (data): automatic ETS (error/trend/season components and damping chosen by AICc, or given as e.g. MAM), Holt, Holt-Winters, simple and seasonal exponential smoothing (given or fitted alpha) and complex exponential smoothing. |  |
+| `tsforecast_theta` | Fits Theta-method models to one series (y) or every series of a panel (data): standard Theta (theta = 2), optimized Theta, the dynamic variants and AutoTheta (best of the four by in-sample error), after a classical multiplicative or additive deseasonalization when the series is seasonal. |  |
+
+Inputs, limits and outputs are described in [Fincept TS Forecast](/guides/fincept-ts-forecast). Full schemas: `fincept_describe_tool`.

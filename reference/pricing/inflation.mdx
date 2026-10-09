@@ -1,0 +1,16 @@
+---
+title: "Inflation"
+description: "Zero-coupon and year-on-year inflation curves from swap quotes or breakevens over published CPI/RPI/HICP fixings with seasonality, projected index levels, zero-coupon / year-on-year / CPI swaps, inflation-linked bonds (TIPS, linkers: real yield, index ratio) and year-on-year caps and floors."
+mode: "wide"
+---
+
+Toolset `pricing_inflation`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pricing_inflation_curve` | Builds a zero-coupon (or year-on-year) inflation curve from swap quotes, breakevens or rates on top of the index's published fixings (optionally with monthly seasonality), and reports the projected index level, the zero inflation rate and the year-on-year rate at each date, with the lagged reference index used by swaps and linkers. |  |
+| `pricing_inflation_swap` | Prices inflation swaps on the inflation curve and nominal discount curve: zero-coupon inflation swaps (index growth vs (1+K)^T - 1), year-on-year inflation swaps (annual YoY rate vs fixed), and CPI swaps (inflation- indexed fixed leg with notional vs a floating leg). |  |
+| `pricing_inflation_bond` | Inflation-linked bond on the market's real-yield convention (US TIPS, UK linkers, OATi/OAT€i): the index ratio from the lagged reference index, real clean/dirty price from a real yield (or the real yield from a real price), inflation-adjusted (nominal) prices, real duration and convexity; with an inflation curve and nominal curve it also prices the projected nominal cash flows. |  |
+| `pricing_inflation_capfloor` | Prices a year-on-year inflation cap, floor or collar (annual optionlets on the YoY index change, e.g. a 0% deflation floor) with Black, unit-displaced Black or Bachelier optionlets at a flat volatility, on the inflation and nominal curves (a year-on-year curve is implied from zero-coupon quotes when needed). |  |
+
+Inputs, limits and outputs are described in [Fincept Pricing](/guides/fincept-pricing). Full schemas: `fincept_describe_tool`.

@@ -1,0 +1,16 @@
+---
+title: "Financial regimes and structural breaks"
+description: "Regime shifts in returns and volatility (one asset, or covariance and correlation regimes of several), trend changes of prices, rates and macro series, breaks in a regression (beta, hedge ratio) and in autoregressive dynamics (persistence, mean reversion of a spread), each with statistics per regime."
+mode: "wide"
+---
+
+Toolset `changepoint_regimes`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `changepoint_return_regimes` | Splits an asset's return history into regimes of volatility (default), mean return or whole distribution; several assets are segmented jointly (covariance and correlation regimes). |  |
+| `changepoint_regression_breaks` | Finds where the coefficients of a linear regression of y on x change: least squares per segment with the breaks chosen to minimise the total squared error (multiple structural breaks). |  |
+| `changepoint_ar_breaks` | Finds where the autoregressive dynamics of one series change: an AR(order) with intercept fitted per segment, breaks minimising the total squared one-step error. |  |
+| `changepoint_trend_breaks` | Fits a piecewise-linear trend to one series and finds where its slope changes: continuous (the trend bends; the fit runs through each segment's end points) or with a level jump at each break (least squares per segment). |  |
+
+Inputs, limits and outputs are described in [Fincept Change Points](/guides/fincept-change-points). Full schemas: `fincept_describe_tool`.

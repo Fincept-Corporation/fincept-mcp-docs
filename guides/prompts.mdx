@@ -26,6 +26,26 @@ Start prompts with "Using Fincept" so the agent reaches for these tools instead 
 | Find the minimum-CVaR portfolio at 95% of SPY, QQQ, TLT and GLD from five years of daily prices. | `market_get_candles`, `pfopt_cvar` |
 | Chart SPY's 1-month realized volatility and its 1-year rolling Sharpe ratio since 2020. | `market_get_candles`, `quant_volatility`, `quant_sharpe_ratio` |
 | Backtest a 60/40 SPY/TLT basket rebalanced monthly with 5 bp costs since 2015. | `market_get_candles`, `quant_basket_backtest` |
+| Fit a GJR-GARCH with skewed t errors to SPY daily returns and forecast 10-day volatility with 1% VaR. | `market_get_candles`, `vol_garch` |
+| Backtest a GARCH(1,1) 1-day 99% VaR on Nifty 50 over the last 250 days and report the hit rate. | `market_get_candles`, `vol_rolling_forecast` |
+| Estimate JPM, BAC and WFC hedge ratios on SPY jointly by SUR and test for a diagonal residual covariance. | `market_get_candles`, `panel_system_regression` |
+| Compare fixed and random effects on the wage panel dataset with a Hausman test. | `panel_dataset`, `panel_compare` |
+| Backtest automatic ARIMA, ETS and Theta on US CPI and forecast 12 months with the best model. | `data_get_observations`, `tsforecast_cross_validation`, `tsforecast_forecast` |
+| Simulate 500 paths of Nifty 50 closes 20 sessions ahead and give the 5% and 95% quantiles. | `market_get_candles`, `tsforecast_simulate` |
+| Compute RSI(14), MACD and 20-day Bollinger bands on a year of RELIANCE.NS daily candles. | `market_get_candles`, `ta_indicators` |
+| Which candlestick patterns fired on AAPL in the last month? | `market_get_candles`, `ta_candlestick_scan` |
+| When did SPY's volatility regime change over the last ten years? Give each regime's volatility and drawdown. | `market_get_candles`, `changepoint_return_regimes` |
+| Has AAPL's beta to QQQ shifted since 2018? Find the breaks. | `market_get_candles`, `changepoint_regression_breaks` |
+| Find three volatility regimes in Nifty 50 daily returns and tell me today's regime and its expected duration. | `market_get_candles`, `regime_gaussian_hmm` |
+| How many regimes do SPY daily returns support? Choose by BIC. | `market_get_candles`, `regime_select_states` |
+| How strongly do JPM, BAC, C and WFC crash together? Show the lower tail dependence. | `market_get_candles`, `copula_tail_dependence` |
+| Copula 99% VaR and expected shortfall of 40% JPM, 30% BAC and 30% XOM, and how BAC and XOM move if JPM falls 8%. | `market_get_candles`, `copula_portfolio_var`, `copula_stress_scenarios` |
+| Back-test a long-only multi-period policy on AAPL, MSFT, JPM, XOM and PFE with 5 bp spreads since 2020 beside equal weight. | `market_get_candles`, `mpo_backtest` |
+| Give me today's optimal trades for a $1M portfolio of AAPL, MSFT, JPM, XOM and PFE from my current holdings. | `market_get_candles`, `mpo_optimize` |
+| Walk-forward test a minimum-CVaR portfolio of seven US large caps rebalanced monthly against HRP and equal weight. | `market_get_candles`, `pflab_compare_strategies` |
+| Stress test a 60/40 SPY/TLT portfolio for a 10% SPY drop with a vine copula. | `market_get_candles`, `pflab_stress_test` |
+| Price a 3-month at-the-money SPY call with its 21-day historical volatility and give the Greeks. | `market_get_candles`, `pricing_historical_vol`, `pricing_vanilla_option` |
+| Bootstrap a SOFR curve from these swap quotes and price a 5-year payer swap at 3.9%. | `pricing_yield_curve`, `pricing_swap` |
 
 <Tip>
   Ask for a chart and the agent gets one: forecasting and analysis tools return `series` and `chart` blocks. Large results include a viewer link at fincept.in with interactive tables and CSV download.

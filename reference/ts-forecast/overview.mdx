@@ -1,0 +1,22 @@
+---
+title: "Fincept TS Forecast"
+description: "Every Fincept TS Forecast module and its toolset."
+icon: "chart-line"
+mode: "wide"
+---
+
+19 tools in 11 modules, plus `tsforecast_catalog`, which lists them from inside your agent. All are free.
+
+| Module | Toolset | Covers | Tools |
+| --- | --- | --- | --- |
+| [ARIMA models](/reference/ts-forecast/arima) | `tsforecast_arima` | Automatic and fixed-order (seasonal) ARIMA and autoregression with exogenous regressors, fitted series by series: orders, coefficients with standard errors, AIC/AICc/BIC, forecasts with intervals; unit-root and seasonal-strength tests that choose the differencing. | 2 |
+| [Statistical forecasting](/reference/ts-forecast/forecasting) | `tsforecast_forecasting` | Forecast one series or a panel with any mix of statistical models (automatic ARIMA, ETS, CES, Theta, TBATS, MSTL, boosted decomposition, structural, intermittent, GARCH, benchmarks, regression), native or conformal intervals, exogenous regressors and a fallback model; the model and parameter reference; transfer of fitted models to new or extended series. | 3 |
+| [Backtesting and evaluation](/reference/ts-forecast/backtest) | `tsforecast_backtest` | Rolling-origin cross-validation of statistical models (expanding or fixed window, refit schedule, conformal or native intervals) scored with MAE, RMSE, MAPE, sMAPE, MASE, RMSSE, bias, quantile, coverage and Winkler metrics per model, window and series; scoring of any forecasts against actuals. | 2 |
+| [Benchmarks and intermittent demand](/reference/ts-forecast/benchmarks) | `tsforecast_benchmarks` | Benchmark forecasters every model should beat (naive, seasonal naive, random walk with drift, historic and window averages, conformal seasonal pool, constant) and intermittent-demand methods for series with many zero periods (Croston classic, optimized and SBA, ADIDA, IMAPA, TSB). | 2 |
+| [Sample data](/reference/ts-forecast/data) | `tsforecast_data` | The monthly international airline passengers series (1949-1960) and synthetic panels of seasonal series of chosen length, frequency and static features, in the long id/date/value layout every tool accepts. | 1 |
+| [Regression on exogenous columns](/reference/ts-forecast/regression) | `tsforecast_regression` | Per-series regression of the target on its exogenous columns (linear, regularized, robust, quantile, tree ensembles, gradient boosting, nearest neighbours, support vector and kernel ridge) forecast from future exogenous values, with conformal intervals and coefficients or importances. | 1 |
+| [Scenario simulation](/reference/ts-forecast/scenarios) | `tsforecast_scenarios` | Sample future paths of fitted statistical models (ARIMA, ETS, CES, Theta, exponential smoothing, benchmarks) with normal, Student t, Laplace, skew-normal, generalized-error or bootstrapped errors: quantile fans, path statistics and raw sample paths for risk and scenario analysis. | 1 |
+| [Multiple seasonality](/reference/ts-forecast/seasonal) | `tsforecast_seasonal` | Models for series with several seasonal cycles (daily data with weekly and yearly patterns, hourly data with daily and weekly ones): TBATS, MSTL decomposition with a trend model, and gradient-boosted decomposition; components, harmonics, Box-Cox and forecasts with intervals. | 3 |
+| [Exponential smoothing and Theta](/reference/ts-forecast/smoothing) | `tsforecast_smoothing` | Automatic ETS state-space models, Holt and Holt-Winters, simple and seasonal exponential smoothing, complex exponential smoothing, and the standard, optimized and dynamic Theta methods: smoothing weights, damping, initial states, AIC/AICc/BIC and forecasts with intervals. | 2 |
+| [Unobserved components](/reference/ts-forecast/structural) | `tsforecast_structural` | Structural time-series models estimated by Kalman filter: local level, local linear trend, smooth trend, seasonal, cycle and autoregressive components with exogenous regressors; component variances, smoothed components and forecasts with intervals. | 1 |
+| [Volatility (GARCH)](/reference/ts-forecast/volatility) | `tsforecast_volatility` | GARCH(p,q) and ARCH(p) conditional-variance models of return series: coefficients, persistence, unconditional variance, in-sample conditional volatility and the volatility forecast. | 1 |

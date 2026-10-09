@@ -1,0 +1,21 @@
+---
+title: "Numerical tools"
+description: "Interpolation (linear to monotone cubic, Kruger, Fritsch-Butland, parabolic, convex-monotone, Lagrange, Chebyshev, bilinear, bicubic), integration and Gaussian quadrature, probability distributions, statistics and risk measures, matrix decompositions and solvers, pseudo-random and low-discrepancy sequences, Monte Carlo paths of stochastic processes, least-squares fits and historical volatility."
+mode: "wide"
+---
+
+Toolset `pricing_math`: 9 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pricing_interpolation` | Interpolates tabulated data: 1-D with any of the library's schemes (linear and log-linear, flat, natural and monotone cubic splines, Kruger, Fritsch-Butland, parabolic, convex-monotone, Lagrange, Chebyshev) returning the value, first and second derivative and primitive at each point; or 2-D (bilinear, bicubic spline) over a grid. |  |
+| `pricing_integration` | Numerical integration of tabulated data: the integral of an interpolated table over an interval with an adaptive or Gaussian integrator (e.g. integrating instantaneous forward rates gives -log of the discount factor), a discounted tail to infinity by exp-sinh, the expectation of the tabulated function of a normal variable by Gauss-Hermite, or the nodes and weights of any Gaussian rule (Legendre, Chebyshev, Gegenbauer, Hermite, hyperbolic, Jacobi, Laguerre). |  |
+| `pricing_least_squares_fit` | Fits a parametric curve to (x, y) points by minimising the sum of squared residuals with a chosen optimiser (Nelder-Mead simplex, BFGS, bounded L-BFGS-B, conjugate gradient, steepest descent, differential evolution within box bounds) under no, positivity or box constraints: Nelson-Siegel and Svensson yield curves, polynomials, exponentials, power laws. |  |
+| `pricing_historical_vol` | Historical volatility from price bars: close-to-close (rolling window) or the range-based Garman-Klass estimators (five variants) and Parkinson's high-low estimator, annualised. |  |
+| `pricing_random_numbers` | Random numbers from the library's generators: uniform or Gaussian scalars (Mersenne Twister, Knuth, L'Ecuyer, Xoshiro256** with Box-Muller, central limit, inverse cumulative, Moro or ziggurat transforms), vector sequences (pseudo-random, Sobol with any direction integers, scrambled Sobol, Halton; uniform or Gaussian), and Brownian-bridge paths. |  |
+| `pricing_process_paths` | Simulates Monte Carlo paths of a stochastic process on a time grid (pseudo-random or Sobol, optional Brownian bridge): Black-Scholes, geometric Brownian motion, Heston, Bates, GJR-GARCH, Ornstein-Uhlenbeck, Hull-White (spot or forward measure), G2++, GSR. |  |
+| `pricing_distribution` | Probability distribution functions: density, cumulative probability and inverse (quantile) of the normal (Acklam or Moro inverse), Student t, chi-square and non-central chi-square, gamma, Poisson and binomial distributions, the bivariate normal cumulative probability (three algorithms) and the log-gamma function. |  |
+| `pricing_statistics` | Sample statistics and risk measures of a series (returns, P&L): count, mean, variance, standard deviation, error estimate, skewness, kurtosis, min, max, semi and downside deviation, value at risk, expected shortfall and potential upside at confidence levels (Gaussian on the moments), shortfall probability, average shortfall and regret below a target; or, for several columns, each column's moments with the covariance and correlation matrices. |  |
+| `pricing_matrix` | Linear algebra on a matrix given by rows, or on the covariance/correlation of data columns: Cholesky factor, salvaged pseudo square root (spectral, hypersphere, lower diagonal, Higham, principal), singular value decomposition, symmetric eigen decomposition (principal components with explained variance), inverse, transpose, covariance from volatilities and correlations, outer product, and A x = b by Cholesky, BiCGstab or GMRES. |  |
+
+Inputs, limits and outputs are described in [Fincept Pricing](/guides/fincept-pricing). Full schemas: `fincept_describe_tool`.

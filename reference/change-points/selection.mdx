@@ -1,0 +1,14 @@
+---
+title: "Penalty and model selection"
+description: "How many breaks: the number of change points found at each penalty of a grid (with the widest stable plateau and the BIC/AIC reference penalty), and the total cost of the best segmentation with 0..K breaks scored by BIC, AIC or the elbow of the cost curve."
+mode: "wide"
+---
+
+Toolset `changepoint_selection`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `changepoint_penalty_sweep` | Runs the search at a grid of penalties and returns, per penalty, the number of change points, the total cost, the penalised cost and the break dates (table + step chart of breaks against penalty), the BIC or AIC reference penalty of the cost, and the widest plateau (the number of breaks that holds over the largest span of log-penalties, a robust choice) with its break dates and segments. |  |
+| `changepoint_select_count` | Fits the best segmentation with 0, 1, ..., max_bkps change points and scores each: total cost, BIC and AIC (Gaussian or rank likelihood of the cost, noise variance profiled out for squared-error costs) and the elbow of the cost curve. |  |
+
+Inputs, limits and outputs are described in [Fincept Change Points](/guides/fincept-change-points). Full schemas: `fincept_describe_tool`.

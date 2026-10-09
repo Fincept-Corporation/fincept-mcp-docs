@@ -1,0 +1,14 @@
+---
+title: "Copula portfolio risk"
+description: "Portfolio value at risk and expected shortfall from vine-copula scenarios mapped through each asset's empirical, kernel or parametric margin, with Gaussian-copula and historical benchmarks and expected shortfall contributions; stress scenarios that hold chosen assets at a shock and draw the rest from their conditional distribution."
+mode: "wide"
+---
+
+Toolset `copula_risk`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `copula_portfolio_var` | One-period portfolio value at risk and expected shortfall by copula simulation: a vine copula is fitted to the assets' returns (or given), scenarios are drawn from it and mapped back through each asset's margin (observed quantiles by default, or kernel/parametric), and the weighted portfolio return distribution gives VaR/ES per confidence (positive = loss, fraction and currency), each asset's ES contribution, per-asset VaR/ES, the worst scenarios and a histogram, beside Gaussian-copula and historical VaR/ES. |  |
+| `copula_stress_scenarios` | Stress scenarios by conditional copula simulation: the shocked assets are held at the given returns (or quantiles) and every other asset is drawn from its distribution conditional on the shock, through a vine copula fitted with the shocked assets last in its order (or a given one) and each asset's margin. |  |
+
+Inputs, limits and outputs are described in [Fincept Copula](/guides/fincept-copula). Full schemas: `fincept_describe_tool`.

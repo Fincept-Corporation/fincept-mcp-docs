@@ -1,0 +1,14 @@
+---
+title: "ARIMA models"
+description: "Automatic and fixed-order (seasonal) ARIMA and autoregression with exogenous regressors, fitted series by series: orders, coefficients with standard errors, AIC/AICc/BIC, forecasts with intervals; unit-root and seasonal-strength tests that choose the differencing."
+mode: "wide"
+---
+
+Toolset `tsforecast_arima`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `tsforecast_arima` | Fits ARIMA-family models to one series (y) or every series of a panel (data): automatic seasonal ARIMA (stepwise AICc search after unit-root tests), ARIMA with given (p,d,q)(P,D,Q) orders, drift, Box-Cox and fixed coefficients, or autoregression on chosen lags; numeric exogenous columns become regressors (give future_exog). |  |
+| `tsforecast_differencing` | The differencing the automatic ARIMA would choose for each series: d from repeated KPSS stationarity tests (null: stationary) and D from the STL seasonal strength (seasonally differenced when it exceeds 0.64), with the seasonal strength itself (0 none to 1 pure seasonality). |  |
+
+Inputs, limits and outputs are described in [Fincept TS Forecast](/guides/fincept-ts-forecast). Full schemas: `fincept_describe_tool`.

@@ -1,0 +1,51 @@
+---
+title: "Fincept Technicals"
+description: "Technical indicators as MCP tools: 201 indicators from moving averages and bands to momentum, volume, volatility and cycle, and all 61 candlestick patterns, on OHLCV bars."
+icon: "gauge"
+---
+
+Fincept Technicals is the technical-analysis engine behind every `ta_*` tool: moving averages (SMA, EMA, WMA, DEMA, TEMA, KAMA, MAMA, T3, HMA, ZLEMA, VWMA, variable-period), Bollinger, Keltner, Donchian and acceleration bands, parabolic SAR and SuperTrend, momentum (RSI, MACD, stochastics, KDJ, ADX/DI/DM, Aroon, CCI, MFI, ROC, TRIX, Williams %R, ultimate oscillator and more), volume (OBV, A/D, Chaikin, VWAP and more), volatility (ATR, NATR, true range and more), price transforms and Heikin-Ashi, Hilbert-transform cycle indicators, rolling statistics (beta, correlation, linear regression, percentiles), math transforms and operators, and all 61 candlestick patterns. Every parameter is settable, and results are series aligned to the dates with the warm-up bars reported. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Technicals tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `ta_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Technicals reference](/reference/technicals/overview) lists every module and tool.
+
+`ta_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| Bars | `data`: OHLCV bars, oldest first, with columns open, high, low, close and volume (only those the indicator reads) and an optional date column; `market_get_candles` data at path `candles` fits as is | `{"date": ["2024-01-02", "2024-01-03"], "open": [187.2, 184.2], "high": [188.4, 185.9], "low": [183.9, 183.4], "close": [185.6, 184.3], "volume": [82488700, 58414500]}` |
+| Series | `values`: one series instead of `data` (closes, a spread, a ratio) for indicators that read one input | `[185.6, 184.3, 181.9, 181.2]` |
+| Dates | `dates`: ISO dates, one per bar, when `data` has no date column or `values` is given | `["2024-01-02", "2024-01-03"]` |
+| Indicator | `indicator`: the indicator's name, with its parameters as arguments; `ta_indicators` takes a list of `{indicator, params}` | `"RSI"`, `[{"indicator": "SMA", "params": {"timeperiod": 50}}, {"indicator": "MACD"}]` |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+`ta_describe` lists every indicator's inputs, parameters with their defaults, outputs and warm-up.
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Every indicator tool returns its outputs as series aligned to the dates (null over the warm-up, reported per output), the last values and a line chart, drawn over the price for averages, bands and stops. `ta_oscillator` adds a bar chart of the histogram, and `ta_candlestick` and `ta_candlestick_scan` a candlestick chart with the signals; the scan lists which patterns fired on which dates, newest first. `ta_indicators` returns one aligned table of every output with each indicator's parameters, warm-up and last values.
+
+## Example
+
+```text Prompt
+Using Fincept, compute the 50- and 200-day SMAs, RSI(14), MACD and 20-day Bollinger bands on a year of RELIANCE.NS daily candles, and list the candlestick patterns that fired in the last month.
+```
+
+The agent searches for `technical indicators`, finds `ta_indicators` and `ta_candlestick_scan`, and passes the bars as a `$fincept` reference to `market_get_candles` at path `candles`.

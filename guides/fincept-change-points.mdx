@@ -1,0 +1,51 @@
+---
+title: "Fincept Change Points"
+description: "Change-point detection as MCP tools: regime breaks in returns, volatility, trends, betas and mean reversion, with penalty selection and segmentation metrics."
+icon: "split"
+---
+
+Fincept Change Points is the change-point engine behind every `changepoint_*` tool: offline detection by PELT, binary segmentation, bottom-up merging, window sliding, dynamic programming or kernel search, with segment costs for shifts in mean, median, mean and covariance, distribution (kernel, cosine, rank), Mahalanobis distance, regression coefficients, continuous trends and autoregressive dynamics, stopped by a number of breaks, a penalty or a cost budget. Finance tools find volatility and return regimes, trend changes, beta and hedge-ratio breaks and mean-reversion regime changes in spreads and rates; penalty sweeps, the choice of the number of breaks, segmentation metrics and synthetic teaching signals complete it. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Change Points tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `changepoint_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Change Points reference](/reference/change-points/overview) lists every module and tool.
+
+`changepoint_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| Series | `values`: one series in time order (prices, returns, a rate, a spread) | `[472.7, 468.8, 467.3, 470.5]` |
+| Table | `data`: several series as columns, optionally with a date column; the columns are segmented jointly | `{"date": ["2024-01-02", "2024-01-03"], "SPY": [472.7, 468.8], "TLT": [97.4, 96.9]}` |
+| Dates | Optional ISO dates for `values`, one per observation | `["2024-01-02", "2024-01-03"]` |
+| Stopping rule | `n_bkps` for a fixed number of breaks, or `penalty` (a BIC-type penalty by default) | `3` |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+Prices become returns before the search with `transform`: `pct_change` for simple returns, `log_return` for log returns. `changepoint_return_regimes` takes prices by default and returns with `returns_data: true`.
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds by default; 120 seconds for `changepoint_change_score`; 180 seconds for `changepoint_detect`, `changepoint_return_regimes`, `changepoint_regression_breaks`, `changepoint_ar_breaks` and `changepoint_trend_breaks`; 300 seconds for `changepoint_penalty_sweep` and `changepoint_select_count` |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Every search returns the change points with their dates, each segment's span and statistics, and the signal with its segment means or fitted trend and the breaks marked as a series with a chart. `changepoint_return_regimes` adds each regime's annualised return and volatility, Sharpe ratio, cumulative return, maximum drawdown and mean correlation; `changepoint_regression_breaks` and `changepoint_ar_breaks` the coefficients, persistence and half-life per regime. `changepoint_penalty_sweep` and `changepoint_select_count` return the number of breaks at each penalty or by BIC, AIC and the elbow, with the chosen segmentation.
+
+## Example
+
+```text Prompt
+Using Fincept, split ten years of SPY daily closes into volatility regimes and give each regime's dates, annualised volatility and maximum drawdown.
+```
+
+The agent searches for `volatility regimes`, finds `changepoint_return_regimes`, and passes the closes as `values` and their dates as `dates`, both `$fincept` references to `market_get_candles` (`candles.close` and `candles.time`).

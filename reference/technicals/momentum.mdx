@@ -1,0 +1,15 @@
+---
+title: "Momentum indicators"
+description: "RSI, ADX/ADXR/DX with the directional indicators and movement, Aroon, CCI, CMO, MFI, momentum and rate of change, TRIX, Williams %R, ultimate oscillator, balance of power, Coppock, DPO, efficiency ratio, Elder ray, forecast oscillator, Williams fractals, IMI, Qstick, TSI, VHF, vortex, Williams A/D; MACD (standard, any MA type, fixed 12/26), APO, PPO, awesome and accelerator oscillators; stochastic (slow, fast, of RSI), KDJ and the stochastic momentum index."
+mode: "wide"
+---
+
+Toolset `ta_momentum`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `ta_momentum` | A momentum or trend-strength indicator on OHLCV bars (or one series for the close-only ones such as RSI, CMO, MOM, ROC, TRIX, TSI): its output(s) aligned to the dates with the warm-up reported, the last values and a line chart. |  |
+| `ta_oscillator` | A moving-average oscillator on the closes (or source, or one series; AO and AC read high/low): its lines aligned to the dates with the warm-up reported, a line chart and a bar chart of the histogram. |  |
+| `ta_stochastic` | A stochastic oscillator from high/low/close bars (STOCHRSI from the closes or one series): %K and %D (KDJ also J) aligned to the dates, 0-100 scale, with the warm-up reported and a line chart. |  |
+
+Inputs, limits and outputs are described in [Fincept Technicals](/guides/fincept-technicals). Full schemas: `fincept_describe_tool`.

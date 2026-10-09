@@ -1,0 +1,14 @@
+---
+title: "Apply a fitted regime model"
+description: "Use data.model of a regime fit without refitting: decode new or recent data into regimes with smoothed or real-time filtered probabilities, score it (log-likelihood, AIC/BIC, emission densities), and simulate regime scenarios."
+mode: "wide"
+---
+
+Toolset `regime_inference`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `regime_decode` | Applies a fitted model (data.model of any regime_ fit tool) to new or recent data without refitting: the data gets the model's transform, scaling and buckets. |  |
+| `regime_simulate` | Draws n_paths paths of n_steps periods from a fitted model (data.model of a regime_ fit tool): each period's regime from the transition matrix, its observation from that regime's emission (in the data's units; counts or symbol codes for discrete models). |  |
+
+Inputs, limits and outputs are described in [Fincept Regimes](/guides/fincept-regimes). Full schemas: `fincept_describe_tool`.

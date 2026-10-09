@@ -1,0 +1,16 @@
+---
+title: "Fincept Regimes"
+description: "Every Fincept Regimes module and its toolset."
+icon: "shuffle"
+mode: "wide"
+---
+
+11 tools in 5 modules, plus `regime_catalog`, which lists them from inside your agent. All are free.
+
+| Module | Toolset | Covers | Tools |
+| --- | --- | --- | --- |
+| [Regime analytics](/reference/regimes/analysis) | `regime_analysis` | Statistics of any returns series by regime (return, volatility, ratio, spells and their compounded returns, empirical transitions) and transition-matrix analytics (stationary distribution, expected durations, half-lives, mixing, h-step forecast, simulated regime paths). | 2 |
+| [Discrete regime models](/reference/regimes/discrete) | `regime_discrete` | Hidden Markov models on symbols and counts: categorical (coded series, return buckets, down/flat/up days; maximum likelihood or variational), Poisson (counts such as large moves, trades or defaults per period) and multinomial (counts over categories per period). | 3 |
+| [Gaussian regime models](/reference/regimes/gaussian) | `regime_gaussian` | Hidden Markov models with Gaussian, Gaussian-mixture or variational Gaussian emissions on returns or feature tables: regimes labelled by volatility or mean, transition matrix, per-regime means and volatilities, state path and probabilities, AIC/BIC, convergence, forecast and the fitted model. | 3 |
+| [Apply a fitted regime model](/reference/regimes/inference) | `regime_inference` | Use data.model of a regime fit without refitting: decode new or recent data into regimes with smoothed or real-time filtered probabilities, score it (log-likelihood, AIC/BIC, emission densities), and simulate regime scenarios. | 2 |
+| [Number of regimes](/reference/regimes/selection) | `regime_selection` | Choose how many regimes the data supports: a model family fitted across a range of state counts with random restarts, compared by BIC, AIC, log-likelihood, variational lower bound or held-out log-likelihood; the winning model is returned ready for regime_decode and regime_simulate. | 1 |

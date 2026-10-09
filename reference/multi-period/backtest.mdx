@@ -1,0 +1,14 @@
+---
+title: "Back-tests"
+description: "Back-tests of trading policies on your own history with a market simulator that charges spreads, market impact, per-share fees and holding costs: single- and multi-period optimisation policies with constraints, and rule-based policies (hold, equal weight, fixed weights, rebalancing, rank long-short, market portfolio), with every performance metric, drawdown, turnover, leverage, cost breakdown and weights over time."
+mode: "wide"
+---
+
+Toolset `mpo_backtest`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `mpo_backtest` | Back-tests a single-period (planning_horizon 1) or multi-period optimisation policy on your history: at each date it maximises the objective (forecast return minus weighted risk, transaction and holding costs) under the constraints, trades the first step and pays the market's costs in the simulator. |  |
+| `mpo_backtest_rules` | Back-tests one or several rule-based policies side by side on your history with the market simulator and its costs: hold, all cash, equal weight, volume-weighted market portfolio, fixed weights or dated targets, periodic, proportional or drift-triggered (adaptive) rebalancing, rank long-short on a signal, fixed trades. |  |
+
+Inputs, limits and outputs are described in [Fincept Multi-Period](/guides/fincept-multi-period). Full schemas: `fincept_describe_tool`.

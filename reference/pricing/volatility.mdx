@@ -1,0 +1,15 @@
+---
+title: "Volatility surfaces and smiles"
+description: "Black volatility surfaces, Dupire and fixed local volatility, Andreasen-Huge arbitrage-free interpolation, FX delta-quoted surfaces, Heston-implied surfaces, SABR / SVI / ZABR / Kahale smiles (evaluated or fitted), and risk-neutral densities under Black-Scholes, Heston, local volatility, CEV, square-root and smile models."
+mode: "wide"
+---
+
+Toolset `pricing_volatility`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pricing_vol_surface` | Builds a volatility surface and reads Black and/or local volatility on an expiry x strike grid: the market's Black surface, Dupire local volatility from it, an Andreasen-Huge arbitrage-free interpolation calibrated to quotes (with its calibration error), a piecewise surface from smiles, an FX surface from delta-quoted vols, the Black surface implied by Heston parameters, or given / constant local vol. |  |
+| `pricing_smile` | One expiry's volatility smile: evaluates SABR (Hagan lognormal or normal, shifted, Floch-Kennedy, arbitrage-free), SVI or ZABR from parameters, or fits them (or interpolates linearly, cubically, Kahale arbitrage-free) to quoted strikes and vols. |  |
+| `pricing_risk_neutral_density` | Risk-neutral probability density and distribution of the underlying at an expiry under Black-Scholes, Heston, Dupire local volatility, CEV or a square-root variance process: density and cumulative probability on a price grid (series + chart) and the price quantiles (e.g. the 1% and 99% tails). |  |
+
+Inputs, limits and outputs are described in [Fincept Pricing](/guides/fincept-pricing). Full schemas: `fincept_describe_tool`.

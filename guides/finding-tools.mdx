@@ -10,7 +10,7 @@ Fincept MCP has hundreds of tools. Listing all of them would fill your agent's c
 
 - **Core tools**: the most used tool of each area, for example `market_get_quote`, `market_get_candles`, `data_search_series`, `stats_ols`, `stats_arima`.
 - **Discovery tools**: `fincept_search_tools`, `fincept_describe_tool`, `fincept_call_tool`.
-- **Engine catalogs**: `stats_catalog`, `forecast_catalog`, `alloc_catalog`, `pfopt_catalog` and `quant_catalog` list each engine's modules and tools.
+- **Engine catalogs**: `stats_catalog`, `forecast_catalog`, `alloc_catalog`, `pfopt_catalog`, `quant_catalog`, `vol_catalog`, `panel_catalog`, `tsforecast_catalog`, `ta_catalog`, `changepoint_catalog`, `regime_catalog`, `copula_catalog`, `mpo_catalog`, `pflab_catalog` and `pricing_catalog` list each engine's modules and tools.
 - **`fincept_read_result`**: pages through large results. See [results](/guides/results).
 
 ## How the agent finds the rest
@@ -57,7 +57,7 @@ https://enterprise.fincept.in/mcp?toolsets=market,data,stats_tsa_models
 | `market,data` | Core tools plus every tool in `market` and `data` |
 | `all` | Every tool |
 
-Unknown names are ignored. Platform toolset names are in the [toolsets reference](/reference/toolsets/overview). Engine toolsets are named `<prefix>_<module>`, such as `stats_tsa_models`, `forecast_backtest` or `alloc_parity`, and listed in each engine's reference: [Fincept Stats](/reference/stats/overview), [Fincept Forecast](/reference/forecast/overview), [Fincept Allocation](/reference/allocation/overview), [Fincept Portfolio Optimizer](/reference/portfolio-optimizer/overview) and [Fincept Quant](/reference/quant/overview).
+Unknown names are ignored. Platform toolset names are in the [toolsets reference](/reference/toolsets/overview). Engine toolsets are named `<prefix>_<module>`, such as `stats_tsa_models`, `forecast_backtest` or `alloc_parity`, and listed in each engine's reference: [Fincept Stats](/reference/stats/overview), [Fincept Forecast](/reference/forecast/overview), [Fincept Allocation](/reference/allocation/overview), [Fincept Portfolio Optimizer](/reference/portfolio-optimizer/overview), [Fincept Quant](/reference/quant/overview), [Fincept Volatility](/reference/volatility/overview), [Fincept Panel](/reference/panel/overview), [Fincept TS Forecast](/reference/ts-forecast/overview), [Fincept Technicals](/reference/technicals/overview), [Fincept Change Points](/reference/change-points/overview), [Fincept Regimes](/reference/regimes/overview), [Fincept Copula](/reference/copula/overview), [Fincept Multi-Period](/reference/multi-period/overview), [Fincept Portfolio Lab](/reference/portfolio-lab/overview) and [Fincept Pricing](/reference/pricing/overview).
 
 <Warning>
   `all` lists several hundred tools. Many clients cap or slow down with that many; prefer a short list of the toolsets you use.

@@ -1,0 +1,14 @@
+---
+title: "Aversion tuning"
+description: "Tune an optimisation policy's risk, trade and holding aversions by back-testing: a grid of values side by side (risk-return frontier of realized results) or a greedy search that keeps moving the values while Sharpe ratio, return or growth improves."
+mode: "wide"
+---
+
+Toolset `mpo_tuning`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `mpo_gamma_sweep` | Back-tests the same optimisation policy for every combination (at most 24) of the given risk, trade and holding aversions, over the same window and costs. |  |
+| `mpo_hyperparameter_search` | Searches the risk, trade and/or holding aversions that maximise a back-test metric (Sharpe by default) with the simulator's greedy method: from the objective's values it back-tests one move up and down for each tuned aversion, takes the best while the metric improves and stops when no move does. |  |
+
+Inputs, limits and outputs are described in [Fincept Multi-Period](/guides/fincept-multi-period). Full schemas: `fincept_describe_tool`.

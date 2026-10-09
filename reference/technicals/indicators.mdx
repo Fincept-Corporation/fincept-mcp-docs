@@ -1,0 +1,14 @@
+---
+title: "Any indicator"
+description: "Every indicator by name: many at once over the same bars (one aligned table and chart), and each indicator's documentation: inputs, parameters with defaults and meaning, outputs, warm-up and unstable period, moving-average types."
+mode: "wide"
+---
+
+Toolset `ta_indicators`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `ta_indicators` | Computes up to 30 indicators (any of the 201: moving averages, bands, RSI, MACD, stochastics, ADX, ATR, volume, cycle, statistics, math, candlestick patterns) over the same OHLCV bars or series in one call. |  |
+| `ta_describe` | Documents the indicators: with indicator, its display name, group, the tool that computes it, the bar columns it reads, every parameter (kind, default, meaning), its outputs (as returned) with their flags, the warm-up in bars at the defaults and for given params/unstable_period, and whether it has an unstable period; without, a table of all 201 (or one group's) with their parameters and outputs. |  |
+
+Inputs, limits and outputs are described in [Fincept Technicals](/guides/fincept-technicals). Full schemas: `fincept_describe_tool`.

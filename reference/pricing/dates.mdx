@@ -1,0 +1,16 @@
+---
+title: "Dates, calendars and schedules"
+description: "Business-day calendars of every market (joint and custom ones), holiday lists, date adjustment and advancing, business-day counts, day count conventions and year fractions, coupon schedules with every date-generation rule, IMM/ASX/ECB dates, CDS maturities and tenor arithmetic."
+mode: "wide"
+---
+
+Toolset `pricing_dates`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pricing_calendar` | Business-day calendar of any market (77 country/exchange calendars, joined or custom): test dates, roll them with a business-day convention, advance them by business days or tenors, count business days between pairs, list holidays or business days over a range, or the first/last business day of the month. |  |
+| `pricing_day_count` | Year fractions and day counts between date pairs under one or several day count conventions side by side (Actual/360, Actual/365 Fixed and its Canadian/no-leap variants, Actual/Actual ISDA/ISMA/Bond/AFB/Euro, every 30/360 variant, Business/252 on a calendar, 1/1, simple), or the date a year fraction after a start date. |  |
+| `pricing_schedule` | Coupon or payment schedule: dates from effective to termination at a frequency or tenor, on a calendar with a business-day convention and a date-generation rule (backward, forward, IMM third Wednesdays, twentieth, CDS, CDS2015, zero), with front/back stubs, end-of-month rolling and truncation; or from explicit dates; or a sinking-fund schedule with the amortizing notional per period. |  |
+| `pricing_date_tools` | Date maths for rates and futures: IMM and ASX futures dates and codes (next dates, test, code &lt;-&gt; date), ECB reserve-maintenance dates, the n-th weekday of a month (third Friday expiries), the next weekday, a date plus tenors, actual days between dates, date facts (weekday, leap year, month end, serial number), tenor normalisation and frequency, and standard CDS maturities. |  |
+
+Inputs, limits and outputs are described in [Fincept Pricing](/guides/fincept-pricing). Full schemas: `fincept_describe_tool`.

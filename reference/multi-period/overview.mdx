@@ -1,0 +1,15 @@
+---
+title: "Fincept Multi-Period"
+description: "Every Fincept Multi-Period module and its toolset."
+icon: "route"
+mode: "wide"
+---
+
+9 tools in 4 modules, plus `mpo_catalog`, which lists them from inside your agent. All are free.
+
+| Module | Toolset | Covers | Tools |
+| --- | --- | --- | --- |
+| [Back-tests](/reference/multi-period/backtest) | `mpo_backtest` | Back-tests of trading policies on your own history with a market simulator that charges spreads, market impact, per-share fees and holding costs: single- and multi-period optimisation policies with constraints, and rule-based policies (hold, equal weight, fixed weights, rebalancing, rank long-short, market portfolio), with every performance metric, drawdown, turnover, leverage, cost breakdown and weights over time. | 2 |
+| [Forecasts and data](/reference/multi-period/forecast) | `mpo_forecast` | The estimates trading policies use, computed at any date from earlier data only: mean returns, variances, volatilities, standard errors, covariance matrices, PCA and SVD factor models and mean traded volumes, with rolling windows and exponential half-lives; and how your history is prepared (trading calendar, periods per year, tradable universe, aligned returns). | 2 |
+| [Trades now](/reference/multi-period/trade) | `mpo_trade` | What to trade today: the optimal trades of a single- or multi-period optimisation policy (with the planned weights of every step ahead), the trades of a rule-based policy, and a pre-trade evaluation of any proposed trade (expected return, risk, transaction and holding costs, constraint checks). | 3 |
+| [Aversion tuning](/reference/multi-period/tuning) | `mpo_tuning` | Tune an optimisation policy's risk, trade and holding aversions by back-testing: a grid of values side by side (risk-return frontier of realized results) or a greedy search that keeps moving the values while Sharpe ratio, return or growth improves. | 2 |

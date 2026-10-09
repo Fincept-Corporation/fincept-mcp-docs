@@ -1,0 +1,16 @@
+---
+title: "Fincept Change Points"
+description: "Every Fincept Change Points module and its toolset."
+icon: "split"
+mode: "wide"
+---
+
+11 tools in 5 modules, plus `changepoint_catalog`, which lists them from inside your agent. All are free.
+
+| Module | Toolset | Covers | Tools |
+| --- | --- | --- | --- |
+| [Change-point search](/reference/change-points/search) | `changepoint_search` | Offline change-point detection on one series or several jointly: PELT, binary segmentation, bottom-up, window sliding, dynamic programming and kernel search over ten segment costs (mean, median, mean-and-covariance, kernel distribution, cosine, regression, continuous trend, rank, Mahalanobis, autoregressive), stopping by a number of breaks, a penalty or a cost budget; and the rolling change score of a sliding window. | 2 |
+| [Segmentation metrics](/reference/change-points/metrics) | `changepoint_metrics` | Compare two sets of change points (Hausdorff distance, Rand index, Hamming distance, precision, recall and F1 within a margin, mean time error) and score given break dates against the data under a segment cost (each break's gain against the BIC/AIC reference penalty). | 2 |
+| [Financial regimes and structural breaks](/reference/change-points/regimes) | `changepoint_regimes` | Regime shifts in returns and volatility (one asset, or covariance and correlation regimes of several), trend changes of prices, rates and macro series, breaks in a regression (beta, hedge ratio) and in autoregressive dynamics (persistence, mean reversion of a spread), each with statistics per regime. | 4 |
+| [Penalty and model selection](/reference/change-points/selection) | `changepoint_selection` | How many breaks: the number of change points found at each penalty of a grid (with the widest stable plateau and the BIC/AIC reference penalty), and the total cost of the best segmentation with 0..K breaks scored by BIC, AIC or the elbow of the cost curve. | 2 |
+| [Synthetic teaching signals](/reference/change-points/synthetic) | `changepoint_synthetic` | Synthetic piecewise signals with known change points (constant means, Gaussian correlation switches, linear-model coefficients, sine frequencies) from a caller-chosen seed, for demonstrations and for checking how well a method and cost recover the true breaks. | 1 |

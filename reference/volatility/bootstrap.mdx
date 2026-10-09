@@ -1,0 +1,16 @@
+---
+title: "Bootstrap inference"
+description: "Bootstrap confidence intervals (percentile, basic, studentized, normal, bias-corrected, BCa) and replicate distributions for return statistics (mean, volatility, Sharpe, Sortino, quantiles, expected shortfall, correlation, beta, differences) under IID, stationary, circular-block, moving-block and independent-samples resampling; optimal block lengths; block-bootstrapped return paths."
+mode: "wide"
+---
+
+Toolset `vol_bootstrap`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `vol_bootstrap_ci` | Bootstrap confidence intervals for a return statistic of each column (or of the first column against each other one): mean, volatility, Sharpe, Sortino, quantile, expected shortfall, skewness, kurtosis, correlation, beta, mean or Sharpe difference. |  |
+| `vol_optimal_block_length` | Politis-White (with the Patton-Politis-White correction) optimal block lengths for the stationary and the circular/moving block bootstrap, per column. |  |
+| `vol_bootstrap_replicates` | The bootstrap distribution of a return statistic: each output's estimate, replicate mean, bias, standard error, 2.5/97.5% quantiles, the covariance matrix of the outputs, and a histogram of the first output (chart). |  |
+| `vol_bootstrap_paths` | Resamples a return series into many paths (stationary, circular or moving-block bootstrap, or iid) and reports the fan of the cumulative return (5/25/50/75/95 percentiles per step, chart), the terminal return's mean, dispersion, probability of loss, VaR and expected shortfall, and the first resampled index sets. |  |
+
+Inputs, limits and outputs are described in [Fincept Volatility](/guides/fincept-volatility). Full schemas: `fincept_describe_tool`.

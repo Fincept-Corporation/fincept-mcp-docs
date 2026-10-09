@@ -1,0 +1,16 @@
+---
+title: "Vine copulas"
+description: "Vine copulas for many assets: R-vine structure selection (maximum or random spanning trees on Kendall's tau, Spearman, Hoeffding, Chatterjee or mutual information), C- and D-vines, given matrices, truncation, thresholding, family sets and criteria; structures built by hand; density, distribution, Rosenblatt and inverse Rosenblatt transforms, per-edge contributions, parameter inference; unconditional and conditional simulation."
+mode: "wide"
+---
+
+Toolset `copula_vine`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `copula_vine_fit` | Fits a vine copula to many assets: selects an R-vine structure (Dissmann's tree-by-tree maximum spanning trees), or uses a C-vine, D-vine or given matrix, choosing each pair copula's family and rotation by AIC/BIC/ mBIC, with optional truncation, thresholding and an asset set kept last for conditional simulation (controls). |  |
+| `copula_vine_evaluate` | Evaluates a fitted vine copula (data.model of copula_vine_fit) at rows: density or log-density, the joint distribution function (probability all variables are at or below the row), the Rosenblatt transform with an independence check (a good model gives independent uniform columns), the inverse transform, each pair copula's contribution to the log-likelihood, or gradient/Hessian-based parameter standard errors. |  |
+| `copula_vine_simulate` | Simulates from a fitted vine copula on the copula scale (uniform margins), reproducible with seeds: unconditionally, or with some variables held at given levels (condition) or per-draw conditioning rows, the rest drawn from their conditional distribution. |  |
+| `copula_vine_structure` | Builds and inspects vine structures: C- and D-vines from an order of names, R-vines from a matrix, a structure array, a list of trees or a uniform random draw, with optional truncation; with pair_copulas it assembles a full vine copula (data.model) for stress scenarios or simulation with hand-set dependence. |  |
+
+Inputs, limits and outputs are described in [Fincept Copula](/guides/fincept-copula). Full schemas: `fincept_describe_tool`.

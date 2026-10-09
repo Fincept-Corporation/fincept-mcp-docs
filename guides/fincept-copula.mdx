@@ -1,0 +1,49 @@
+---
+title: "Fincept Copula"
+description: "Dependence modelling as MCP tools: rank and tail dependence, bivariate and vine copulas, joint distributions, copula VaR and stress scenarios."
+icon: "network"
+---
+
+Fincept Copula is the dependence engine behind every `copula_*` tool: Kendall's tau, Spearman, Blomqvist, Hoeffding and Chatterjee dependence matrices; tail dependence between every pair; bivariate copulas of every family (Gaussian, Student, Clayton, Gumbel, Frank, Joe, BB1, BB6, BB7, BB8, Tawn and nonparametric) with rotations, fitted or selected by AIC, BIC or mBIC; R-, C- and D-vine copulas with truncation and thresholds, Rosenblatt transforms and conditional simulation; kernel and parametric margins and joint distributions on the return scale; vine quantile regression; and copula-based portfolio VaR, expected shortfall and stress scenarios by simulation. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Copula tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `copula_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Copula reference](/reference/copula/overview) lists every module and tool.
+
+`copula_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| History | `data`: one column per asset, optionally a date column; returns by default, prices with `kind: "prices"` (simple returns, or log returns with `log_returns: true`), values already on the copula scale with `kind: "uniform"` | `{"date": ["2024-01-02", "2024-01-03"], "JPM": [0.012, -0.004], "BAC": [0.015, -0.006]}` |
+| Weights | Portfolio weights by asset, for `copula_portfolio_var` and `copula_stress_scenarios` | `{"JPM": 0.4, "BAC": 0.3, "XOM": 0.3}` |
+| Stress | `stress`: the shocked assets and their return, or a probability level with `stress_scale: "quantile"` | `{"JPM": -0.08}` |
+| Fitted copula | `copula`: the `data.copula` of `copula_pair_fit`; `model`: the `data.model` of `copula_vine_fit`, for the evaluate, simulate, risk and stress tools | The object a fit returns |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds by default; 180 seconds for `copula_pair_fit`, `copula_vine_evaluate` and `copula_vine_simulate`; 300 seconds for `copula_tail_dependence`, `copula_joint_density`, `copula_vine_regression`, `copula_portfolio_var`, `copula_stress_scenarios` and `copula_vine_fit` |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Dependence tools return matrices with heatmaps and the most dependent pairs. Fit tools return each family, rotation and parameters with standard errors, Kendall's tau, tail dependence and information criteria, and the reusable `data.copula` or `data.model`. `copula_portfolio_var` returns VaR and expected shortfall per confidence as a fraction and in currency, each asset's ES contribution, the worst scenarios and a histogram, beside Gaussian-copula and historical figures; `copula_stress_scenarios` returns each asset's conditional mean, quantiles and probability of a loss and the portfolio's conditional VaR and ES.
+
+## Example
+
+```text Prompt
+Using Fincept, estimate the one-day 99% VaR and expected shortfall of 40% JPM, 30% BAC and 30% XOM from three years of daily prices with a vine copula, and show how the other two move if JPM falls 8%.
+```
+
+The agent searches for `copula portfolio VaR`, finds `copula_portfolio_var` and `copula_stress_scenarios`, and passes each stock's closes as a `$fincept` reference to `market_get_candles`, one `data` column per stock with `kind: "prices"`.

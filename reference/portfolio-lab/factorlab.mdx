@@ -1,0 +1,20 @@
+---
+title: "Cross-sectional factor lab"
+description: "Characteristics panels (date x asset fields: returns, market cap, fundamentals, industry ...), 46 descriptors (value, momentum, volatility, beta, size, liquidity, quality, growth, leverage, yield), cross-sectional winsorizing, z-scoring and rank transforms, factor exposures, Barra-style characteristics factor models with factor returns, risk forecasts, diagnostics, attribution and optimisation, cross-sectional regressions, and alpha models with forecast evaluation."
+mode: "wide"
+---
+
+Toolset `pflab_factorlab`: 8 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pflab_panel_describe` | Coverage report of a characteristics panel: per field its type, share missing overall and inside the universe, assets with no data, categorical levels and their sizes, optionally broken down by a text field; with optional forward/backward filling of gaps (e.g. quarterly fundamentals) and shrinking the universe to rows with data. |  |
+| `pflab_synthetic_panel` | A simulated characteristics panel (returns from a factor structure, market cap, prices and volumes, fundamentals, analyst estimates, short interest, industries, listings and delistings, missing values) in the long layout the factor-lab tools take. |  |
+| `pflab_descriptors` | Computes descriptors (raw characteristics) for every date and asset of a panel: value ratios, momentum and reversal, volatility, beta and residual risk, size, liquidity, short interest, profitability, growth, leverage and yield, or growth/change/passthrough of any field. |  |
+| `pflab_cs_transform` | Transforms a field cross-sectionally at every date: winsorizing at quantiles, tanh outlier shrinkage, weighted z-scoring, Gaussian-rank or percentile-rank scaling, optionally within groups (industry-neutral) and weighted (e.g. by market cap). |  |
+| `pflab_factor_exposures` | Factor exposures at every date: the market (global) factor, one-hot categories (industry, country), and style factors as weighted composites of descriptors, winsorized and z-scored cross-sectionally (optionally within groups). |  |
+| `pflab_alpha_model` | Alpha research on a characteristics panel: a factor risk model isolates idiosyncratic returns, each alpha model forecasts them from descriptors (fixed weights, exponentially weighted Sharpe-optimal weights, or a ridge/forest/boosting predictor), and the forecasts are evaluated out of sample: information coefficients and their t-statistics, rank- and z-weighted long-short portfolios, quantile spreads, decay over horizons, calibration, coverage and factor correlations, compared across alphas (predictor alphas keep no forecast history and are not evaluated). |  |
+| `pflab_characteristics_factor_model` | Barra-style characteristics factor model: exposures from descriptors and categories at every date, factor returns by cross-sectional regression of returns on lagged exposures (cap-weighted, robust or GLS), factor covariance and premia, idiosyncratic risk, and asset expected returns and covariance. |  |
+| `pflab_cs_regression` | Cross-sectional regression at every date of a panel field on other fields (lagged by default), weighted by a field or equally, by least squares, Huber, ridge or lasso: the Fama-MacBeth estimate of each regressor's return. |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Lab](/guides/fincept-portfolio-lab). Full schemas: `fincept_describe_tool`.

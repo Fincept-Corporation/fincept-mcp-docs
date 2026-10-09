@@ -1,0 +1,15 @@
+---
+title: "Discrete regime models"
+description: "Hidden Markov models on symbols and counts: categorical (coded series, return buckets, down/flat/up days; maximum likelihood or variational), Poisson (counts such as large moves, trades or defaults per period) and multinomial (counts over categories per period)."
+mode: "wide"
+---
+
+Toolset `regime_discrete`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `regime_categorical_hmm` | Categorical hidden Markov model on one symbol per period: a coded series, or a continuous feature cut into quantile buckets or down/flat/up signs. |  |
+| `regime_poisson_hmm` | Poisson hidden Markov model on counts per period (one or more count columns): regimes of low and high event intensity, e.g. the number of large market moves, trades or defaults per month. |  |
+| `regime_multinomial_hmm` | Multinomial hidden Markov model on counts over categories per period (each row's counts add up to its trials), e.g. down/flat/up days per week or advancing/declining issues per day. |  |
+
+Inputs, limits and outputs are described in [Fincept Regimes](/guides/fincept-regimes). Full schemas: `fincept_describe_tool`.

@@ -1,0 +1,16 @@
+---
+title: "Distributions, copulas and stress tests"
+description: "Fitted return distributions per asset (normal, Student t, Johnson SU, normal inverse Gaussian, best by AIC/BIC) with quantiles and Q-Q numbers, bivariate copulas (Gaussian, Student t, Clayton, Gumbel, Joe, independent, rotations) with tail dependence, regular vine copulas, synthetic scenario generation and conditional stress tests of a portfolio."
+mode: "wide"
+---
+
+Toolset `pflab_distributions`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pflab_univariate_distribution` | Fits each asset's returns to a normal, Student t, Johnson SU or normal inverse Gaussian distribution, or selects the best by AIC/BIC. |  |
+| `pflab_bivariate_copula` | Fits a bivariate copula to two assets' pseudo-observations (ranks): Gaussian, Student t, Clayton, Gumbel or Joe with rotations, or the best by AIC/BIC with an independence test. |  |
+| `pflab_vine_copula` | Fits a regular vine copula: a marginal distribution per asset and a tree of pair copulas (Gaussian, Student t, Clayton, Gumbel, Joe, independent, with rotations) capturing non-Gaussian and tail dependence, then samples synthetic scenarios, optionally conditioned on some assets' returns. |  |
+| `pflab_stress_test` | Synthetic stress test: a vine copula fitted to the history is sampled conditionally on the stressed assets' returns, so every other asset moves consistently with the fitted (non-Gaussian, tail-dependent) structure. |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Lab](/guides/fincept-portfolio-lab). Full schemas: `fincept_describe_tool`.

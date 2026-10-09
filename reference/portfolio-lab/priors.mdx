@@ -1,0 +1,18 @@
+---
+title: "Priors and views"
+description: "The return distribution behind an optimisation: sample or shrunk moments with log-normal projection, Black-Litterman views, entropy pooling views on means, variances, correlations, skews, kurtosis, VaR and CVaR (on history or synthetic scenarios), opinion pooling of several experts, time-series factor models, vine-copula synthetic scenarios, and the uncertainty sets of robust optimisation."
+mode: "wide"
+---
+
+Toolset `pflab_priors`: 6 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pflab_prior` | The return distribution a prior produces, exactly as the optimizers see it: sample/shrunk moments (optionally log-normal over an investment horizon), Black-Litterman, entropy pooling, a time-series factor model or vine-copula synthetic scenarios (optionally stressed). |  |
+| `pflab_black_litterman` | Black-Litterman: blends the prior expected returns (market-implied equilibrium by default) with absolute, relative or group views, each with an optional Idzorek confidence. |  |
+| `pflab_factor_model` | Time-series factor model: each asset's returns are regressed on the factor returns (OLS, ridge or sparse lasso), giving loadings (betas) and idiosyncratic risk; expected returns = loadings x factor premia and covariance = loadings x factor covariance x loadings' + idiosyncratic variance. |  |
+| `pflab_uncertainty_set` | Uncertainty sets for robust (worst-case) optimisation: an ellipsoid around the expected returns or the covariance, sized at a confidence level from asymptotics or a block bootstrap, or confined to the directions a factor model cannot explain. |  |
+| `pflab_entropy_pooling` | Entropy pooling: finds the scenario probabilities closest (least relative entropy) to the prior's that satisfy views on means, variances, correlations, skews, kurtosis, VaR and CVaR (equalities, inequalities, rankings, multiples of the prior, groups), on the history or on vine-copula synthetic scenarios. |  |
+| `pflab_opinion_pooling` | Opinion pooling: each expert's views become an entropy-pooling distribution, and the experts are pooled (linear or logarithmic) with their probabilities, optionally penalising experts that diverge from the consensus. |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Lab](/guides/fincept-portfolio-lab). Full schemas: `fincept_describe_tool`.

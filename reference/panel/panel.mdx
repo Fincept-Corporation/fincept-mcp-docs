@@ -1,0 +1,18 @@
+---
+title: "Panel regression"
+description: "Regressions on a long panel (entity x period): fixed effects with entity, time and other effects, random effects, between, first difference, pooled and Fama-MacBeth, with robust, one- or two-way clustered, Driscoll-Kraay and autocorrelation-robust errors; estimated effects; side-by-side comparison with a Hausman test; and regression absorbing high-dimensional fixed effects and interactions."
+mode: "wide"
+---
+
+Toolset `panel_panel`: 6 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `panel_fixed_effects` | Fixed-effects (within) panel regression with entity, period and up to two effects in all (other_effects adds categorical effects). |  |
+| `panel_absorbing_regression` | Least squares that absorbs many fixed effects (e.g. firm and year, or worker and employer) plus continuous controls and category-specific slopes, reporting only the coefficients of interest. |  |
+| `panel_random_effects` | Random-effects (GLS, quasi-demeaned) panel regression: entity effects treated as random and uncorrelated with the regressors. |  |
+| `panel_fama_macbeth` | Fama-MacBeth regression: one cross-sectional regression per period, coefficients averaged over periods with standard errors from their time-series variation (optionally HAC). |  |
+| `panel_regression` | Pooled OLS on a panel, the between estimator (OLS on entity means) or first-difference OLS (changes within entities, which removes entity effects). |  |
+| `panel_compare` | Fits several panel estimators on the same dependent and regressors and lays them side by side: coefficients, standard errors, t statistics and p-values per model, and per-model observations, R² (overall, within, between) and F tests. |  |
+
+Inputs, limits and outputs are described in [Fincept Panel](/guides/fincept-panel). Full schemas: `fincept_describe_tool`.

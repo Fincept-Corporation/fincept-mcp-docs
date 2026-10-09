@@ -1,0 +1,52 @@
+---
+title: "Fincept Portfolio Lab"
+description: "Portfolio research as MCP tools: optimisation over 15 risk measures on any prior, walk-forward and combinatorial cross-validation, stress tests and cross-sectional factor models."
+icon: "microscope"
+---
+
+Fincept Portfolio Lab is the portfolio research engine behind every `pflab_*` tool: it builds portfolios as estimator pipelines and validates them out of sample. Mean-risk optimisation over 15 risk measures on any prior (sample or shrunk moments, Black-Litterman, entropy pooling, opinion pooling, factor models, vine-copula scenarios), efficient frontiers, risk budgeting, maximum diversification, distributionally robust CVaR, benchmark tracking, HRP, HERC, Schur and nested-cluster portfolios and stacking; walk-forward, combinatorial purged and online cross-validation with hyper-parameter search; 13 covariance estimators with forecast evaluation; return distributions, copulas and synthetic stress tests; analytics over 46 return, risk and ratio measures; and characteristics-based cross-sectional factor models with descriptors, alpha models and attribution. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Portfolio Lab tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `pflab_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Portfolio Lab reference](/reference/portfolio-lab/overview) lists every module and tool.
+
+`pflab_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| Returns or prices | `data`: one column per asset, one row per period, optionally a date column; returns by default, prices with `data_kind: "prices"` (simple returns, or log returns with `price_returns: "log"`) | `{"date": ["2024-01-02", "2024-01-03"], "AAPL": [0.012, -0.004], "MSFT": [0.008, 0.001]}` |
+| Weights | Portfolio weights by asset; assets left out weigh 0 | `{"AAPL": 0.4, "MSFT": 0.6}` |
+| Factors and benchmark | `factors`: factor returns, a column per factor; `benchmark`: benchmark returns in one column; both in the same layout and kind as `data` | `{"MKT": [0.004, -0.002], "SMB": [0.001, 0.003]}` |
+| Strategy | `strategy`: a pipeline of pre-selection steps, an optimizer, its prior and constraints, for the validation tools | `{"optimizer": "mean_risk", "objective": "max_ratio", "risk_measure": "cvar", "constraints": {"max_weights": 0.25}}` |
+| Characteristics panel | `panel`: a long table, one row per date and asset, with a date column, an asset column and one column per field (returns, market_cap, fundamentals), for the factor-lab tools | `{"date": ["2024-01-02", "2024-01-02"], "asset": ["AAPL", "MSFT"], "returns": [0.012, 0.008], "market_cap": [2.9e12, 2.8e12]}` |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+Measures are annualised with `annualization_factor` periods per year: 252 (the default) for daily data.
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds by default; 120 seconds for `pflab_factor_attribution`, `pflab_cs_regression` and `pflab_clustering`; 180 seconds for `pflab_descriptors`, `pflab_factor_exposures`, `pflab_risk_budgeting`, `pflab_max_diversification`, `pflab_benchmark_tracker`, `pflab_hierarchical`, `pflab_covariance`, `pflab_prior`, `pflab_factor_model`, `pflab_uncertainty_set`, `pflab_entropy_pooling` and `pflab_opinion_pooling`; 300 seconds for `pflab_vine_copula`, `pflab_stress_test`, `pflab_alpha_model`, `pflab_characteristics_factor_model`, `pflab_mean_risk`, `pflab_efficient_frontier`, `pflab_stacking`, `pflab_robust_cvar`, `pflab_nested_clusters`, `pflab_covariance_forecast_evaluation`, `pflab_walk_forward`, `pflab_compare_strategies`, `pflab_combinatorial_cv`, `pflab_grid_search` and `pflab_online_backtest` |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Optimisers return the weights as a table and bar chart with the solver's expected return and risk, every in-sample measure and the cumulative return and drawdown paths. Validation tools return the out-of-sample measures, paths and the weights at each rebalance; `pflab_combinatorial_cv` returns the distribution of each measure over many backtest paths and `pflab_grid_search` the score of every setting with the best pipeline's weights. Analytics tools return the 46 measures, risk contributions and rolling measures; moment, prior and factor tools return estimates with heatmaps; factor-lab tools return descriptors, exposures, factor returns, information coefficients and attribution.
+
+## Example
+
+```text Prompt
+Using Fincept, walk-forward test a maximum return-to-CVaR portfolio of AAPL, MSFT, JPM, XOM, JNJ, KO and PG rebalanced monthly on four years of daily prices with at most 25% per stock, and compare it out of sample with HRP and equal weight.
+```
+
+The agent searches for `walk-forward portfolio backtest`, finds `pflab_walk_forward` and `pflab_compare_strategies`, and passes each stock's closes as a `$fincept` reference to `market_get_candles`, one `data` column per stock plus a `date` column from `candles.time`, with `data_kind: "prices"`.

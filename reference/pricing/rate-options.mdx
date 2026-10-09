@@ -1,0 +1,17 @@
+---
+title: "Interest-rate options"
+description: "Caps, floors and collars; European and Bermudan swaptions (physical or cash settled); Black, shifted Black, Bachelier and short-rate model engines (Hull-White, Black-Karasinski, G2, Vasicek, CIR, GSR, Markov functional); caplet stripping, swaption volatility matrices and SABR cubes; CMS coupons and convexity adjustments."
+mode: "wide"
+---
+
+Toolset `pricing_rate_options`: 5 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pricing_capfloor` | Prices an interest-rate cap, floor or collar on a term index with Black (flat lognormal or shifted vol), Bachelier (normal vol), Hull-White closed form, a short-rate tree or a Gaussian1d (GSR) model. |  |
+| `pricing_swaption` | Prices a European or Bermudan swaption on a fixed-float swap, bullet or amortizing (physical or cash settled) with Black, Bachelier, Jamshidian on an affine one-factor model, trees on any short-rate model, analytic G2, finite differences (Hull-White, G2), Gaussian1d with a GSR model, or a Markov-functional model. |  |
+| `pricing_coupon_leg` | Prices a leg of coupons that need an option model: CMS coupons with Hagan or linear-TSR convexity adjustments (also zero-coupon CMS and CMS spreads), overnight coupons compounded or averaged with caps and floors (Black on the overnight optionlet), and multiple-reset coupons. |  |
+| `pricing_optionlet_strip` | Strips caplet (optionlet) volatilities from flat cap volatilities quoted by tenor and strike (lognormal, shifted or normal): each caplet's volatility such that every cap reprices. |  |
+| `pricing_swaption_vol` | Builds a swaption volatility structure from an ATM matrix (option tenor x swap tenor), optionally with smile quotes as a cube (interpolated, SABR-fitted or ZABR-fitted) or shifted by a spread, and reads volatilities at any option tenor, swap tenor and strike. |  |
+
+Inputs, limits and outputs are described in [Fincept Pricing](/guides/fincept-pricing). Full schemas: `fincept_describe_tool`.

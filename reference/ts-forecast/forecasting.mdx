@@ -1,0 +1,15 @@
+---
+title: "Statistical forecasting"
+description: "Forecast one series or a panel with any mix of statistical models (automatic ARIMA, ETS, CES, Theta, TBATS, MSTL, boosted decomposition, structural, intermittent, GARCH, benchmarks, regression), native or conformal intervals, exogenous regressors and a fallback model; the model and parameter reference; transfer of fitted models to new or extended series."
+mode: "wide"
+---
+
+Toolset `tsforecast_forecasting`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `tsforecast_forecast` | Fits statistical models to one series (y) or every series of a panel (data: id, time, value) and forecasts h periods ahead: any mix of automatic ARIMA, ETS, CES, Theta, TBATS, MSTL, boosted decomposition, structural, intermittent-demand, GARCH, benchmark and regression models (tsforecast_models lists them and their parameters), with native or conformal prediction intervals, numeric exogenous regressors (future_exog) and a fallback model for series a model cannot fit (its forecasts then fill that model's column). |  |
+| `tsforecast_models` | Lists the forecasting models any multi-model tool accepts: each model key, the family tool that also returns its fitted summary, its default column name, a one-line description and what it supports (exogenous regressors, native intervals, transfer to new data, simulation), with every parameter's type, default, allowed range and meaning. |  |
+| `tsforecast_forward` | Fits the models on one history (data or y) and applies them, parameters unchanged, to new data (new_data or new_y): the same series with more observations (update a forecast without re-estimating) or other series (forecast a short or new series with a model learned elsewhere). |  |
+
+Inputs, limits and outputs are described in [Fincept TS Forecast](/guides/fincept-ts-forecast). Full schemas: `fincept_describe_tool`.

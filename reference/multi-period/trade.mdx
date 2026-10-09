@@ -1,0 +1,15 @@
+---
+title: "Trades now"
+description: "What to trade today: the optimal trades of a single- or multi-period optimisation policy (with the planned weights of every step ahead), the trades of a rule-based policy, and a pre-trade evaluation of any proposed trade (expected return, risk, transaction and holding costs, constraint checks)."
+mode: "wide"
+---
+
+Toolset `mpo_trade`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `mpo_optimize` | Today's optimal trades: solves the single- or multi-period optimisation at the decision date (default the last date) from your current holdings, seeing only earlier data, exactly as mpo_backtest decides each day. |  |
+| `mpo_rule_trades` | The trades a rule-based policy (equal weight, market portfolio, fixed weights, periodic, proportional or drift-triggered rebalancing, rank long-short, fixed trades, hold, sell all) makes at the decision date (default the last date) from your current holdings. |  |
+| `mpo_evaluate_trade` | Evaluates a proposed trade at the decision date before placing it: every objective term an optimisation policy would weigh (forecast return, cash return, risk with ex-ante annualized volatility, transaction and holding costs in value, forecast-error penalties) for the current and the post-trade portfolio, the weighted objective, and whether each constraint holds (with its largest violation). |  |
+
+Inputs, limits and outputs are described in [Fincept Multi-Period](/guides/fincept-multi-period). Full schemas: `fincept_describe_tool`.

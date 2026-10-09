@@ -1,0 +1,52 @@
+---
+title: "Fincept Panel"
+description: "Panel and cross-section econometrics as MCP tools: fixed and random effects, Fama-MacBeth, instrumental variables, systems of equations and factor asset pricing."
+icon: "table"
+---
+
+Fincept Panel is the econometrics engine behind every `panel_*` tool: fixed effects (entity, time and other effects), random effects, between, first-difference, pooled and Fama-MacBeth regressions with robust, one- or two-way clustered, Driscoll-Kraay and autocorrelation-robust standard errors; estimator comparison with a Hausman test; regression absorbing high-dimensional fixed effects; instrumental variables (2SLS, LIML, k-class, GMM, CUE-GMM) with first-stage, over-identification and endogeneity tests; SUR, 3SLS and system GMM with cross-equation constraints; and linear factor asset-pricing models with risk premia, alphas and the J test. Classic econometrics datasets are bundled to try every model. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Panel tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `panel_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Panel reference](/reference/panel/overview) lists every module and tool.
+
+`panel_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| Panel | `data`: a long table, one row per entity and period, columns by name; `entity` and `time` name the panel columns | `{"firm": ["AAPL", "AAPL", "MSFT"], "year": [2022, 2023, 2022], "roa": [0.28, 0.27, 0.19], "lev": [0.31, 0.29, 0.22]}` |
+| Table | `data` without `entity` and `time` for instrumental-variables, absorbing and system regressions: one row per observation | `{"JPM": [196.4, 195.1], "SPY": [472.7, 468.8]}` |
+| Model | `dependent` and `exog` column names, or a `formula` with `EntityEffects` and `TimeEffects` terms where they apply | `"roa ~ 1 + lev + EntityEffects"` |
+| Instruments | `endog` and `instruments` column names, or a formula with `[endogenous ~ instruments]` | `"lwage ~ 1 + exper + [educ ~ fatheduc + motheduc]"` |
+| Factor model | `data`: one row per period with test-asset and factor returns; `portfolios` and `factors` name the columns | `{"portfolios": ["P1", "P2", "P3"], "factors": ["MKT", "SMB", "HML"]}` |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+Formulas take the columns of `data` and the transforms `log`, `exp`, `sqrt`, `C()`, `center()`, `scale()` and `poly()`; write `1 +` for an intercept. `panel_dataset` returns a bundled dataset whose `data.table` can be passed straight to a model tool as `data`.
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds by default; 180 seconds for `panel_iv_regression`, `panel_iv_compare`, `panel_fixed_effects`, `panel_absorbing_regression`, `panel_compare` and `panel_system_regression`; 300 seconds for `panel_factor_model` |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Regressions return coefficients with standard errors, t statistics, p-values and intervals, R² (within, between and overall for panels), F tests and optional Wald tests, predictions and per-row fitted values and residuals. `panel_fixed_effects` and `panel_random_effects` add the estimated effects and the variance share due to them; IV tools add first-stage strength, over-identification and endogeneity tests; `panel_compare` and `panel_iv_compare` set estimators side by side, with the Hausman test when fixed and random effects are both fitted. `panel_factor_model` returns risk premia, each asset's alpha and betas and the J test, with charts of premia and alphas.
+
+## Example
+
+```text Prompt
+Using Fincept, estimate the hedge ratios of JPM, BAC and WFC log closes on SPY jointly by SUR over two years of daily data, and test whether the residual covariance is diagonal.
+```
+
+The agent searches for `seemingly unrelated regression`, finds `panel_system_regression`, and passes each symbol's closes as a `$fincept` reference to `market_get_candles`, one `data` column per symbol, with one equation per bank such as `log(JPM) ~ 1 + log(SPY)`.

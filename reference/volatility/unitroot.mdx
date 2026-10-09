@@ -1,0 +1,17 @@
+---
+title: "Unit roots and cointegration"
+description: "Unit-root and stationarity tests (ADF, DF-GLS, Phillips-Perron, KPSS, Zivot-Andrews with a break), variance-ratio random-walk tests, Engle-Granger and Phillips-Ouliaris cointegration tests, cointegrating vectors by dynamic OLS, fully modified OLS and canonical cointegrating regression, and p-values and critical values for any of these statistics."
+mode: "wide"
+---
+
+Toolset `vol_unitroot`: 5 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `vol_unit_root` | Unit-root and stationarity tests on one series: augmented Dickey-Fuller, DF-GLS (Elliott-Rothenberg-Stock), Phillips-Perron (tau or rho), KPSS (null: stationary) and Zivot-Andrews (one structural break, dated), or the first four together with a joint verdict. |  |
+| `vol_variance_ratio` | Lo-MacKinlay variance-ratio test of a random walk on a level series (log prices; transform log turns prices into log prices) at several horizons. |  |
+| `vol_cointegration_test` | Residual-based cointegration tests of y on x (null: no cointegration): Engle-Granger (ADF on the cointegrating residual) or Phillips-Ouliaris (Zt, Za, Pu, Pz with a kernel long-run variance). |  |
+| `vol_cointegrating_vector` | Efficient estimates of the cointegrating vector of y on x: dynamic OLS (Stock-Watson, with leads and lags of the differenced regressors), fully modified OLS (Phillips-Hansen) or canonical cointegrating regression (Park). |  |
+| `vol_unit_root_pvalue` | p-value and 1/5/10% critical values of a unit-root or cointegration statistic computed elsewhere: MacKinnon response surfaces for Dickey-Fuller t and z and DF-GLS, simulated tables for KPSS, Engle-Granger and the four Phillips-Ouliaris statistics. |  |
+
+Inputs, limits and outputs are described in [Fincept Volatility](/guides/fincept-volatility). Full schemas: `fincept_describe_tool`.

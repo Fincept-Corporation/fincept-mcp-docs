@@ -1,0 +1,52 @@
+---
+title: "Fincept Volatility"
+description: "Volatility modelling as MCP tools: GARCH-family models, VaR and expected-shortfall forecasts and backtests, unit roots, cointegration and bootstrap inference."
+icon: "waves"
+---
+
+Fincept Volatility is the volatility and financial econometrics engine behind every `vol_*` tool: GARCH, GJR, TARCH, EGARCH, APARCH, FIGARCH, HARCH, MIDAS hyperbolic, EWMA and RiskMetrics 2006 variance with constant, zero, AR, HAR, regression and volatility-in-mean mean equations and normal, Student t, skewed t or GED errors; analytic, simulated and bootstrap forecasts with Value-at-Risk and expected shortfall; rolling and expanding re-estimation backtests and scenario forecasts; unit-root, variance-ratio and cointegration tests with cointegrating vectors (DOLS, FMOLS, CCR); bootstrap confidence intervals; forecast comparison (SPA, StepM, model confidence set) and kernel long-run covariances. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Volatility tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `vol_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Volatility reference](/reference/volatility/overview) lists every module and tool.
+
+`vol_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| Returns | `returns`: one series in time order; percent returns by default (1.2 = 1.2%), decimal returns with `units: "fraction"`, prices with `units: "prices_log"` or `"prices_simple"` (turned into log or simple returns) | `[0.42, -1.10, 0.35, 0.87]` |
+| Dates | Optional ISO dates for `returns`, one per observation | `["2024-01-02", "2024-01-03"]` |
+| Model | `model`: mean equation, volatility process and error distribution; default constant mean, GARCH(1,1), normal errors | `{"volatility": "garch", "p": 1, "o": 1, "q": 1, "distribution": "skewt"}` |
+| Return table | `data`: one column per series, for the bootstrap tools and the long-run covariance | `{"SPY": [0.42, -1.10], "TLT": [-0.21, 0.63]}` |
+| Losses | `losses`: one column per model and one row per period, for `vol_spa` and `vol_mcs` | `{"garch": [1.21, 0.84], "ewma": [1.37, 0.92]}` |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+Unit-root and cointegration tools take levels in `values` or `data`; `transform: "log"` turns prices into log prices and `"log_diff"` into log returns. Models are fitted on percent returns, and volatility, VaR and expected shortfall come back in percent.
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds by default; 120 seconds for `vol_simulate` and `vol_unit_root`; 180 seconds for `vol_bootstrap_ci`, `vol_bootstrap_replicates`, `vol_bootstrap_paths`, `vol_spa`, `vol_mcs`, `vol_garch`, `vol_forecast_origins` and `vol_scenario_forecast`; 300 seconds for `vol_rolling_forecast` |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+`vol_garch` returns the parameters with robust standard errors, persistence, half-life and unconditional volatility, ARCH-LM, Ljung-Box and Jarque-Bera diagnostics, the conditional volatility and standardized residuals as series with charts, and the forecast of mean and volatility with a fan chart and per-step VaR and expected shortfall. `vol_rolling_forecast` returns every out-of-sample forecast with its VaR hits, the hit rates and squared-error and QLIKE losses that `vol_spa` and `vol_mcs` take as `losses`. Tests return statistics, p-values, critical values and a verdict; bootstrap tools return estimates with their bounds, replicate distributions and fans of cumulative return.
+
+## Example
+
+```text Prompt
+Using Fincept, fit a GJR-GARCH(1,1) with skewed t errors to five years of SPY daily closes, forecast volatility 10 days ahead with 1% and 5% VaR, and backtest the 1-day VaR over the last 250 days.
+```
+
+The agent searches for `GARCH volatility`, finds `vol_garch` and `vol_rolling_forecast`, and passes the closes as a `$fincept` reference to `market_get_candles` (`candles.close`) with `units: "prices_log"`.

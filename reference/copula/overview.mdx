@@ -1,0 +1,17 @@
+---
+title: "Fincept Copula"
+description: "Every Fincept Copula module and its toolset."
+icon: "network"
+mode: "wide"
+---
+
+19 tools in 6 modules, plus `copula_catalog`, which lists them from inside your agent. All are free.
+
+| Module | Toolset | Covers | Tools |
+| --- | --- | --- | --- |
+| [Dependence measures](/reference/copula/dependence) | `copula_dependence` | Kendall's tau, Spearman's rho, Pearson, Blomqvist's beta, Hoeffding's D and Chatterjee's xi matrices between assets, implied copula parameters, tail dependence from pairwise copulas, pseudo-observations, quasi-random uniform samples and latent samples for discrete pairs. | 5 |
+| [Margins and joint distributions](/reference/copula/distribution) | `copula_distribution` | Univariate margins (boundary-corrected kernel densities for continuous, discrete and zero-inflated data, or the best parametric family by AIC/BIC/AICc, or a density given on a grid) and joint distributions of many assets combining margins with a vine copula: density, joint probabilities, Rosenblatt transforms and samples on the original scale. | 2 |
+| [Bivariate copulas](/reference/copula/pair) | `copula_pair` | Copulas for two assets: fit a chosen family and rotation or select the best of every family (Gaussian, Student, Clayton, Gumbel, Frank, Joe, BB1, BB6, BB7, BB8, Tawn, nonparametric TLL) by AIC/BIC/mBIC, compare families, parameter standard errors; densities, distribution and h-functions with their inverses and derivatives; simulation; tau, Blomqvist beta and tail-dependence conversions. | 5 |
+| [Vine regression](/reference/copula/regression) | `copula_regression` | Conditional mean and quantiles of one asset given others from a vine copula with kernel margins: nonlinear, tail-aware regression such as a stock's 5% quantile given the market (CoVaR-style). | 1 |
+| [Copula portfolio risk](/reference/copula/risk) | `copula_risk` | Portfolio value at risk and expected shortfall from vine-copula scenarios mapped through each asset's empirical, kernel or parametric margin, with Gaussian-copula and historical benchmarks and expected shortfall contributions; stress scenarios that hold chosen assets at a shock and draw the rest from their conditional distribution. | 2 |
+| [Vine copulas](/reference/copula/vine) | `copula_vine` | Vine copulas for many assets: R-vine structure selection (maximum or random spanning trees on Kendall's tau, Spearman, Hoeffding, Chatterjee or mutual information), C- and D-vines, given matrices, truncation, thresholding, family sets and criteria; structures built by hand; density, distribution, Rosenblatt and inverse Rosenblatt transforms, per-edge contributions, parameter inference; unconditional and conditional simulation. | 4 |

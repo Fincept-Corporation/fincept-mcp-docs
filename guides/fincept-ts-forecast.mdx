@@ -1,0 +1,52 @@
+---
+title: "Fincept TS Forecast"
+description: "Statistical time-series forecasting as MCP tools: automatic ARIMA, ETS, Theta, TBATS and MSTL on one series or a panel, with intervals, backtests and simulated paths."
+icon: "chart-line"
+---
+
+Fincept TS Forecast is the statistical forecasting engine behind every `tsforecast_*` tool: automatic and fixed-order ARIMA, ETS, complex exponential smoothing and Theta; Holt and Holt-Winters; TBATS, MSTL and boosted decomposition for multiple seasonality; unobserved components; Croston, ADIDA, IMAPA and TSB for intermittent demand; GARCH and ARCH volatility; naive, seasonal naive, drift and window-average benchmarks; and regression on exogenous columns, fitted one model per series on one series or a whole panel. Native or conformal prediction intervals, rolling-origin backtests with accuracy metrics, sample-path simulation, fitted-model summaries and transfer of fitted models to new data complete it. It runs on Fincept's servers; your agent sends numbers or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept TS Forecast tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in modules. Each module is a toolset named `tsforecast_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept TS Forecast reference](/reference/ts-forecast/overview) lists every module and tool.
+
+`tsforecast_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| Series | `y`: one series of numbers, oldest first | `[101.2, 102.8, 101.9, 103.1]` |
+| Dates | Optional ISO dates for `y`, one per observation | `["2024-01-31", "2024-02-29"]` |
+| Panel | `data`: a long table, one row per series and period, with id, time and target columns plus any numeric exogenous columns | `{"unique_id": ["AAPL", "MSFT"], "ds": ["2024-01-02", "2024-01-02"], "y": [185.6, 370.9]}` |
+| Models | `models`: the models to fit, each a model key with optional `params`; `tsforecast_models` lists every key and parameter | `[{"model": "auto_arima"}, {"model": "mstl", "params": {"season_length": [12]}}]` |
+| Future exogenous | `future_exog`: the exogenous values over the horizon, `h` rows per series | `{"unique_id": ["AAPL"], "ds": ["2024-01-03"], "rate": [5.33]}` |
+| Reference | Any of the above fetched from a Fincept tool | `{"$fincept": {...}}` |
+
+The id, time and target columns are `unique_id`, `ds` and `y` unless `id_col`, `time_col` and `target_col` name others. `h` sets the horizon and `levels` the interval levels in percent (`[80, 95]` by default; `[]` for point forecasts). `tsforecast_garch` takes returns, not prices.
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per table or series | 200,000 |
+| Columns per table | 500 |
+| Compute time | 90 seconds by default; 30 seconds for `tsforecast_models` and `tsforecast_sample_data`; 120 seconds for `tsforecast_evaluate`, `tsforecast_baselines`, `tsforecast_intermittent` and `tsforecast_garch`; 180 seconds for `tsforecast_regression` and `tsforecast_theta`; 300 seconds for `tsforecast_arima`, `tsforecast_forecast`, `tsforecast_forward`, `tsforecast_cross_validation`, `tsforecast_simulate`, `tsforecast_tbats`, `tsforecast_mfles`, `tsforecast_mstl`, `tsforecast_ets` and `tsforecast_ucm` |
+
+A computation that runs past its time limit answers `timeout`; a busy engine answers `busy` and the call can be retried a few seconds later.
+
+## Outputs
+
+Forecasting tools return the forecast of every series and model with `-lo-<level>` and `-hi-<level>` interval bands and charts; the family tools add each fitted model's specification, coefficients and information criteria, and the decomposition tools their trend, seasonal and remainder components. `tsforecast_cross_validation` returns every window's forecasts, the chosen metrics per model, window and series and the best model; `tsforecast_evaluate` scores any forecasts against actuals. `tsforecast_simulate` returns the mean, standard deviation and quantiles of the simulated paths as a fan chart, with a few raw paths.
+
+## Example
+
+```text Prompt
+Using Fincept, backtest automatic ARIMA, ETS and Theta on two years of Nifty 50 daily closes over 4 windows of 10 days, then forecast the next 10 sessions with the best model and 80% and 95% intervals.
+```
+
+The agent searches for `statistical forecast`, finds `tsforecast_cross_validation` and `tsforecast_forecast`, and passes the closes as `y` and their dates as `dates`, both `$fincept` references to `market_get_candles` (`candles.close` and `candles.time`).

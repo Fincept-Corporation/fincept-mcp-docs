@@ -1,0 +1,16 @@
+---
+title: "Moment estimators"
+description: "Expected returns (sample, exponentially weighted, market equilibrium, James-Stein, Bayes-Stein, Bodnar-Okhrin shrinkage), covariance (sample, EW, Ledoit-Wolf, OAS, shrunk, Gerber, denoised, detoned, graphical lasso, geodesic shrinkage, regime-adjusted EW, implied-volatility), per-asset variance and out-of-sample covariance forecast evaluation (calibration, exceedances, QLIKE)."
+mode: "wide"
+---
+
+Toolset `pflab_moments`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pflab_expected_returns` | Expected return per asset by one estimator: sample mean, exponentially weighted mean, market-implied equilibrium returns (reverse optimisation of market weights) or a shrinkage of the mean (James-Stein, Bayes-Stein, Bodnar-Okhrin; with the target and intensity). |  |
+| `pflab_covariance` | Covariance matrix by one of 13 estimators (sample, EW, Ledoit-Wolf, OAS, fixed shrinkage, Gerber, random-matrix denoising, detoning, cross-validated graphical lasso, geodesic shrinkage, regime-adjusted EW, implied-volatility scaling). |  |
+| `pflab_variance` | Variance and volatility per asset by the sample, exponentially weighted (RiskMetrics-style) or regime-adjusted EW estimator, with the regime multiplier. |  |
+| `pflab_covariance_forecast_evaluation` | Out-of-sample quality of covariance forecasts: each estimator forecasts the next test_size periods, then the realised returns are scored. |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Lab](/guides/fincept-portfolio-lab). Full schemas: `fincept_describe_tool`.

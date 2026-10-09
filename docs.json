@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "linden",
   "name": "Fincept MCP",
-  "description": "Connect Claude Code, Codex, Cursor and any MCP client to Fincept Terminal's markets, research and analytics, and to Fincept Stats, Forecast, Allocation, Portfolio Optimizer and Quant.",
+  "description": "Connect Claude Code, Codex, Cursor and any MCP client to Fincept Terminal's markets, research and analytics, and to 15 Fincept engines for statistics, forecasting, volatility, econometrics, technicals, regimes, dependence, pricing and portfolio construction.",
   "colors": {
     "primary": "#0E7C4A",
     "light": "#04B96C",
@@ -94,6 +94,16 @@
               "guides/fincept-allocation",
               "guides/fincept-portfolio-optimizer",
               "guides/fincept-quant",
+              "guides/fincept-volatility",
+              "guides/fincept-panel",
+              "guides/fincept-ts-forecast",
+              "guides/fincept-technicals",
+              "guides/fincept-change-points",
+              "guides/fincept-regimes",
+              "guides/fincept-copula",
+              "guides/fincept-multi-period",
+              "guides/fincept-portfolio-lab",
+              "guides/fincept-pricing",
               "guides/prompts"
             ]
           },
@@ -251,6 +261,198 @@
                   "reference/quant/stats",
                   "reference/quant/technicals",
                   "reference/quant/algebra"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Volatility",
+            "pages": [
+              "reference/volatility/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/volatility/bootstrap",
+                  "reference/volatility/comparison",
+                  "reference/volatility/covariance",
+                  "reference/volatility/models",
+                  "reference/volatility/forecast",
+                  "reference/volatility/unitroot"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Panel",
+            "pages": [
+              "reference/panel/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/panel/asset-pricing",
+                  "reference/panel/data",
+                  "reference/panel/iv",
+                  "reference/panel/panel",
+                  "reference/panel/system"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept TS Forecast",
+            "pages": [
+              "reference/ts-forecast/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/ts-forecast/arima",
+                  "reference/ts-forecast/forecasting",
+                  "reference/ts-forecast/backtest",
+                  "reference/ts-forecast/benchmarks",
+                  "reference/ts-forecast/data",
+                  "reference/ts-forecast/regression",
+                  "reference/ts-forecast/scenarios",
+                  "reference/ts-forecast/seasonal",
+                  "reference/ts-forecast/smoothing",
+                  "reference/ts-forecast/structural",
+                  "reference/ts-forecast/volatility"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Technicals",
+            "pages": [
+              "reference/technicals/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/technicals/cycle",
+                  "reference/technicals/indicators",
+                  "reference/technicals/math",
+                  "reference/technicals/momentum",
+                  "reference/technicals/overlap",
+                  "reference/technicals/patterns",
+                  "reference/technicals/price-transform",
+                  "reference/technicals/statistics",
+                  "reference/technicals/volatility",
+                  "reference/technicals/volume"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Change Points",
+            "pages": [
+              "reference/change-points/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/change-points/search",
+                  "reference/change-points/metrics",
+                  "reference/change-points/regimes",
+                  "reference/change-points/selection",
+                  "reference/change-points/synthetic"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Regimes",
+            "pages": [
+              "reference/regimes/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/regimes/analysis",
+                  "reference/regimes/discrete",
+                  "reference/regimes/gaussian",
+                  "reference/regimes/inference",
+                  "reference/regimes/selection"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Copula",
+            "pages": [
+              "reference/copula/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/copula/dependence",
+                  "reference/copula/distribution",
+                  "reference/copula/pair",
+                  "reference/copula/regression",
+                  "reference/copula/risk",
+                  "reference/copula/vine"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Multi-Period",
+            "pages": [
+              "reference/multi-period/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/multi-period/backtest",
+                  "reference/multi-period/forecast",
+                  "reference/multi-period/trade",
+                  "reference/multi-period/tuning"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Portfolio Lab",
+            "pages": [
+              "reference/portfolio-lab/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/portfolio-lab/analytics",
+                  "reference/portfolio-lab/distributions",
+                  "reference/portfolio-lab/factorlab",
+                  "reference/portfolio-lab/optimize",
+                  "reference/portfolio-lab/hierarchical",
+                  "reference/portfolio-lab/moments",
+                  "reference/portfolio-lab/priors",
+                  "reference/portfolio-lab/validation"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Pricing",
+            "pages": [
+              "reference/pricing/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/pricing/bonds",
+                  "reference/pricing/credit",
+                  "reference/pricing/curves",
+                  "reference/pricing/dates",
+                  "reference/pricing/inflation",
+                  "reference/pricing/math",
+                  "reference/pricing/models",
+                  "reference/pricing/options",
+                  "reference/pricing/swaps",
+                  "reference/pricing/rate-options",
+                  "reference/pricing/rates",
+                  "reference/pricing/volatility"
                 ]
               }
             ]

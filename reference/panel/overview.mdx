@@ -1,0 +1,16 @@
+---
+title: "Fincept Panel"
+description: "Every Fincept Panel module and its toolset."
+icon: "table"
+mode: "wide"
+---
+
+13 tools in 5 modules, plus `panel_catalog`, which lists them from inside your agent. All are free.
+
+| Module | Toolset | Covers | Tools |
+| --- | --- | --- | --- |
+| [Factor asset pricing](/reference/panel/asset-pricing) | `panel_asset_pricing` | Linear factor models of test-asset returns: time-series regressions on traded factors, two-pass cross-sectional regressions (traded or non-traded factors, optional zero-beta rate) and GMM; risk premia with standard errors, betas, pricing errors and the J test of zero alphas. | 1 |
+| [Panel data and datasets](/reference/panel/data) | `panel_data` | Classic econometrics example datasets (wage panel, job training, Mroz, Card, fertility, birth weight, Fama-French portfolios, Munnell public capital, fringe benefits, MEPS) and simulated panels; panel structure, balance and within/between variation, demeaning, first differences and group means; HAC kernel weights and the automatic bandwidth. | 3 |
+| [Instrumental variables](/reference/panel/iv) | `panel_iv` | Instrumental-variables regression for endogenous regressors: two-stage least squares, LIML and k-class (Fuller), GMM and continuously updated GMM with robust, HAC or clustered weighting, first-stage strength, over-identification (Sargan, Basmann, J) and endogeneity (Durbin, Wu-Hausman, C) tests, and side-by-side comparison of estimators. | 2 |
+| [Panel regression](/reference/panel/panel) | `panel_panel` | Regressions on a long panel (entity x period): fixed effects with entity, time and other effects, random effects, between, first difference, pooled and Fama-MacBeth, with robust, one- or two-way clustered, Driscoll-Kraay and autocorrelation-robust errors; estimated effects; side-by-side comparison with a Hausman test; and regression absorbing high-dimensional fixed effects and interactions. | 6 |
+| [System regression](/reference/panel/system) | `panel_system` | Several linked regression equations estimated together: seemingly unrelated regressions (SUR/FGLS) with cross-equation constraints, three-stage least squares and system GMM for equations with endogenous regressors; residual covariance, system R² and tests of a diagonal covariance. | 1 |

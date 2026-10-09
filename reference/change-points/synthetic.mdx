@@ -1,0 +1,13 @@
+---
+title: "Synthetic teaching signals"
+description: "Synthetic piecewise signals with known change points (constant means, Gaussian correlation switches, linear-model coefficients, sine frequencies) from a caller-chosen seed, for demonstrations and for checking how well a method and cost recover the true breaks."
+mode: "wide"
+---
+
+Toolset `changepoint_synthetic`: 1 tool.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `changepoint_simulate` | Draws a synthetic piecewise signal with known change points from the caller's seed (a teaching and benchmarking tool, never market data): piecewise-constant means, Gaussian correlation switches, linear-model coefficient changes or sine frequency changes. |  |
+
+Inputs, limits and outputs are described in [Fincept Change Points](/guides/fincept-change-points). Full schemas: `fincept_describe_tool`.

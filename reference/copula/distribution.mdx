@@ -1,0 +1,14 @@
+---
+title: "Margins and joint distributions"
+description: "Univariate margins (boundary-corrected kernel densities for continuous, discrete and zero-inflated data, or the best parametric family by AIC/BIC/AICc, or a density given on a grid) and joint distributions of many assets combining margins with a vine copula: density, joint probabilities, Rosenblatt transforms and samples on the original scale."
+mode: "wide"
+---
+
+Toolset `copula_distribution`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `copula_joint_density` | Fits a joint distribution of several assets on the original scale: each margin a kernel density (default; continuous, discrete or zero-inflated, with optional bounds) or the best parametric family, then a vine copula on the margins' probability transforms. |  |
+| `copula_margin_fit` | Fits one variable's marginal distribution: a boundary-corrected kernel density (continuous, discrete or zero-inflated, default), the best parametric family among normal, Student t, Laplace, skew-normal and others by AIC/BIC/AICc (or one family with given or partly fixed parameters), or a density supplied on a grid. |  |
+
+Inputs, limits and outputs are described in [Fincept Copula](/guides/fincept-copula). Full schemas: `fincept_describe_tool`.

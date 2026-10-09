@@ -1,0 +1,17 @@
+---
+title: "Fincept Volatility"
+description: "Every Fincept Volatility module and its toolset."
+icon: "waves"
+mode: "wide"
+---
+
+19 tools in 6 modules, plus `vol_catalog`, which lists them from inside your agent. All are free.
+
+| Module | Toolset | Covers | Tools |
+| --- | --- | --- | --- |
+| [Bootstrap inference](/reference/volatility/bootstrap) | `vol_bootstrap` | Bootstrap confidence intervals (percentile, basic, studentized, normal, bias-corrected, BCa) and replicate distributions for return statistics (mean, volatility, Sharpe, Sortino, quantiles, expected shortfall, correlation, beta, differences) under IID, stationary, circular-block, moving-block and independent-samples resampling; optimal block lengths; block-bootstrapped return paths. | 4 |
+| [Forecast comparison](/reference/volatility/comparison) | `vol_comparison` | Compare forecasting models on their losses: superior predictive ability (SPA) and reality check p-values and the StepM set of models that beat a benchmark, and the model confidence set of the best models, all with block-bootstrap inference. | 2 |
+| [Long-run covariance](/reference/volatility/covariance) | `vol_covariance` | Kernel (HAC) long-run covariance estimators: Bartlett/Newey-West, Parzen/Gallant, quadratic spectral/Andrews, Parzen-Riesz, Parzen geometric, Parzen-Cauchy, Tukey-Hamming, Tukey-Hanning and Tukey-Parzen, with data-driven bandwidths, kernel weights and HAC standard errors of the mean. | 1 |
+| [Volatility models](/reference/volatility/models) | `vol_models` | GARCH-family conditional volatility models (GARCH, GJR, TARCH, EGARCH, APARCH, FIGARCH, HARCH, MIDAS hyperbolic, EWMA, RiskMetrics 2006, fixed variance) with constant, zero, AR, HAR, regression or volatility-in-mean means and normal, Student t, skewed t or GED errors: estimation, diagnostics, forecasts with VaR and expected shortfall, ARCH-effect tests, simulation and the error distributions. | 4 |
+| [Volatility forecasting and VaR backtests](/reference/volatility/forecast) | `vol_forecast` | Out-of-sample volatility, Value-at-Risk and expected-shortfall forecasts with rolling or expanding re-estimation and hit-rate backtests; forecasts from many origins (hedgehog view, origin or target alignment); scenario forecasts from crisis-window or scaled shocks. | 3 |
+| [Unit roots and cointegration](/reference/volatility/unitroot) | `vol_unitroot` | Unit-root and stationarity tests (ADF, DF-GLS, Phillips-Perron, KPSS, Zivot-Andrews with a break), variance-ratio random-walk tests, Engle-Granger and Phillips-Ouliaris cointegration tests, cointegrating vectors by dynamic OLS, fully modified OLS and canonical cointegrating regression, and p-values and critical values for any of these statistics. | 5 |

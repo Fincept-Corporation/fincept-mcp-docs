@@ -1,0 +1,14 @@
+---
+title: "Segmentation metrics"
+description: "Compare two sets of change points (Hausdorff distance, Rand index, Hamming distance, precision, recall and F1 within a margin, mean time error) and score given break dates against the data under a segment cost (each break's gain against the BIC/AIC reference penalty)."
+mode: "wide"
+---
+
+Toolset `changepoint_metrics`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `changepoint_compare` | Compares a candidate set of change points with a reference set on the same series: Hausdorff distance (the worst miss, in observations), Rand index and Hamming distance (agreement of the two partitions), precision, recall and F1 within margin observations, and mean time error (average distance of a candidate to its nearest reference). |  |
+| `changepoint_evaluate_breaks` | Scores given change points (known events, an analyst's regime dates) under a segment cost: each segment's statistics and cost, each break's gain (the cost saved by splitting its two neighbouring segments there) against the BIC/AIC reference penalty (a gain below it is not supported by the data), and the total cost with and without the breaks. |  |
+
+Inputs, limits and outputs are described in [Fincept Change Points](/guides/fincept-change-points). Full schemas: `fincept_describe_tool`.

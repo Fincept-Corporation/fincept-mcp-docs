@@ -1,0 +1,14 @@
+---
+title: "Instrumental variables"
+description: "Instrumental-variables regression for endogenous regressors: two-stage least squares, LIML and k-class (Fuller), GMM and continuously updated GMM with robust, HAC or clustered weighting, first-stage strength, over-identification (Sargan, Basmann, J) and endogeneity (Durbin, Wu-Hausman, C) tests, and side-by-side comparison of estimators."
+mode: "wide"
+---
+
+Toolset `panel_iv`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `panel_iv_regression` | Linear instrumental-variables regression of a dependent column on exogenous and endogenous regressors with excluded instruments. |  |
+| `panel_iv_compare` | Fits several instrumental-variables estimators (and OLS, which treats the endogenous regressors as exogenous) on the same specification and lays them side by side: coefficients, standard errors, t statistics and p-values per estimator, with observations, R², adjusted R² and F per estimator. |  |
+
+Inputs, limits and outputs are described in [Fincept Panel](/guides/fincept-panel). Full schemas: `fincept_describe_tool`.

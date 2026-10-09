@@ -1,0 +1,21 @@
+---
+title: "Portfolio analytics"
+description: "Every return, risk and ratio measure of a portfolio (46 measures incl. CVaR, EVaR, CDaR, EDaR, ulcer index, Gini, Sortino, Calmar), costs, fees and turnover, cumulative return and drawdown paths, return distribution, risk contributions, rolling measures, comparison of many portfolios with Pareto fronts, rebalancing schedules with weight drift, raw return-series measures, asset pre-selection screens, prices to returns, and factor risk and return attribution."
+mode: "wide"
+---
+
+Toolset `pflab_analytics`: 9 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pflab_portfolio_analysis` | Every measure of a portfolio with given weights over the history: 46 return, risk and ratio measures (mean, volatility, semi-deviation, CVaR, EVaR, VaR, worst realization, CDaR, EDaR, max and average drawdown, ulcer index, Gini, skew, kurtosis, Sharpe, Sortino, Calmar ...), effective number of assets, diversification ratio, Sharpe-ratio information criterion, turnover and costs versus previous weights, the cumulative return and drawdown paths and the return histogram; optionally the predicted return and volatility under a prior. |  |
+| `pflab_risk_contribution` | Each asset's contribution to the portfolio's risk for one or more risk measures (Euler decomposition; finite differences for measures without a closed form), with its share of the total. |  |
+| `pflab_factor_attribution` | Predicted (ex-ante) attribution of a portfolio on a time-series factor model: its volatility and expected return split into systematic and idiosyncratic parts, by factor (exposure, volatility contribution, share of variance, return contribution, standalone volatility, correlation with the portfolio), by factor family, by asset, and by asset and factor. |  |
+| `pflab_return_measures` | Return and risk measures of each column taken as its own return series (asset, fund or strategy returns, no weights): moments, semi and lower-partial moments, VaR, CVaR, EVaR, entropic risk, worst realization, Gini mean difference and the drawdown measures (max, average, DaR, CDaR, EDaR, ulcer index), per period. |  |
+| `pflab_rolling_measure` | Any of the 46 measures over a rolling window, for a portfolio (weights) or for each column on its own. |  |
+| `pflab_prices_to_returns` | Converts price tables to simple or log returns with the cleaning a portfolio needs: dates with too many missing prices dropped, gaps carried forward, early dates before listings dropped, and a benchmark or factor table aligned on the same dates. |  |
+| `pflab_compare_portfolios` | Compares several portfolios on the same history: every measure for each, their Pareto fronts (non-dominated sorting on the fitness measures), a risk/return scatter on any two measures, the composition of each and their cumulative returns (series + line chart). |  |
+| `pflab_rebalanced_portfolio` | Evaluates a history of allocations: each rebalance holds its weights from its start until the next one (drifting with returns by default), paying transaction costs on the trades from the previous holdings. |  |
+| `pflab_pre_selection` | Applies asset pre-selection screens in order and reports which assets each one keeps and drops: highly correlated pairs, zero variance, incomplete histories, the best or worst k by any measure, the Pareto-optimal assets on several measures, or contracts expiring within a lookahead. |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Lab](/guides/fincept-portfolio-lab). Full schemas: `fincept_describe_tool`.

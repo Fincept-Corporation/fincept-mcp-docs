@@ -1,0 +1,15 @@
+---
+title: "Panel data and datasets"
+description: "Classic econometrics example datasets (wage panel, job training, Mroz, Card, fertility, birth weight, Fama-French portfolios, Munnell public capital, fringe benefits, MEPS) and simulated panels; panel structure, balance and within/between variation, demeaning, first differences and group means; HAC kernel weights and the automatic bandwidth."
+mode: "wide"
+---
+
+Toolset `panel_data`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `panel_dataset` | Returns a classic econometrics dataset bundled with the engine (or a simulated panel) as columns by name, with its description: variables, units and source. |  |
+| `panel_structure` | Describes a long panel or applies the panel transforms the estimators use. |  |
+| `panel_hac_bandwidth` | The automatic (data-driven) bandwidth for a HAC covariance with the chosen kernel, and the kernel weight on each lag at that bandwidth (or at the bandwidth given), as a series with a bar chart. |  |
+
+Inputs, limits and outputs are described in [Fincept Panel](/guides/fincept-panel). Full schemas: `fincept_describe_tool`.

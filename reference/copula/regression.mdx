@@ -1,0 +1,13 @@
+---
+title: "Vine regression"
+description: "Conditional mean and quantiles of one asset given others from a vine copula with kernel margins: nonlinear, tail-aware regression such as a stock's 5% quantile given the market (CoVaR-style)."
+mode: "wide"
+---
+
+Toolset `copula_regression`: 1 tool.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `copula_vine_regression` | Vine copula regression: fits kernel margins and a vine copula over the target and feature assets, then predicts the target's conditional mean and conditional quantiles at given feature values, capturing nonlinear and tail-dependent relations (e.g. a stock's 5% quantile when the market falls 3%, CoVaR-style). |  |
+
+Inputs, limits and outputs are described in [Fincept Copula](/guides/fincept-copula). Full schemas: `fincept_describe_tool`.

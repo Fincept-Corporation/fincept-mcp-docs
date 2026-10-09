@@ -1,0 +1,18 @@
+---
+title: "Validation and tuning"
+description: "Out-of-sample testing of whole portfolio pipelines: walk-forward backtests with calendar rebalancing, purging and sequential costs and turnover, strategy comparison on the same periods, combinatorial purged cross-validation (distribution of out-of-sample Sharpe over many paths), multiple randomized CV, CV planning (optimal number of folds), grid and randomized hyper-parameter search, and online learning backtests and searches."
+mode: "wide"
+---
+
+Toolset `pflab_validation`: 6 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pflab_walk_forward` | Walk-forward backtest of a whole pipeline (pre-selection steps, any optimizer, prior and constraints): refit on each training window, hold until the next rebalance (every test_size periods or on a calendar such as month starts), with purging, expanding windows, and costs and turnover limits applied from one rebalance to the next. |  |
+| `pflab_compare_strategies` | Runs several strategies (pipelines with any optimizer, prior, constraints and pre-selection) through the same walk-forward periods and ranks them by an out-of-sample measure. |  |
+| `pflab_combinatorial_cv` | Combinatorial purged cross-validation of a pipeline: the history is cut into folds, every combination of test folds is predicted out of sample (with purging and embargo), and the predictions are recombined into many full backtest paths, giving a distribution of out-of-sample results instead of one walk-forward path (or multiple randomized CV on random asset subsets and windows). |  |
+| `pflab_cv_plan` | Plans cross-validation without fitting anything: the number of folds and test folds that best match a target training size and number of backtest paths, the resulting combinatorial design (splits, paths, average training size, which folds are train or test in each split), and, when data is given, the walk-forward train/test windows with their dates (rebalance calendar). |  |
+| `pflab_grid_search` | Cross-validated hyper-parameter search of a pipeline: every combination of the grid (or n_iter random ones) is scored by an out-of-sample portfolio measure on walk-forward or k-fold splits. |  |
+| `pflab_online_backtest` | Online backtest: after a warmup the pipeline's estimators are updated incrementally with each new period (no refitting from scratch) and the portfolio is rebalanced every test_size periods or on a calendar. |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Lab](/guides/fincept-portfolio-lab). Full schemas: `fincept_describe_tool`.

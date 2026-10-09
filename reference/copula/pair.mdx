@@ -1,0 +1,17 @@
+---
+title: "Bivariate copulas"
+description: "Copulas for two assets: fit a chosen family and rotation or select the best of every family (Gaussian, Student, Clayton, Gumbel, Frank, Joe, BB1, BB6, BB7, BB8, Tawn, nonparametric TLL) by AIC/BIC/mBIC, compare families, parameter standard errors; densities, distribution and h-functions with their inverses and derivatives; simulation; tau, Blomqvist beta and tail-dependence conversions."
+mode: "wide"
+---
+
+Toolset `copula_pair`: 5 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `copula_pair_fit` | Fits a bivariate copula to two assets' pseudo-observations: selects the family and rotation by AIC (or BIC, mBIC, log-likelihood) from every family or controls.family_set, or fits a named family by maximum likelihood or Kendall's tau inversion. |  |
+| `copula_families` | The catalogue of bivariate copula families: class, number of parameters with names and bounds, allowed rotations, which tail(s) carry dependence, whether Kendall's tau inversion applies, and every group each family belongs to (the names usable in family_set). |  |
+| `copula_pair_evaluate` | Evaluates a bivariate copula at points or on a grid: density, distribution function, the two h-functions (conditional distributions) and their inverses (conditional quantiles), and first/second derivatives with respect to parameters or arguments. |  |
+| `copula_pair_simulate` | Draws from a bivariate copula (or one draw per row of row_parameters, for time-varying parameters), reproducible with seeds. |  |
+| `copula_pair_convert` | Converts between a copula's parameters and its dependence measures: Kendall's tau to parameters (indep, gaussian, clayton, gumbel, frank, joe), parameters to Kendall's tau, Blomqvist's beta and the 2x2 tail dependence matrix (all four corners, rotation applied), with the family's parameter bounds and the copula with its variables swapped. |  |
+
+Inputs, limits and outputs are described in [Fincept Copula](/guides/fincept-copula). Full schemas: `fincept_describe_tool`.

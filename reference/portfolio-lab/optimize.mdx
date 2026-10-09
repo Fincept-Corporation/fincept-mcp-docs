@@ -1,0 +1,20 @@
+---
+title: "Portfolio optimisation"
+description: "Mean-risk optimisation over 15 risk measures and four objectives with any prior (sample moments, Black-Litterman, entropy pooling, factor model, vine-copula scenarios), efficient frontiers, risk budgeting, maximum diversification, distributionally robust CVaR, benchmark tracking, naive portfolios and stacking ensembles, under bounds, budgets, cardinality, group, linear, turnover, tracking-error and risk-limit constraints, costs, fees and worst-case uncertainty sets."
+mode: "wide"
+---
+
+Toolset `pflab_optimize`: 8 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pflab_mean_risk` | Optimal weights for one of 15 risk measures (variance, CVaR, EVaR, CDaR, max drawdown, ulcer index, Gini ...) and an objective (minimum risk, maximum return, maximum utility, maximum return/risk), on any prior (sample or shrunk moments, Black-Litterman, entropy pooling, factor model, vine-copula scenarios), under bounds, budget, cardinality, group/linear constraints, turnover, tracking error, risk limits, costs and worst-case uncertainty sets. |  |
+| `pflab_efficient_frontier` | The mean-risk efficient frontier for any of the 15 risk measures and any prior and constraints: `points` Pareto-optimal portfolios from minimum risk to maximum return, or one per target return or target risk level (unreachable targets are dropped with a warning). |  |
+| `pflab_risk_budgeting` | Risk budgeting: weights whose contributions to a risk measure (variance, CVaR, CDaR, max drawdown ... any of the 15) are proportional to risk_budget (equal by default: risk parity). |  |
+| `pflab_max_diversification` | The maximum diversification portfolio: weights maximising the diversification ratio (weighted average of asset volatilities over portfolio volatility), under any constraints and prior. |  |
+| `pflab_naive` | Naive allocations used as baselines: equal weight (1/N), inverse volatility (from any prior's covariance) or a random Dirichlet draw. |  |
+| `pflab_stacking` | Stacking: several base strategies (any optimizer, prior and constraints) are fitted, their out-of-sample returns (by cross-validation) become the assets of a final optimizer, and the final asset weights are the stack-weighted mix of the base weights. |  |
+| `pflab_robust_cvar` | Distributionally robust mean-CVaR: maximises expected return minus risk_aversion x CVaR under the worst distribution within a Wasserstein ball of the scenarios, which guards against estimation error in the return distribution. |  |
+| `pflab_benchmark_tracker` | The portfolio of the given assets that best tracks a benchmark: minimises the risk (tracking error by default) of the portfolio's return minus the benchmark's, under any constraints. |  |
+
+Inputs, limits and outputs are described in [Fincept Portfolio Lab](/guides/fincept-portfolio-lab). Full schemas: `fincept_describe_tool`.

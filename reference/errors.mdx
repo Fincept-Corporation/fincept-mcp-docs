@@ -28,7 +28,7 @@ A tool that runs but cannot answer returns an envelope with `status: "error"`, `
 | `spend_cap_reached` | The daily credit cap or the hourly cap for this action is reached. |
 | `not_found` | The item does not exist or belongs to another account, or a stored result expired. |
 | `timeout` | The call ran past its time limit. |
-| `busy` | The engine (Fincept Stats, Forecast, Allocation, Portfolio Optimizer or Quant) has no free worker. Retry in a few seconds. |
+| `busy` | The Fincept engine behind the tool (Stats, Forecast, Volatility, Pricing or any other) has no free worker. Retry in a few seconds. |
 | `model_failed` | An engine computation (a model fit, an optimisation, a forecast) failed on this data. The hint suggests what to change. |
 | `unavailable` | A Fincept service could not be reached. Retry later. |
 

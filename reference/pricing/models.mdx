@@ -1,0 +1,15 @@
+---
+title: "Models and calibration"
+description: "Heston, Bates, piecewise time-dependent Heston and GJR-GARCH calibrated to option volatilities; Hull-White, Black-Karasinski, G2++, Vasicek, CIR, extended CIR and GSR calibrated to swaption and cap volatilities; zero-coupon bond prices, bond options and short-rate statistics under a short-rate model."
+mode: "wide"
+---
+
+Toolset `pricing_models`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `pricing_heston_calibration` | Calibrates a Heston (or Bates, piecewise time-dependent Heston, GJR-GARCH) model to implied-volatility quotes by expiry and strike with a chosen optimiser, optionally holding some parameters fixed. |  |
+| `pricing_short_rate_calibration` | Calibrates a short-rate model (Hull-White, Black-Karasinski, G2++, Vasicek, CIR, extended CIR, or GSR step volatilities) to ATM swaption and cap volatilities (normal or lognormal) on the curve, with a chosen optimiser and optionally fixed parameters. |  |
+| `pricing_short_rate_model` | Analytics of a short-rate model with given parameters: model discount factors and zero yields at maturities (the curve for fitted models, the model's own curve for Vasicek and CIR), European options on zero-coupon bonds, the Hull-White futures convexity bias, and the mean and standard deviation of the short rate over time for Hull-White. |  |
+
+Inputs, limits and outputs are described in [Fincept Pricing](/guides/fincept-pricing). Full schemas: `fincept_describe_tool`.

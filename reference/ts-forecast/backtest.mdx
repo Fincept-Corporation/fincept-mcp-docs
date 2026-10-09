@@ -1,0 +1,14 @@
+---
+title: "Backtesting and evaluation"
+description: "Rolling-origin cross-validation of statistical models (expanding or fixed window, refit schedule, conformal or native intervals) scored with MAE, RMSE, MAPE, sMAPE, MASE, RMSSE, bias, quantile, coverage and Winkler metrics per model, window and series; scoring of any forecasts against actuals."
+mode: "wide"
+---
+
+Toolset `tsforecast_backtest`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `tsforecast_cross_validation` | Rolling-origin backtest of one series (y) or a panel (data): for each of n_windows origins (step_size apart) the models are fitted on the history before it (all of it, or the last input_size points; re-estimated every refit windows) and forecast the next h periods, which are scored against the actuals. |  |
+| `tsforecast_evaluate` | Scores model forecasts against actuals with any of 25 metrics: point (MAE, MSE, RMSE, MAPE, sMAPE, WAPE, ND, bias, cumulative error, periods in stock, relative MAE, Tweedie deviance, LINEX), scaled by the in-sample seasonal naive (MASE, MSSE, RMSSE, scaled PIS), quantile (pinball, multi-quantile, scaled CRPS) and interval (coverage, Winkler, calibration). |  |
+
+Inputs, limits and outputs are described in [Fincept TS Forecast](/guides/fincept-ts-forecast). Full schemas: `fincept_describe_tool`.
