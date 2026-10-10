@@ -6,7 +6,7 @@ Hosted [Model Context Protocol](https://modelcontextprotocol.io) server for [Fin
 
 - **Endpoint:** `https://enterprise.fincept.in/mcp` (Streamable HTTP)
 - **Auth:** OAuth 2.1 browser sign-in with your Fincept account. You don't need an API key.
-- **Plan:** Exclusive Pro ([pricing](https://fincept.in/pricing))
+- **Plan:** any Fincept Exclusive plan: Exclusive, Exclusive+ or Exclusive Pro ([pricing](https://fincept.in/pricing))
 - **Docs:** [docs.fincept.in](https://docs.fincept.in)
 - **Registry:** `in.fincept/mcp` on the [official MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers?search=in.fincept)
 

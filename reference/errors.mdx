@@ -12,7 +12,7 @@ These stop a request before any tool runs. Clients handle most of them.
 | --- | --- | --- | --- |
 | `401` | `session_expired`, `session_revoked` | Missing, expired or revoked token. `WWW-Authenticate` carries `error="invalid_token"` and the OAuth metadata URL. | The client refreshes or signs in again. |
 | `402` | `entitlement_required` | The account has no active plan. | Buy or renew a plan. |
-| `403` | `upgrade_required` | The plan does not include Fincept MCP. | Upgrade to Exclusive Pro. |
+| `403` | `upgrade_required` | The account has no active Fincept Exclusive plan. | Subscribe to any Exclusive plan. |
 | `429` | `rate_limited` | More than 120 requests a minute. `Retry-After` gives the wait. | Back off and retry. |
 
 ## Envelope errors
