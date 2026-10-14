@@ -43,6 +43,10 @@ Start prompts with "Using Fincept" so the agent reaches for these tools instead 
 | List coins above $1 billion market cap up more than 10% this week. | `scan_run` |
 | Of the Nasdaq 100 names below RSI 40, which broke out of their 20-day range on rising volume? | `scan_run`, `scan_history` |
 | Show Microsoft's last eight quarters of revenue and EPS against estimates. | `scan_financials`, `scan_earnings` |
+| Compare AAPL, MSFT and SPY over five years: CAGR, max drawdown, Sharpe at 4% and worst month. | `market_get_candles`, `perf_stats` |
+| Show the five deepest drawdowns of the Nifty 50 since 2015 and how long each lasted. | `market_get_candles`, `perf_drawdowns` |
+| Build equal-risk-contribution weights for SPY, TLT, GLD and DBC. | `market_get_candles`, `perf_weights` |
+| I tested 40 parameter sets; is the best one real or overfitted? | `perf_deflated_sharpe`, `perf_backtest_overfitting` |
 | How strongly do JPM, BAC, C and WFC crash together? Show the lower tail dependence. | `market_get_candles`, `copula_tail_dependence` |
 | Copula 99% VaR and expected shortfall of 40% JPM, 30% BAC and 30% XOM, and how BAC and XOM move if JPM falls 8%. | `market_get_candles`, `copula_portfolio_var`, `copula_stress_scenarios` |
 | Back-test a long-only multi-period policy on AAPL, MSFT, JPM, XOM and PFE with 5 bp spreads since 2020 beside equal weight. | `market_get_candles`, `mpo_backtest` |

@@ -15,7 +15,7 @@ Most tools are free. Tools that cost credits in the terminal cost the same here,
 - The price is in each tool's description, so the agent sees it before calling.
 - Charges happen on a delivered result. Failed, empty and refused calls cost nothing.
 - Daily spend caps and per-action hourly caps apply as in the terminal (`402 spend_cap_reached`).
-- Engine tools are free: Fincept Stats, Forecast, Allocation, Portfolio Optimizer, Quant, Volatility, Panel, TS Forecast, Technicals, Change Points, Regimes, Copula, Multi-Period, Portfolio Lab, Pricing and Scanner.
+- Engine tools are free: Fincept Stats, Forecast, Allocation, Portfolio Optimizer, Quant, Volatility, Panel, TS Forecast, Technicals, Change Points, Regimes, Copula, Multi-Period, Portfolio Lab, Pricing, Scanner and Performance.
 
 The [credits reference](/reference/toolsets/credits) lists every tool that can spend credits. Check your balance with `account_get_credits` and your spending with `account_get_usage`.
 
@@ -53,6 +53,7 @@ Fincept Scanner's requests to the market data source are also paced across the w
 | Fincept Portfolio Lab | 90 seconds, up to 300 seconds for heavy tools |
 | Fincept Pricing | 90 seconds, up to 300 seconds for heavy tools |
 | Fincept Scanner | 75 seconds; `scan_history` 240 seconds |
+| Fincept Performance | 30 to 120 seconds; `perf_rolling` and `perf_bootstrap` 180 seconds, `perf_backtest_overfitting` 300 seconds |
 
 A call past its limit returns an error envelope with code `timeout`.
 

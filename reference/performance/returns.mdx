@@ -1,0 +1,17 @@
+---
+title: "Return transforms"
+description: "Returns, rebasing, drawdown series, winsorizing and rescaling; resampling; annualising; frequency inference and data sufficiency; rolling statistics."
+mode: "wide"
+---
+
+Toolset `perf_returns`: 5 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `perf_transform` | Transforms each series at every date: simple or log returns from prices; excess returns over an annual risk-free rate and a price index compounding returns from a starting level (both from returns); prices rebased to a common start; the drawdown from the running peak; values winsorized at quantiles or rescaled into a range. | `tail` returns the last rows only. |
+| `perf_resample` | Resamples each series to weekly, monthly, quarterly or yearly observations, keeping the actual date of each period's last observation, not the calendar end. |  |
+| `perf_annualize` | Annualises returns earned over given numbers of calendar days, de-annualises annual rates to a per-period basis, or gives the year fraction between two dates. | No price input. |
+| `perf_frequency` | The frequency of each series' dates, the periods per year that follows, its span in years, and with a lookback the observations needed over it against those each series has in its latest window. |  |
+| `perf_rolling` | A rolling statistic of each series over a window of observations: total return, CAGR, maximum drawdown, Calmar ratio, ulcer index, annualised Sharpe and Sortino ratios, volatility and mean return, skew or kurtosis. Answers the series and its last, highest and lowest values. | Up to 180 seconds. |
+
+Inputs, limits and outputs are described in [Fincept Performance](/guides/fincept-performance). Full schemas: `fincept_describe_tool`.

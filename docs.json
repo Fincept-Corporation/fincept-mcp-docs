@@ -99,6 +99,7 @@
               "guides/fincept-ts-forecast",
               "guides/fincept-technicals",
               "guides/fincept-scanner",
+              "guides/fincept-performance",
               "guides/fincept-change-points",
               "guides/fincept-regimes",
               "guides/fincept-copula",
@@ -357,6 +358,22 @@
                   "reference/scanner/screen",
                   "reference/scanner/bars",
                   "reference/scanner/fundamentals"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Performance",
+            "pages": [
+              "reference/performance/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/performance/stats",
+                  "reference/performance/returns",
+                  "reference/performance/weights",
+                  "reference/performance/validation"
                 ]
               }
             ]

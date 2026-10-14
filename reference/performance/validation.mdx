@@ -1,0 +1,15 @@
+---
+title: "Strategy selection checks"
+description: "The deflated Sharpe ratio, the probability of backtest overfitting and bootstrap distributions of performance statistics."
+mode: "wide"
+---
+
+Toolset `perf_validation`: 3 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `perf_deflated_sharpe` | The deflated Sharpe ratio of the best strategy of a search: the probability that its true Sharpe ratio is above zero after correcting for how many trials were tried, how much their Sharpe ratios spread, and the skew and fat tails of its returns. Give every trial's prices or returns and it picks the best, or the selected strategy with `trial_sharpe_ratios`. Also answers the expected maximum Sharpe ratio of that many skill-less trials. |  |
+| `perf_backtest_overfitting` | The probability of backtest overfitting of a strategy search by combinatorially symmetric cross-validation: for every way of using half the blocks in-sample, the in-sample best trial is ranked out of sample. Also answers the winner's mean out-of-sample rank and the distribution of the rank logits. | Up to 300 seconds. |
+| `perf_bootstrap` | The bootstrap distribution of a performance statistic of each series: its returns resampled with replacement many times, the statistic computed on every resample, giving its spread, a confidence interval and the share of resamples above zero, next to the value on the actual returns. | Up to 180 seconds. |
+
+Inputs, limits and outputs are described in [Fincept Performance](/guides/fincept-performance). Full schemas: `fincept_describe_tool`.

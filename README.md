@@ -2,7 +2,7 @@
 
 <img src="assets/logo.png" alt="Fincept" width="120">
 
-Hosted [Model Context Protocol](https://modelcontextprotocol.io) server for [Fincept Terminal](https://fincept.in). It gives Claude Code, Codex, Cursor, VS Code and any other MCP client access to markets data, research and analytics, through 442 platform tools and 16 engines.
+Hosted [Model Context Protocol](https://modelcontextprotocol.io) server for [Fincept Terminal](https://fincept.in). It gives Claude Code, Codex, Cursor, VS Code and any other MCP client access to markets data, research and analytics, through 442 platform tools and 17 engines.
 
 - **Endpoint:** `https://enterprise.fincept.in/mcp` (Streamable HTTP)
 - **Auth:** OAuth 2.1 browser sign-in with your Fincept account. You don't need an API key.
@@ -46,7 +46,7 @@ Any other client that supports remote HTTP servers with OAuth works too. The fir
 | News and alternative data | News, sentiment, monitors, maritime, trade and geopolitical data |
 | Crypto | Venues, markets, derivatives, accounts and DeFi (read-only) |
 
-**Engines:** Scanner (live screens of every market on about 4,000 fields), Stats, Forecast, TS Forecast, Volatility, Panel, Quant, Technicals (201 indicators, 61 candlestick patterns), Change Points, Regimes, Copula, Allocation, Portfolio Optimizer, Portfolio Lab, Multi-Period, and Pricing (curves, bonds, swaps, credit and options).
+**Engines:** Scanner (live screens of every market on about 4,000 fields), Performance (performance reports, drawdowns, risk parity, overfitting checks), Stats, Forecast, TS Forecast, Volatility, Panel, Quant, Technicals (201 indicators, 61 candlestick patterns), Change Points, Regimes, Copula, Allocation, Portfolio Optimizer, Portfolio Lab, Multi-Period, and Pricing (curves, bonds, swaps, credit and options).
 
 ## How it works
 

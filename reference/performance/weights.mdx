@@ -1,0 +1,16 @@
+---
+title: "Portfolio weights and clustering"
+description: "Inverse-volatility, mean-variance and equal-risk-contribution weights, capping weights, random weights, and clustering of assets."
+mode: "wide"
+---
+
+Toolset `perf_weights`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `perf_weights` | Portfolio weights from the assets' returns: inverse volatility, mean-variance (the highest return per unit of risk within bounds, on a shrunk or sample covariance) or equal risk contribution (risk parity, with optional risk budgets); optionally capped at a maximum weight with the excess redistributed. Answers the weights and the resulting portfolio's annualised return and volatility over the same sample. |  |
+| `perf_limit_weights` | Caps every weight at a limit and redistributes the excess to the other assets in proportion to their weights, repeating until none is above it. | No price input. |
+| `perf_random_weights` | Draws random portfolio weights within per-asset bounds that sum to a total, to benchmark a strategy's weights against. | No price input. Reproducible with `seed`. |
+| `perf_clusters` | Groups assets by the correlation of their returns, with k-means on a two-dimensional map of correlation distances or with the fast threshold clustering algorithm, and answers each cluster's members with their average correlation inside it, and the correlation matrix. | Reproducible with `seed`. |
+
+Inputs, limits and outputs are described in [Fincept Performance](/guides/fincept-performance). Full schemas: `fincept_describe_tool`.

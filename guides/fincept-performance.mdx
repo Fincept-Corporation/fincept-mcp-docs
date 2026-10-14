@@ -1,0 +1,107 @@
+---
+title: "Fincept Performance"
+description: "Performance reports, monthly returns, drawdowns and ratios of any price series; return transforms and rolling statistics; risk-parity and mean-variance weights; deflated Sharpe ratio, backtest overfitting and bootstrap checks."
+icon: "trophy"
+---
+
+Fincept Performance is the performance-analysis engine behind every `perf_*` tool. `perf_stats` gives the full performance report of one or many price series side by side: total return, CAGR, maximum drawdown and Calmar ratio; MTD, 3- and 6-month, YTD, 1-, 3-, 5- and 10-year and since-inception returns; Sharpe and Sortino ratios, mean, volatility, skew, kurtosis and the best and worst period at daily, monthly and yearly frequency; average drawdown, average up and down month and win rates. The other tools give monthly return tables, drawdown episodes, single ratios against a benchmark, return transforms, resampling, annualisation, rolling statistics, portfolio weights, clustering, and the checks of a strategy search. It runs on Fincept's servers; your agent sends prices or [data references](/guides/data-references) and gets back a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Performance tools are free. They count toward the [rate limit](/guides/credits-and-limits) only; a `$fincept` reference inside a call is charged like a direct call to that tool.
+</Note>
+
+## Modules
+
+Tools are grouped in four modules. Each module is a toolset named `perf_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Performance reference](/reference/performance/overview) lists every tool.
+
+| Module | Toolset | Tools |
+| --- | --- | --- |
+| Performance statistics | `perf_stats` | `perf_stats`, `perf_monthly_returns`, `perf_drawdowns`, `perf_metrics` |
+| Return transforms | `perf_returns` | `perf_transform`, `perf_resample`, `perf_annualize`, `perf_frequency`, `perf_rolling` |
+| Portfolio weights and clustering | `perf_weights` | `perf_weights`, `perf_limit_weights`, `perf_random_weights`, `perf_clusters` |
+| Strategy selection checks | `perf_validation` | `perf_deflated_sharpe`, `perf_backtest_overfitting`, `perf_bootstrap` |
+
+`perf_stats` is listed by default. `perf_catalog` returns the live list of modules and tools from inside your agent.
+
+## Inputs
+
+Every tool except `perf_annualize`, `perf_limit_weights` and `perf_random_weights` reads price series, given either way, or both:
+
+| Input | Shape | Example |
+| --- | --- | --- |
+| `prices` | A table: one column per series (the column name is the series' name) and a date column (`date`, `datetime`, `time` or `timestamp`; ISO dates or times). Columns by name or row objects. | `{"date": ["2024-01-02", "2024-01-03"], "SPY": [472.6, 468.8], "TLT": [97.2, 96.1]}` |
+| `series` | Named series, each its own table, joined on their dates. The value column defaults to `close`, `price`, `value` or `nav`; `column` picks another. | `[{"name": "AAPL", "data": {"$fincept": {...}}}]` |
+| `columns` | Use only some of the series. | `["SPY", "TLT"]` |
+| `data_kind` | Weights, clustering and the strategy checks also take periodic returns instead of prices: `"returns"`. | `"returns"` |
+
+`series` is how an agent compares instruments it fetches itself: one [data reference](/guides/data-references) per instrument, `market_get_candles` data at path `candles` as is.
+
+```json
+{
+  "series": [
+    {"name": "AAPL", "data": {"$fincept": {"tool": "market_get_candles", "arguments": {"symbol": "AAPL", "interval": "1d", "limit": 1260}, "path": "candles"}}},
+    {"name": "SPY", "data": {"$fincept": {"tool": "market_get_candles", "arguments": {"symbol": "SPY", "interval": "1d", "limit": 1260}, "path": "candles"}}}
+  ],
+  "rf": 0.04
+}
+```
+
+- **Dates are required.** The statistics are calendar-based (month, year and lookback figures), so every table needs a date column. Each series is measured on its own dates.
+- **Times with a UTC offset** (`2024-01-02T09:30:00-05:00`) are read at the exchange's own clock: bars at most one a day become that local date, so daylight-saving changes do not shift them; intraday bars become UTC times.
+- **Prices must be above zero**; a zero or negative price is refused with the series named.
+- **Periods per year.** Annualised figures use `periods_per_year` when given. Otherwise it is inferred from the dates: from their regular frequency when they have one, else from their median spacing (trading days give 252, weekly data 52, monthly 12). The answer says which was used.
+
+## Outputs
+
+Returns, drawdowns, volatility and rates are fractions (`0.12` is 12%); ratios are plain numbers. Dated results come back as rows with ISO dates and a line chart; reports come back as tables (statistics in rows, series in columns) with metrics for the headline figures.
+
+| Tool | Returns |
+| --- | --- |
+| `perf_stats` | Every statistic of every series, lookback returns, and with several series their return correlations and growth rebased to 100. `rf` (an annual rate) or `rf_prices` (a risk-free index) sets the risk-free return; `start` and `end` narrow the report. |
+| `perf_monthly_returns` | Each series' return by month and year with the year's return (months outside its span left empty), best and worst month, share of positive months, average up and down month. |
+| `perf_drawdowns` | The drawdown at every date, the deepest episodes with start, end, length and depth, the maximum and average drawdown, the ulcer index, and the drawdown now with when it began. |
+| `perf_metrics` | Total return, CAGR, maximum drawdown, Calmar, Sharpe and Sortino over `rf`, return/risk, ulcer index and ulcer performance index; with `benchmark` (one of the input series), the information ratio and probabilistic momentum. `annualize: false` gives per-period ratios. |
+| `perf_transform` | `returns`, `log_returns`, `excess_returns` and `price_index` (both from returns), `rebase`, `drawdown`, `winsorize` and `rescale`, at every date. |
+| `perf_resample` | Weekly, monthly, quarterly or yearly observations on their actual last dates (the 29th when the 29th was the month's last trading day). |
+| `perf_annualize` | Returns earned over given days as annual rates, annual rates on a per-period basis, or the years between two dates. |
+| `perf_frequency` | Each series' frequency, periods per year and span, and with `lookback` whether it has enough observations over that latest window. |
+| `perf_rolling` | Total return, CAGR, maximum drawdown, Calmar, ulcer index, Sharpe, Sortino, volatility, mean return, skew or kurtosis over a moving window, with its last, highest and lowest values. |
+| `perf_weights` | Inverse-volatility, mean-variance or equal-risk-contribution weights (with optional risk budgets), optionally capped at `limit`, and the resulting portfolio's annualised return and volatility. |
+| `perf_limit_weights` | Weights capped at a maximum, the excess redistributed in proportion. |
+| `perf_random_weights` | Random portfolios within per-asset bounds that sum to a total, reproducible with `seed`. |
+| `perf_clusters` | Groups of assets by the correlation of their returns (k-means or fast threshold clustering), each with its average inner correlation, and the correlation matrix. |
+| `perf_deflated_sharpe` | The deflated Sharpe ratio of a search's best strategy and the expected best Sharpe ratio of that many skill-less trials. Give every trial's prices (it picks the best), or the selected strategy with `trial_sharpe_ratios`. |
+| `perf_backtest_overfitting` | The probability of backtest overfitting by combinatorially symmetric cross-validation over every trial's returns, the winner's mean out-of-sample rank and the distribution of rank logits. |
+| `perf_bootstrap` | The bootstrap distribution of a statistic per series: the value on the actual returns, the mean, a confidence interval and the share of resamples above zero, with a histogram. |
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Series per call | 500 |
+| Rows per table | 200,000 |
+| `perf_rolling` window | 10,000 observations |
+| `perf_bootstrap` | 10,000 resamples |
+| `perf_backtest_overfitting` | An even number of blocks from 2 to 20 (16 gives 12,870 splits) |
+| Time | 30 to 120 seconds; `perf_rolling` and `perf_bootstrap` 180 seconds, `perf_backtest_overfitting` 300 seconds |
+
+Inputs the computation cannot use are refused with the reason: a missing date column, repeated dates or series names, a non-positive price, weight bounds or a cap that cannot sum to 1, a benchmark that is not one of the series.
+
+## Example
+
+```text Prompt
+Using Fincept, compare AAPL, MSFT and SPY over the last five years: CAGR, max drawdown, Sharpe at a 4% risk-free rate and each one's worst month, then build equal-risk-contribution weights for the three.
+```
+
+The agent fetches each instrument with `market_get_candles`, passes them as `series` to `perf_stats` and `perf_monthly_returns`, then calls `perf_weights` with `method: "equal_risk_contribution"`.
+
+More prompts:
+
+| Prompt | Tools the agent uses |
+| --- | --- |
+| Show the five deepest drawdowns of the Nifty 50 since 2015 and how long each took to recover. | `market_get_candles`, `perf_drawdowns` |
+| Plot NVDA's rolling one-year Sharpe ratio. | `market_get_candles`, `perf_rolling` |
+| What is AAPL's information ratio and probability of outperforming SPY? | `market_get_candles`, `perf_metrics` |
+| I tested 40 parameter sets; here are their returns. Is the best one real? | `perf_deflated_sharpe`, `perf_backtest_overfitting` |
+| How confident can I be in this fund's Sharpe ratio? Bootstrap it. | `market_get_candles`, `perf_bootstrap` |
+| Group these 30 stocks by how their returns move together. | `market_get_candles`, `perf_clusters` |

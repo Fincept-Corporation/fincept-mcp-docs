@@ -1,0 +1,16 @@
+---
+title: "Performance statistics"
+description: "The full performance report of one or many price series, monthly return tables, drawdown episodes and single ratios, against a benchmark where they compare."
+mode: "wide"
+---
+
+Toolset `perf_stats`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `perf_stats` | The performance report of one or many price series side by side: start and end, total return, CAGR, max drawdown, Calmar ratio; MTD, 3- and 6-month, YTD, 1-year, 3-, 5- and 10-year annualised and since-inception returns; Sharpe and Sortino ratios, annualised mean and volatility, skew, kurtosis and the best and worst period at daily, monthly and yearly frequency; average drawdown and its length, average up and down month, and the share of winning years and 12-month periods. With several series, also their return correlations and their growth rebased to 100. | Listed by default. |
+| `perf_monthly_returns` | The calendar return table of each price series: the return of every month by year with the year's return, months outside the series' span left empty; plus the best and worst month, the share of positive months and the average up and down month. |  |
+| `perf_drawdowns` | The drawdowns of each price series: the drawdown at every date, the deepest episodes with their start, end, length in calendar days and depth, the maximum and average drawdown, the average episode length, the ulcer index, and the drawdown now with when it began. |  |
+| `perf_metrics` | Single ratios of each price series with every setting exposed: total return, CAGR, maximum drawdown, Calmar ratio, Sharpe and Sortino ratios over an annual risk-free rate, return/risk ratio, ulcer index and ulcer performance index; against a benchmark series, the information ratio and the probabilistic momentum. |  |
+
+Inputs, limits and outputs are described in [Fincept Performance](/guides/fincept-performance). Full schemas: `fincept_describe_tool`.
