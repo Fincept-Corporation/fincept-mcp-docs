@@ -1,0 +1,16 @@
+---
+title: "Company fundamentals"
+description: "Financial statements, earnings against estimates, dividend history and revenue segments per company."
+mode: "wide"
+---
+
+Toolset `scan_fundamentals`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `scan_financials` | Returns a company's income statement, balance sheet, cash flow or statistics (valuation, margins, returns, per-share and bank ratios), newest period first, by fiscal year, half, quarter or trailing twelve months: every line the company reports in raw reporting-currency units, with the latest value of each line. `statement: "all"` returns the four statements with earnings, dividends and revenue segments in one request. |  |
+| `scan_earnings` | Returns reported EPS against the consensus estimate with the surprise in percent, and reported revenue against its estimate, by quarter or fiscal year, newest first. |  |
+| `scan_dividends` | Returns a company's dividend payments, newest first (amount per share, ex, record and payment dates, kind), with the recent yield, the TTM payout ratio and dividends paid. |  |
+| `scan_segments` | Returns a company's annual revenue by business line and by country or region, newest year first. |  |
+
+Inputs, limits and outputs are described in [Fincept Scanner](/guides/fincept-scanner). Full schemas: `fincept_describe_tool`.

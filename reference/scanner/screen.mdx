@@ -1,0 +1,16 @@
+---
+title: "Market screener"
+description: "Live screens of any market on any of about 4,000 fields, with conditions, and/or groups, crosses and index universes; field search, markets, operators and ready-made screens."
+mode: "wide"
+---
+
+Toolset `scan_screen`: 4 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `scan_run` | Screens a market live on any of its fields and returns the matching instruments, paged and sorted: price and volume on 1-minute to monthly bars, performance, technical indicators and ratings, candlestick patterns, valuation, profitability, growth, balance sheet, cash flow, dividends, earnings and dividend dates and analyst targets, for stocks in 68 countries, ETFs, crypto pairs and coins, forex, futures, CFDs, bonds, options and economic series. Conditions compare a field with a value or another field, test crosses on the latest bar, ranges, lists, text and dates; `where` adds OR groups; `index` and `symbols` narrow the universe; `template` starts from a ready-made screen. Each row carries the instrument's `EXCHANGE:TICKER` symbol. | Listed by default. Up to 1,000 rows a page. |
+| `scan_fields` | Searches the fields a market can be screened on by words, category or type, best matches first: each field's exact name, its meaning, category, type, whether it is a bar field (readable on any timeframe and one or two bars back), and with `include_values` the exact values a text field takes (sectors, industries, countries). |  |
+| `scan_markets` | Lists the 68 country markets by region with their exchanges, the asset-class markets, the 73 index universes, the bar timeframes, every condition operator with its meaning, the universe options and the request budget now. `section` returns one part. | Makes no market data request. |
+| `scan_templates` | Lists the 44 ready-made screens `scan_run` takes as `template` (price and volume, technicals, fundamentals, events, crypto, forex and ETF screens), each with its full arguments. | Makes no market data request. |
+
+Inputs, limits and outputs are described in [Fincept Scanner](/guides/fincept-scanner). Full schemas: `fincept_describe_tool`.

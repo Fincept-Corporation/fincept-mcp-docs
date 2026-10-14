@@ -1,0 +1,204 @@
+---
+title: "Fincept Scanner"
+description: "Live market screens on about 4,000 fields across stocks in 68 countries, ETFs, crypto, forex, futures, bonds and more; custom formula screens over price history; bars and company fundamentals per symbol."
+icon: "radar"
+---
+
+Fincept Scanner is the screening engine behind every `scan_*` tool. `scan_run` screens a whole market live on any of its fields: price and volume on 1-minute to monthly bars, performance, technical indicators and ratings, candlestick patterns, valuation, profitability, growth, balance sheet, cash flow, dividends, earnings and dividend dates and analyst targets. It covers stocks in 68 countries with their ETFs and funds, crypto pairs and coins, forex, futures, CFDs, bonds, options and economic series, and narrows to index universes such as the S&P 500, Nasdaq 100, Nifty 50, FTSE 100 or Nikkei 225. `scan_history` screens instruments' price history with a formula of your own, for rules no field expresses. `scan_ohlcv` and the fundamentals tools return bars, statements, earnings, dividends and revenue segments per symbol. Every tool answers with a [result envelope](/guides/results) with tables and charts.
+
+<Note>
+  Fincept Scanner tools are free. They count toward the [rate limit](/guides/credits-and-limits) only. Requests to the market data source are also paced across the server: when that budget is in use the tool answers `busy` with `details.retry_after_s`, the number of seconds to wait.
+</Note>
+
+## Modules
+
+Tools are grouped in three modules. Each module is a toolset named `scan_<module>`, so you can [list it](/guides/finding-tools#list-whole-toolsets) or search within it. The [Fincept Scanner reference](/reference/scanner/overview) lists every tool.
+
+| Module | Toolset | Tools |
+| --- | --- | --- |
+| Market screener | `scan_screen` | `scan_run`, `scan_fields`, `scan_markets`, `scan_templates` |
+| Price history | `scan_bars` | `scan_ohlcv`, `scan_history` |
+| Company fundamentals | `scan_fundamentals` | `scan_financials`, `scan_earnings`, `scan_dividends`, `scan_segments` |
+
+`scan_run` is listed by default. `scan_catalog` returns the live list of modules and tools from inside your agent.
+
+## Build a screen
+
+A screen is a market, conditions on its fields, and a sort:
+
+```json
+{
+  "market": "america",
+  "filters": [
+    {"field": "RSI", "op": "<", "value": 35},
+    {"field": "market_cap_basic", "op": ">", "value": 10000000000},
+    {"field": "close", "op": ">", "to_field": "SMA200"}
+  ],
+  "columns": ["description", "close", "RSI", "SMA200", "market_cap_basic"],
+  "sort_by": "RSI",
+  "sort_order": "asc",
+  "limit": 10
+}
+```
+
+### Where to screen
+
+| Argument | What it does | Example |
+| --- | --- | --- |
+| `market` | A country market (68, such as `america`, `india`, `uk`, `germany`, `japan`) or an asset class: `crypto` (pairs on every exchange), `coin` (crypto assets across exchanges), `forex`, `futures`, `cfd`, `bond`, `economics`, `options`. A list screens several at once. Default `america`. | `["america", "india"]` |
+| `universe` | For country markets: `stocks` (primary listings of common stocks, the default), `etfs`, or `all` (every listed instrument: ETFs, funds, preferreds, depositary receipts, OTC). | `"etfs"` |
+| `index` | Only an index's constituents: 73 indexes, including `sp500`, `nasdaq100`, `dow30`, `russell2000`, `nifty50`, `nifty500`, `nifty_bank`, `sensex`, `ftse100`, `dax40`, `cac40`, `euro_stoxx50`, `nikkei225`, `hang_seng`, `csi300`, `asx200`. | `"nifty50"` |
+| `symbols` | Only these instruments, as `EXCHANGE:TICKER`. With no conditions it is a live snapshot of any fields for them. | `["NASDAQ:AAPL", "NSE:RELIANCE", "BINANCE:BTCUSDT"]` |
+
+`scan_markets` lists every market by region with its exchanges, every index, the timeframes and the operators.
+
+### Fields
+
+Field names are case-sensitive: `RSI`, `close`, `SMA50`, `market_cap_basic`, `price_earnings_ttm`, `sector`, `earnings_release_next_date`. `scan_fields` searches a market's fields by words (`"dividend yield"`, `"free cash flow"`, `"52 week"`), category or type, and with `include_values` lists the exact values a text field takes, such as every sector or industry.
+
+- **Timeframes.** A bar field (price, volume or a technical) reads another timeframe with a suffix: `RSI|60` is RSI on 1-hour bars. Suffixes are `1`, `5`, `15`, `30`, `60`, `120`, `240` (minutes), `1W` and `1M`; daily is the field without a suffix. The `timeframe` argument applies one to every bar field that names none.
+- **Previous bars.** `[1]` and `[2]` read a bar field one or two bars back: `close[1]`, `RSI[1]|60`.
+- **Units.** Percent fields are in percent (`5` is 5%). Date fields take ISO dates (`"2026-01-31"`) and come back as ISO dates.
+- **Checked first.** A field the market does not have is refused before anything runs, with the nearest names in `details.did_you_mean`. A text value the field never takes (`"Technology"` for `sector`) adds a warning with the values it does take.
+
+### Conditions
+
+Each condition is `{"field", "op", "value"}`, or `{"field", "op", "to_field"}` to compare with another field. `filters` must all hold.
+
+| Operator | Meaning | Example |
+| --- | --- | --- |
+| `>` `>=` `<` `<=` `==` `!=` | Compare with a value or another field | `{"field": "close", "op": ">", "to_field": "SMA200"}` |
+| `between`, `not_between` | Inside or outside `[low, high]`, inclusive | `{"field": "price_earnings_ttm", "op": "between", "value": [0, 15]}` |
+| `in`, `not_in` | One of, or none of, a list | `{"field": "sector", "op": "in", "value": ["Finance", "Utilities"]}` |
+| `crosses`, `crosses_above`, `crosses_below` | Crossed a field or value on the latest bar | `{"field": "SMA50", "op": "crosses_above", "to_field": "SMA200"}` |
+| `above_pct`, `below_pct` | Above or below a multiple of another field | `{"field": "close", "op": "above_pct", "to_field": "price_52_week_high", "value": 0.95}` |
+| `between_pct`, `not_between_pct` | Within or outside `[low, high]` multiples of another field | `{"field": "close", "op": "between_pct", "to_field": "SMA50", "value": [0.98, 1.02]}` |
+| `has`, `has_none_of` | A list field holds any, or none, of the values | `{"field": "typespecs", "op": "has", "value": ["reit"]}` |
+| `match`, `not_match` | Text contains, or does not contain, a value | `{"field": "description", "op": "match", "value": "bank"}` |
+| `empty`, `not_empty` | Has no value, or has one | `{"field": "dividends_yield_current", "op": "not_empty"}` |
+| `within_days`, `within_weeks`, `within_months` | A date falls `[from, to]` days, weeks or months from today (negative is past) | `{"field": "earnings_release_next_date", "op": "within_days", "value": [0, 7]}` |
+
+### OR logic
+
+`where` holds an and/or tree three levels deep, and is combined with `filters` by AND. Each level is `{"all": [...]}` or `{"any": [...]}`, whose items are conditions or groups:
+
+```json
+{
+  "where": {"any": [
+    {"field": "RSI", "op": "<", "value": 25},
+    {"all": [
+      {"field": "RSI", "op": ">", "value": 80},
+      {"field": "relative_volume_10d_calc", "op": ">", "value": 2}
+    ]}
+  ]}
+}
+```
+
+### Sort, columns and pages
+
+- `sort_by` and `sort_order` (`desc` or `asc`) pick the order; the default is market cap for stocks and coins, traded volume for crypto pairs, forex, futures and options, and name for the rest.
+- `columns` picks the fields each row carries. Every field a condition or the sort reads is added, so a row shows why it matched.
+- `limit` returns up to 1,000 rows (default 50). `offset` skips rows; `data.next_offset` is the offset of the next page, null on the last.
+
+### Templates
+
+`template` starts from a ready-made screen. Your `filters` are added to its conditions; your `sort_by` and `columns` replace its own. `scan_templates` lists all 44, each with its full arguments to copy and adapt.
+
+| Kind | Templates |
+| --- | --- |
+| Price and volume | `top_gainers`, `top_losers`, `most_active`, `unusual_volume`, `gap_up`, `gap_down`, `new_52w_high`, `new_52w_low`, `near_all_time_high`, `momentum_leaders`, `high_volatility` |
+| Technicals | `oversold_rsi`, `overbought_rsi`, `rsi_recovery`, `golden_cross`, `death_cross`, `uptrend`, `macd_bullish_cross`, `macd_bearish_cross`, `bollinger_breakout`, `bollinger_breakdown`, `strong_trend_adx`, `stochastic_oversold_cross`, `above_cloud`, `bullish_engulfing`, `hammer`, `technical_strong_buy` |
+| Fundamentals | `value_low_pe`, `garp`, `high_growth`, `quality_compounders`, `piotroski_strong`, `net_cash`, `high_dividend`, `dividend_growers`, `analyst_upside`, `analyst_strong_buy` |
+| Events | `earnings_this_week`, `ex_dividend_soon` |
+| Crypto, forex, ETFs | `crypto_top_gainers`, `crypto_largest`, `crypto_oversold`, `forex_movers`, `etf_momentum` |
+
+## Screen price history
+
+`scan_history` evaluates a formula over each instrument's bars, for rules no field expresses: streaks, breakouts over any window, distances from highs, custom indicators and their crosses. It takes up to 40 symbols, so narrow a market with `scan_run` first. A [data reference](/guides/data-references) passes a screen's symbols in one call:
+
+```json
+{
+  "symbols": {"$fincept": {"tool": "scan_run", "arguments": {"index": "nasdaq100", "filters": [{"field": "RSI", "op": "<", "value": 40}], "limit": 40}, "path": "symbols"}},
+  "condition": "close > highest(high, 20)[1] and volume > 1.5 * sma(volume, 20)",
+  "values": {"rsi": "rsi(close)", "from_high_pct": "(close / highest(high, 252) - 1) * 100"},
+  "within": 3,
+  "sort_by": "rsi"
+}
+```
+
+A formula is written like a Python expression over the series `open`, `high`, `low`, `close`, `volume`, `hl2`, `hlc3` and `ohlc4`:
+
+- `x[n]` is `x` from `n` bars back; `+ - * / % **`, comparisons, and `and`, `or`, `not` work bar by bar.
+- Window lengths and settings are numbers, such as `sma(close, 50)`.
+- `condition` decides a match on the latest bar, or on any of the last `within` bars (the row says when it last held). `values` are named formulas reported at the latest bar, and `sort_by` can name one.
+
+| Functions | |
+| --- | --- |
+| Averages | `sma`, `ema`, `wma`, `rma`, `hma` (series, window) |
+| Ranges and changes | `highest`, `lowest`, `sum`, `stdev`, `zscore`, `percentrank`, `roc` (series, window); `change` (series, bars back, default 1) |
+| Oscillators | `rsi` (series, window = 14), `macd`, `macd_signal`, `macd_hist` (series, 12, 26, 9), `stoch_k`, `stoch_d` (14, 3, 3), `cci` (20), `willr` (14), `mfi` (14), `adx`, `plus_di`, `minus_di` (14) |
+| Bands and volatility | `bb_upper`, `bb_lower`, `bb_width` (series, 20, 2), `atr`, `natr` (14), `tr` |
+| Volume | `obv`, `vwap` (window) |
+| Conditions | `crossover`, `crossunder` (a, b); `rising`, `falling` (series, bars); `count` (condition, window); `barssince` (condition); `iff` (condition, a, b) |
+| Maths | `abs`, `log`, `sqrt`, `max`, `min`, `nz` (series, value = 0) |
+
+A formula is checked before anything is fetched: an unknown name, a missing window or anything that is not a formula is refused with the reason.
+
+Examples:
+
+| Rule | Formula |
+| --- | --- |
+| 20-bar breakout | `close > highest(high, 20)[1]` |
+| Five green bars in a row | `count(close > open, 5) == 5` |
+| Pullback in an uptrend | `close > sma(close, 200) and rsi(close, 3) < 20` |
+| Bollinger squeeze | `bb_width(close, 20) < 5` |
+| EMA crossover | `crossover(ema(close, 12), ema(close, 26))` |
+| Within 3% of the 52-week high | `close >= 0.97 * highest(high, 252)` |
+
+## Bars and fundamentals
+
+| Tool | Returns |
+| --- | --- |
+| `scan_ohlcv` | One instrument's bars, oldest first, on any interval from 1 minute to monthly: the latest `bars` (up to 5,000) or a `start`/`end` range, split- or dividend-adjusted, each with its time at the exchange's UTC offset. Data at path `candles` feeds the [Fincept Technicals](/guides/fincept-technicals) tools as is. |
+| `scan_financials` | Income statement, balance sheet, cash flow or statistics by fiscal year, half, quarter or TTM, every line the company reports; `statement: "all"` returns the four with earnings, dividends and segments. |
+| `scan_earnings` | EPS and revenue against the estimate, with the surprise, by quarter or year. |
+| `scan_dividends` | Dividend payments with ex, record and payment dates, the recent yield and the payout ratio. |
+| `scan_segments` | Annual revenue by business line and by region. |
+
+Amounts are in the reporting currency's own units, not thousands or millions. A date range that would need more than 5,000 bars is refused; ask for the latest bars by count or use a longer interval.
+
+## Limits
+
+| Limit | Value |
+| --- | --- |
+| Rows per screen | 1,000 per page |
+| Columns per screen | 100 |
+| Conditions | 50 in `filters`, plus the `where` tree |
+| `scan_history` | 40 symbols, 5,000 bars each, 12 named values, 1,000 characters per formula |
+| Bars per `scan_ohlcv` call | 5,000 |
+| Time | 75 seconds; `scan_history` 240 seconds |
+
+`scan_history` and the bar and fundamentals tools fetch a few instruments at a time. When the server-wide pace is reached, `scan_history` stops starting new fetches, answers `partial`, and lists the symbols it skipped under `data.failed`. An identical screen within 30 seconds is answered from cache.
+
+## Outputs
+
+Every screen row carries the instrument's `symbol` as `EXCHANGE:TICKER` and one value per column. `data.symbols` lists the symbols in order, ready for `scan_history`, `scan_ohlcv`, the fundamentals tools or any market tool. `data.total_count` is the number of matches overall; `data.fields` gives each column's meaning and type; `data.conditions` restates the screen as it ran. Values are as the market data source publishes them: real time for some venues, delayed by the exchange's public delay (up to 15 minutes) for others.
+
+## Example
+
+```text Prompt
+Using Fincept, find Nasdaq 100 stocks below RSI 40 that just broke out of their 20-day range on above-average volume, and give me each one's last four quarters of revenue.
+```
+
+The agent calls `scan_run` with `index: "nasdaq100"` and an RSI filter, passes its symbols to `scan_history` with a breakout formula, then calls `scan_financials` with `period: "FQ"` for each match.
+
+More prompts:
+
+| Prompt | Tools the agent uses |
+| --- | --- |
+| Indian stocks trading at 3x their usual volume today, biggest first. | `scan_run` (`template: "unusual_volume"`, `market: "india"`) |
+| S&P 500 stocks within 2% of their 50-day average, RSI under 40 on the 4-hour chart. | `scan_run` (`index`, `between_pct`, `RSI\|240`) |
+| Coins over $1 billion market cap up more than 10% this week. | `scan_run` (`market: "coin"`, `Perf.W`) |
+| Dividend growers yielding over 3% with payout under 60%, sorted by yield. | `scan_run` (`template: "dividend_growers"`) |
+| Which of these 30 stocks closed green five days in a row? | `scan_history` |
+| Who reports earnings this week among large caps in Germany? | `scan_run` (`template: "earnings_this_week"`, `market: "germany"`) |

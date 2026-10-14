@@ -15,7 +15,7 @@ Most tools are free. Tools that cost credits in the terminal cost the same here,
 - The price is in each tool's description, so the agent sees it before calling.
 - Charges happen on a delivered result. Failed, empty and refused calls cost nothing.
 - Daily spend caps and per-action hourly caps apply as in the terminal (`402 spend_cap_reached`).
-- Engine tools are free: Fincept Stats, Forecast, Allocation, Portfolio Optimizer, Quant, Volatility, Panel, TS Forecast, Technicals, Change Points, Regimes, Copula, Multi-Period, Portfolio Lab and Pricing.
+- Engine tools are free: Fincept Stats, Forecast, Allocation, Portfolio Optimizer, Quant, Volatility, Panel, TS Forecast, Technicals, Change Points, Regimes, Copula, Multi-Period, Portfolio Lab, Pricing and Scanner.
 
 The [credits reference](/reference/toolsets/credits) lists every tool that can spend credits. Check your balance with `account_get_credits` and your spending with `account_get_usage`.
 
@@ -27,6 +27,8 @@ The [credits reference](/reference/toolsets/credits) lists every tool that can s
 | Request body | 1 MB |
 
 Every MCP message counts as one request, including `tools/list` and discovery calls. Past the limit the server answers HTTP `429` with `Retry-After`; clients retry on their own.
+
+Fincept Scanner's requests to the market data source are also paced across the whole server. When that pace is reached, a scanner tool answers `busy` with `details.retry_after_s`, the seconds to wait; retrying sooner gets the same answer.
 
 ## Time limits
 
@@ -50,6 +52,7 @@ Every MCP message counts as one request, including `tools/list` and discovery ca
 | Fincept Multi-Period | 90 seconds, up to 300 seconds for heavy tools |
 | Fincept Portfolio Lab | 90 seconds, up to 300 seconds for heavy tools |
 | Fincept Pricing | 90 seconds, up to 300 seconds for heavy tools |
+| Fincept Scanner | 75 seconds; `scan_history` 240 seconds |
 
 A call past its limit returns an error envelope with code `timeout`.
 

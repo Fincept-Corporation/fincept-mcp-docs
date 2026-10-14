@@ -23,7 +23,7 @@ Toolset `algo`: 21 tools. List them all with `?toolsets=algo`, or let the agent 
 | `algo_get_metrics` | A deployment's latest metrics snapshot: total, realized and unrealized P&L, trade count, win rate, max drawdown, current price and position (qty, side, entry), as heartbeated by the terminal. | Read |
 | `algo_list_trades` | A deployment's fills, newest first: side, quantity, price, P&L, slippage and fill model. | Read |
 | `algo_get_deploy_charges` | Daily runtime charges billed over the last days, credits spent, active deployments and the credits per day they will cost (2 per active deployment). | Read |
-| `algo_list_basket_catalog` | The prebuilt symbol baskets (index constituents such as NIFTY 50, S&P 500, Nasdaq-100): key, name, region, exchange, currency, symbols, Yahoo symbols, source, as_of and whether the sync is stale. | Read |
+| `algo_list_basket_catalog` | The prebuilt symbol baskets (index constituents such as NIFTY 50, S&P 500, Nasdaq-100): key, name, region, exchange, currency, symbols, quote symbols, source, as_of and whether the sync is stale. | Read |
 | `algo_resolve_basket` | Resolves an index or basket name ("nifty it") or catalog key to one catalog basket with its members. | Read |
 | `algo_list_baskets` | The account's own named order baskets (groups of order legs), or the one named name. | Read |
 | `algo_get_basket` | One order basket with its legs. | Read |

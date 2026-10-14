@@ -98,6 +98,7 @@
               "guides/fincept-panel",
               "guides/fincept-ts-forecast",
               "guides/fincept-technicals",
+              "guides/fincept-scanner",
               "guides/fincept-change-points",
               "guides/fincept-regimes",
               "guides/fincept-copula",
@@ -341,6 +342,21 @@
                   "reference/technicals/statistics",
                   "reference/technicals/volatility",
                   "reference/technicals/volume"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Fincept Scanner",
+            "pages": [
+              "reference/scanner/overview",
+              {
+                "group": "Modules",
+                "expanded": false,
+                "pages": [
+                  "reference/scanner/screen",
+                  "reference/scanner/bars",
+                  "reference/scanner/fundamentals"
                 ]
               }
             ]

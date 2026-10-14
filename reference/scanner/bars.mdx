@@ -1,0 +1,14 @@
+---
+title: "Price history"
+description: "Bars for any instrument on any interval, and screens of many instruments' bars with custom formulas."
+mode: "wide"
+---
+
+Toolset `scan_bars`: 2 tools.
+
+| Tool | What it does | Notes |
+| --- | --- | --- |
+| `scan_ohlcv` | Returns an instrument's bars on any interval from 1 minute to monthly, oldest first: the latest N or a date range, split- or dividend-adjusted, each with its time at the exchange's UTC offset, plus the span's change, high, low and average volume and an integrity check of the bars. Data at path `candles` feeds the Fincept Technicals tools as is. | Up to 5,000 bars a call. |
+| `scan_history` | Screens up to 40 instruments' price history with a custom formula: evaluates it at every bar and reports whether it held on the latest bar (or any of the last N, with when it last did), plus named values for ranking. For multi-bar patterns, streaks, breakouts over any window, distances from highs and custom indicators. `symbols` can be a `$fincept` reference to a `scan_run` screen's symbols. | Up to 240 seconds. Answers `partial` with the skipped symbols when the server-wide pace is reached. |
+
+Inputs, limits and outputs are described in [Fincept Scanner](/guides/fincept-scanner). Full schemas: `fincept_describe_tool`.

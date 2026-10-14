@@ -5,11 +5,12 @@ icon: "chart-candlestick"
 mode: "wide"
 ---
 
-Toolset `market`: 13 tools. List them all with `?toolsets=market`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+Toolset `market`: 14 tools. List them all with `?toolsets=market`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
 
 | Tool | What it does | Type |
 | --- | --- | --- |
 | `market_search_instruments` | Search the instrument universe by ticker, name or ISIN. | Read, core |
+| `market_query_universe` | Every instrument matching a filter (country, exchanges, type, sector, market-cap band, index membership, metrics), 500 rows per page with `next_offset` for the rest. Use it for complete listings such as all NSE stocks. | Read, core |
 | `market_get_quote` | Latest quote for one symbol: price, change, change percent, day range, volume, currency, exchange time and the feed's delay. | Read, core |
 | `market_get_quotes` | Latest quotes for up to 300 symbols in one call. | Read, core |
 | `market_get_candles` | OHLCV candles for a symbol, oldest first. | Read, core |

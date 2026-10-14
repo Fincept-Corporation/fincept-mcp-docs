@@ -2,7 +2,7 @@
 
 <img src="assets/logo.png" alt="Fincept" width="120">
 
-Hosted [Model Context Protocol](https://modelcontextprotocol.io) server for [Fincept Terminal](https://fincept.in). It gives Claude Code, Codex, Cursor, VS Code and any other MCP client access to markets data, research and analytics, through 440 platform tools and 15 quant engines.
+Hosted [Model Context Protocol](https://modelcontextprotocol.io) server for [Fincept Terminal](https://fincept.in). It gives Claude Code, Codex, Cursor, VS Code and any other MCP client access to markets data, research and analytics, through 442 platform tools and 16 engines.
 
 - **Endpoint:** `https://enterprise.fincept.in/mcp` (Streamable HTTP)
 - **Auth:** OAuth 2.1 browser sign-in with your Fincept account. You don't need an API key.
@@ -46,7 +46,7 @@ Any other client that supports remote HTTP servers with OAuth works too. The fir
 | News and alternative data | News, sentiment, monitors, maritime, trade and geopolitical data |
 | Crypto | Venues, markets, derivatives, accounts and DeFi (read-only) |
 
-**Engines:** Stats, Forecast, TS Forecast, Volatility, Panel, Quant, Technicals (201 indicators, 61 candlestick patterns), Change Points, Regimes, Copula, Allocation, Portfolio Optimizer, Portfolio Lab, Multi-Period, and Pricing (curves, bonds, swaps, credit and options).
+**Engines:** Scanner (live screens of every market on about 4,000 fields), Stats, Forecast, TS Forecast, Volatility, Panel, Quant, Technicals (201 indicators, 61 candlestick patterns), Change Points, Regimes, Copula, Allocation, Portfolio Optimizer, Portfolio Lab, Multi-Period, and Pricing (curves, bonds, swaps, credit and options).
 
 ## How it works
 
@@ -61,6 +61,7 @@ Any other client that supports remote HTTP servers with OAuth works too. The fir
 Using Fincept, get the latest quote for AAPL and the last 5 daily candles.
 Using Fincept, fit an ARIMA(1,1,1) to the last 500 daily closes of ^NSEI and forecast 10 days.
 Using Fincept, build a hierarchical risk parity portfolio from SPY, TLT, GLD and QQQ over 3 years.
+Using Fincept, find S&P 500 stocks with RSI under 30 trading above their 200-day average.
 ```
 
 ## Links

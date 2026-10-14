@@ -1,14 +1,15 @@
 ---
 title: "Account"
-description: "Credit balance, usage, the credit ledger and account notices."
+description: "Your profile, credit balance, usage, the credit ledger and account notices."
 icon: "user"
 mode: "wide"
 ---
 
-Toolset `account`: 4 tools. List them all with `?toolsets=account`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+Toolset `account`: 5 tools. List them all with `?toolsets=account`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
 
 | Tool | What it does | Type |
 | --- | --- | --- |
+| `account_get_profile` | The signed-in user's profile: user_id, username, email, email_verified, created_at (member since), tier, active (subscription live), phone, country_code, country, country_iso2, contact_complete and profession (field_name, category_name, role). | Read, core |
 | `account_get_credits` | The account's credit balance: credits (the total), granted_credits (this period's allowance, which can expire), purchased_credits (bought, never expire) and tier. | Read, core |
 | `account_get_usage` | Credit consumption over the last N days: total_credits_used, total_credits_granted, total_calls, total_tokens, and breakdowns by_model, by_surface (the tab that spent it) and daily. | Read |
 | `account_get_credit_ledger` | The itemised credit statement, newest first: entries (kind grant, debit, refund or adjust. | Read |
