@@ -1,14 +1,15 @@
 ---
 title: "Price history"
-description: "Bars for any instrument on any interval, and screens of many instruments' bars with custom formulas."
+description: "Bars for any instrument on any interval, screens of many instruments' bars with custom formulas, and many instruments' returns over calendar periods."
 mode: "wide"
 ---
 
-Toolset `scan_bars`: 2 tools.
+Toolset `scan_bars`: 3 tools.
 
 | Tool | What it does | Notes |
 | --- | --- | --- |
 | `scan_ohlcv` | Returns an instrument's bars on any interval from 1 minute to monthly, oldest first: the latest N or a date range, split- or dividend-adjusted, each with its time at the exchange's UTC offset, plus the span's change, high, low and average volume and an integrity check of the bars. Data at path `candles` feeds the Fincept Technicals tools as is. | Up to 5,000 bars a call. |
-| `scan_history` | Screens up to 40 instruments' price history with a custom formula: evaluates it at every bar and reports whether it held on the latest bar (or any of the last N, with when it last did), plus named values for ranking. For multi-bar patterns, streaks, breakouts over any window, distances from highs and custom indicators. `symbols` can be a `$fincept` reference to a `scan_run` screen's symbols. | Up to 240 seconds. Answers `partial` with the skipped symbols when the server-wide pace is reached. |
+| `scan_history` | Screens up to 500 instruments' price history with a custom formula: evaluates it at every bar and reports whether it held on the latest bar (or any of the last N, with when it last did), plus named values for ranking. For multi-bar patterns, streaks, breakouts over any window, distances from highs and custom indicators. `symbols` can be a `$fincept` reference to a `scan_run` screen's symbols. | About 25 new instruments a call, answered within about 45 seconds; the rest are in `data.remaining` for the next call. |
+| `scan_returns` | Returns of up to 500 instruments over up to 12 calendar periods: a month, quarter, year or date range, each as the last close inside the period over the last close before it, in percent. Price return by default, total return with `adjustment: "dividends"`. | About 25 new instruments a call, answered within about 45 seconds; the rest are in `data.remaining`. A finished period's return is kept for a day. |
 
 Inputs, limits and outputs are described in [Fincept Scanner](/guides/fincept-scanner). Full schemas: `fincept_describe_tool`.

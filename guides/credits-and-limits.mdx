@@ -52,7 +52,7 @@ Fincept Scanner's requests to the market data source are also paced across the w
 | Fincept Multi-Period | 90 seconds, up to 300 seconds for heavy tools |
 | Fincept Portfolio Lab | 90 seconds, up to 300 seconds for heavy tools |
 | Fincept Pricing | 90 seconds, up to 300 seconds for heavy tools |
-| Fincept Scanner | 75 seconds; `scan_history` 240 seconds |
+| Fincept Scanner | 75 seconds; `scan_history` and `scan_returns` answer within about 45 seconds and continue in the next call |
 | Fincept Performance | 30 to 120 seconds; `perf_rolling` and `perf_bootstrap` 180 seconds, `perf_backtest_overfitting` 300 seconds |
 
 A call past its limit returns an error envelope with code `timeout`.

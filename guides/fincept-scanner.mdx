@@ -4,7 +4,7 @@ description: "Live market screens on about 4,000 fields across stocks in 68 coun
 icon: "radar"
 ---
 
-Fincept Scanner is the screening engine behind every `scan_*` tool. `scan_run` screens a whole market live on any of its fields: price and volume on 1-minute to monthly bars, performance, technical indicators and ratings, candlestick patterns, valuation, profitability, growth, balance sheet, cash flow, dividends, earnings and dividend dates and analyst targets. It covers stocks in 68 countries with their ETFs and funds, crypto pairs and coins, forex, futures, CFDs, bonds, options and economic series, and narrows to index universes such as the S&P 500, Nasdaq 100, Nifty 50, FTSE 100 or Nikkei 225. `scan_history` screens instruments' price history with a formula of your own, for rules no field expresses. `scan_ohlcv` and the fundamentals tools return bars, statements, earnings, dividends and revenue segments per symbol. Every tool answers with a [result envelope](/guides/results) with tables and charts.
+Fincept Scanner is the screening engine behind every `scan_*` tool. `scan_run` screens a whole market live on any of its fields: price and volume on 1-minute to monthly bars, performance, technical indicators and ratings, candlestick patterns, valuation, profitability, growth, balance sheet, cash flow, dividends, earnings and dividend dates and analyst targets. It covers stocks in 68 countries with their ETFs and funds, crypto pairs and coins, forex, futures, CFDs, bonds, options and economic series, and narrows to index universes such as the S&P 500, Nasdaq 100, Nifty 50, FTSE 100 or Nikkei 225. `scan_history` screens instruments' price history with a formula of your own, for rules no field expresses. `scan_returns` gives many instruments' returns over any calendar month, quarter, year or date range. `scan_ohlcv` and the fundamentals tools return bars, statements, earnings, dividends and revenue segments per symbol. Every tool answers with a [result envelope](/guides/results) with tables and charts.
 
 <Note>
   Fincept Scanner tools are free. They count toward the [rate limit](/guides/credits-and-limits) only. Requests to the market data source are also paced across the server: when that budget is in use the tool answers `busy` with `details.retry_after_s`, the number of seconds to wait.
@@ -17,7 +17,7 @@ Tools are grouped in three modules. Each module is a toolset named `scan_<module
 | Module | Toolset | Tools |
 | --- | --- | --- |
 | Market screener | `scan_screen` | `scan_run`, `scan_fields`, `scan_markets`, `scan_templates` |
-| Price history | `scan_bars` | `scan_ohlcv`, `scan_history` |
+| Price history | `scan_bars` | `scan_ohlcv`, `scan_history`, `scan_returns` |
 | Company fundamentals | `scan_fundamentals` | `scan_financials`, `scan_earnings`, `scan_dividends`, `scan_segments` |
 
 `scan_run` is listed by default. `scan_catalog` returns the live list of modules and tools from inside your agent.
@@ -48,7 +48,7 @@ A screen is a market, conditions on its fields, and a sort:
 | `market` | A country market (68, such as `america`, `india`, `uk`, `germany`, `japan`) or an asset class: `crypto` (pairs on every exchange), `coin` (crypto assets across exchanges), `forex`, `futures`, `cfd`, `bond`, `economics`, `options`. A list screens several at once. Default `america`. | `["america", "india"]` |
 | `universe` | For country markets: `stocks` (primary listings of common stocks, the default), `etfs`, or `all` (every listed instrument: ETFs, funds, preferreds, depositary receipts, OTC). | `"etfs"` |
 | `index` | Only an index's constituents: 73 indexes, including `sp500`, `nasdaq100`, `dow30`, `russell2000`, `nifty50`, `nifty500`, `nifty_bank`, `sensex`, `ftse100`, `dax40`, `cac40`, `euro_stoxx50`, `nikkei225`, `hang_seng`, `csi300`, `asx200`. | `"nifty50"` |
-| `symbols` | Only these instruments, as `EXCHANGE:TICKER`. With no conditions it is a live snapshot of any fields for them. | `["NASDAQ:AAPL", "NSE:RELIANCE", "BINANCE:BTCUSDT"]` |
+| `symbols` | Only these instruments, as `EXCHANGE:TICKER`, exactly as a screen answers them (a ticker can hold `&`, `-` or `.`). With no conditions it is a live snapshot of any fields for them. | `["NASDAQ:AAPL", "NSE:M&M", "BINANCE:BTCUSDT"]` |
 
 `scan_markets` lists every market by region with its exchanges, every index, the timeframes and the operators.
 
@@ -57,7 +57,7 @@ A screen is a market, conditions on its fields, and a sort:
 Field names are case-sensitive: `RSI`, `close`, `SMA50`, `market_cap_basic`, `price_earnings_ttm`, `sector`, `earnings_release_next_date`. `scan_fields` searches a market's fields by words (`"dividend yield"`, `"free cash flow"`, `"52 week"`), category or type, and with `include_values` lists the exact values a text field takes, such as every sector or industry.
 
 - **Timeframes.** A bar field (price, volume or a technical) reads another timeframe with a suffix: `RSI|60` is RSI on 1-hour bars. Suffixes are `1`, `5`, `15`, `30`, `60`, `120`, `240` (minutes), `1W` and `1M`; daily is the field without a suffix. The `timeframe` argument applies one to every bar field that names none.
-- **Previous bars.** `[1]` and `[2]` read a bar field one or two bars back: `close[1]`, `RSI[1]|60`.
+- **Previous bars.** `[1]` and `[2]` read a bar field one or two bars back: `close[1]`, `RSI[1]|60`. On another timeframe the source keeps less: `close[1]|1M` is last month's close, so `close|1M` against it is the month to date, but `change` has no earlier values on a timeframe and is refused. For any older month, quarter or year use [`scan_returns`](#returns-over-calendar-periods).
 - **Units.** Percent fields are in percent (`5` is 5%). Date fields take ISO dates (`"2026-01-31"`) and come back as ISO dates.
 - **Checked first.** A field the market does not have is refused before anything runs, with the nearest names in `details.did_you_mean`. A text value the field never takes (`"Technology"` for `sector`) adds a warning with the values it does take.
 
@@ -114,7 +114,7 @@ Each condition is `{"field", "op", "value"}`, or `{"field", "op", "to_field"}` t
 
 ## Screen price history
 
-`scan_history` evaluates a formula over each instrument's bars, for rules no field expresses: streaks, breakouts over any window, distances from highs, custom indicators and their crosses. It takes up to 40 symbols, so narrow a market with `scan_run` first. A [data reference](/guides/data-references) passes a screen's symbols in one call:
+`scan_history` evaluates a formula over each instrument's bars, for rules no field expresses: streaks, breakouts over any window, distances from highs, custom indicators and their crosses. It takes up to 500 symbols; narrow a market with `scan_run` first, as each call fetches about 25 new instruments (see [Big lists](#big-lists)). A [data reference](/guides/data-references) passes a screen's symbols in one call:
 
 ```json
 {
@@ -155,6 +155,32 @@ Examples:
 | EMA crossover | `crossover(ema(close, 12), ema(close, 26))` |
 | Within 3% of the 52-week high | `close >= 0.97 * highest(high, 252)` |
 
+## Returns over calendar periods
+
+`scan_returns` measures each instrument's return over up to 12 calendar periods at once: a month (`2026-06`), a quarter (`2026-Q2`), a year (`2025`) or a date range (`2026-01-15..2026-03-31`). A return is the last close inside the period over the last close before it began, in percent. Months are the exchange's own calendar months. A period that has not ended is measured to the latest bar, and the answer says so.
+
+```json
+{
+  "symbols": {"$fincept": {"tool": "scan_run", "arguments": {"index": "nifty50", "limit": 50}, "path": "symbols"}},
+  "periods": ["2026-06", "2026-Q2", "2025"],
+  "sort_by": "2026-06"
+}
+```
+
+| Argument | What it does |
+| --- | --- |
+| `adjustment` | `splits` (default): price return, on split-adjusted closes. `dividends`: total return, with dividends in the closes. |
+| `sort_by`, `sort_order` | Rank by one of the periods. |
+| `include_closes` | Also give, per period, the close it is measured from and to, with their dates. |
+
+Each row has the symbol and one value per period: `null`, with the reason in `notes`, when there is no close inside the period or none before it. A finished period's return is kept for a day, so asking again costs nothing.
+
+For a whole market, [`market_get_returns`](/reference/toolsets/market) is faster: it measures up to 100 symbols a call by the same rule, with `basis` `price` or `total`, and takes symbols as `scan_run` answers them. A symbol it has no listing for is under `missing`; `scan_returns` covers it.
+
+### Big lists
+
+`scan_history` and `scan_returns` fetch each instrument's bars, two at a time, paced across the server: about 25 new instruments a call. A call answers within about 45 seconds, so a client's timeout never cuts it off. When it could not reach every instrument, it answers `partial` and lists the rest in `data.remaining`: call the tool again with `symbols` set to them to continue. Instruments already fetched are cached and cost nothing the next time. Instruments that could not be fetched are under `data.failed`, grouped by reason. When the server-wide pace pauses requests, the call stops early the same way, and its warning says how long to wait.
+
 ## Bars and fundamentals
 
 | Tool | Returns |
@@ -174,15 +200,16 @@ Amounts are in the reporting currency's own units, not thousands or millions. A 
 | Rows per screen | 1,000 per page |
 | Columns per screen | 100 |
 | Conditions | 50 in `filters`, plus the `where` tree |
-| `scan_history` | 40 symbols, 5,000 bars each, 12 named values, 1,000 characters per formula |
+| `scan_history` | 500 symbols, 5,000 bars each, 12 named values, 1,000 characters per formula |
+| `scan_returns` | 500 symbols, 12 periods |
 | Bars per `scan_ohlcv` call | 5,000 |
-| Time | 75 seconds; `scan_history` 240 seconds |
+| Time | 75 seconds; `scan_history` and `scan_returns` answer within about 45 seconds |
 
-`scan_history` and the bar and fundamentals tools fetch a few instruments at a time. When the server-wide pace is reached, `scan_history` stops starting new fetches, answers `partial`, and lists the symbols it skipped under `data.failed`. An identical screen within 30 seconds is answered from cache.
+The bar and fundamentals tools share two sessions with the source across the server; [Big lists](#big-lists) explains how the many-instrument tools continue. An identical screen within 30 seconds is answered from cache.
 
 ## Outputs
 
-Every screen row carries the instrument's `symbol` as `EXCHANGE:TICKER` and one value per column. `data.symbols` lists the symbols in order, ready for `scan_history`, `scan_ohlcv`, the fundamentals tools or any market tool. `data.total_count` is the number of matches overall; `data.fields` gives each column's meaning and type; `data.conditions` restates the screen as it ran. Values are as the market data source publishes them: real time for some venues, delayed by the exchange's public delay (up to 15 minutes) for others.
+Every screen row carries the instrument's `symbol` as `EXCHANGE:TICKER` and one value per column. `data.symbols` lists the symbols in order, ready for `scan_history`, `scan_returns`, `scan_ohlcv`, the fundamentals tools or any market tool. `data.total_count` is the number of matches overall; `data.fields` gives each column's meaning and type; `data.conditions` restates the screen as it ran. The `results` table block shows the first 50 rows; `data.rows` has every row. Values are as the market data source publishes them: real time for some venues, delayed by the exchange's public delay (up to 15 minutes) for others.
 
 ## Example
 
@@ -201,4 +228,5 @@ More prompts:
 | Coins over $1 billion market cap up more than 10% this week. | `scan_run` (`market: "coin"`, `Perf.W`) |
 | Dividend growers yielding over 3% with payout under 60%, sorted by yield. | `scan_run` (`template: "dividend_growers"`) |
 | Which of these 30 stocks closed green five days in a row? | `scan_history` |
+| What did each Nifty 50 stock return in June 2026, best first? | `scan_run` (`index: "nifty50"`), `market_get_returns` or `scan_returns` |
 | Who reports earnings this week among large caps in Germany? | `scan_run` (`template: "earnings_this_week"`, `market: "germany"`) |

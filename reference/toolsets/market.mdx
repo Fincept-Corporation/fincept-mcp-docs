@@ -5,7 +5,7 @@ icon: "chart-candlestick"
 mode: "wide"
 ---
 
-Toolset `market`: 14 tools. List them all with `?toolsets=market`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
+Toolset `market`: 15 tools. List them all with `?toolsets=market`, or let the agent find them with `fincept_search_tools`. Full descriptions and input schemas: `fincept_describe_tool`.
 
 | Tool | What it does | Type |
 | --- | --- | --- |
@@ -13,7 +13,8 @@ Toolset `market`: 14 tools. List them all with `?toolsets=market`, or let the ag
 | `market_query_universe` | Every instrument matching a filter (country, exchanges, type, sector, market-cap band, index membership, metrics), 500 rows per page with `next_offset` for the rest. Use it for complete listings such as all NSE stocks. | Read, core |
 | `market_get_quote` | Latest quote for one symbol: price, change, change percent, day range, volume, currency, exchange time and the feed's delay. | Read, core |
 | `market_get_quotes` | Latest quotes for up to 300 symbols in one call. | Read, core |
-| `market_get_candles` | OHLCV candles for a symbol, oldest first. | Read, core |
+| `market_get_candles` | OHLCV candles for a symbol, oldest first. Daily and coarser bars carry `date`, their trading day at the exchange; weekly, monthly and quarterly answers have one bar per period and say in `last_bar_partial` whether the last one is still running; `adjust: "splits"` gives price-only bars. | Read, core |
+| `market_get_returns` | Returns of up to 100 symbols over up to 12 calendar periods in one call: a month, quarter, year or date range, each as the last close inside the period over the last close before it, in percent, on price (default) or total-return closes. Takes symbols as `scan_run` answers them. | Read |
 | `market_get_snapshot` | An instrument's row in the symbol index: identity, listing, classification (type, sector, country, currency) and the index's stored metrics stamped with metrics_as_of. | Read |
 | `market_get_fundamentals` | Key fundamentals for an equity: valuation ratios, margins, growth, balance-sheet figures, dividend and share data as the provider reports them. | Read, core |
 | `market_get_profile` | Company profile: name, sector, industry, country, website, employees and business summary. | Read |

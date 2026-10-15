@@ -2,7 +2,7 @@
 
 <img src="assets/logo.png" alt="Fincept" width="120">
 
-Hosted [Model Context Protocol](https://modelcontextprotocol.io) server for [Fincept Terminal](https://fincept.in). It gives Claude Code, Codex, Cursor, VS Code and any other MCP client access to markets data, research and analytics, through 442 platform tools and 17 engines.
+Hosted [Model Context Protocol](https://modelcontextprotocol.io) server for [Fincept Terminal](https://fincept.in). It gives Claude Code, Codex, Cursor, VS Code and any other MCP client access to markets data, research and analytics, through 443 platform tools and 17 engines.
 
 - **Endpoint:** `https://enterprise.fincept.in/mcp` (Streamable HTTP)
 - **Auth:** OAuth 2.1 browser sign-in with your Fincept account. You don't need an API key.
